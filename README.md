@@ -1,39 +1,42 @@
 # Iran Constitutional Monarchy
 
-A constitutional monarchy for Iran, implemented as ten Solidity smart contracts on the blockchain. This is a proof-of-concept demonstrating that governance processes — elections, legislation, judicial review, budgets, constitutional amendments — can be transparent, automated, and auditable on-chain, while preserving citizens' ability to participate through secret ballots verified by cryptographic proof.
+A constitutional monarchy for Iran implemented as ten Solidity smart contracts on the blockchain. This is a proof-of-concept: not a deployment-ready government, but a working model that shows how constitutional governance can be encoded in code that no one can alter and every citizen can verify.
 
-The constitutional framework draws from Reza Pahlavi's *Winds of Change* (2002) and Mohammad Reza Shah Pahlavi's *Answer to History* (1980). The whitepaper, reproduced in full below, explains the system in the Shah's own voice.
+The constitutional framework draws from Reza Pahlavi's *Winds of Change* (2002), his vision for a secular, democratic constitutional monarchy, and is informed by Mohammad Reza Shah Pahlavi's *Answer to History* (1980). The project implements a minimum viable government: Crown, Parliament, Executive, Supreme Court, Elections with secret ballots using passport-based cryptographic proofs, Provincial Councils, Referendums, and Public Finance.
+
+864 tests cover every rule the contracts enforce, from simple checks (can only the Crown nominate a Prime Minister?) to full governance workflows (what happens when two Crown nominees fail and Parliament must dissolve?).
 
 ## Repository Structure
 
 ```
 ├── whitepaper/
-│   ├── whitepaper-shah.md             English whitepaper (source)
-│   ├── whitepaper-shah-fa.md          Persian translation
+│   ├── whitepaper-shah.md             English whitepaper
+│   ├── whitepaper-shah-fa.md          Persian whitepaper (فارسی)
 │   ├── glossary-fa.md                 Persian terminology glossary
 │   ├── Answer to the Future.pdf       English PDF
-│   └── پاسخ به آینده.pdf               Persian PDF
+│   └── پاسخ به آینده.pdf               Persian PDF (فارسی)
 ├── constitution/
 │   ├── Constitution.md                English constitution (66 articles)
-│   ├── Constitution-fa.md             Persian translation
+│   ├── Constitution-fa.md             Persian constitution (فارسی)
 │   ├── glossary-fa.md                 Persian terminology glossary
 │   ├── CONSTITUTION OF IRAN.pdf       English PDF
-│   └── قانون اساسی ایران.pdf           Persian PDF
+│   └── قانون اساسی ایران.pdf           Persian PDF (فارسی)
 ├── contracts/
-│   ├── src/                           Solidity contracts (14 files)
-│   ├── test/                          Foundry tests (15 files + helpers)
+│   ├── src/                           14 Solidity contracts
+│   ├── test/                          15 test files + helpers
 │   ├── circuits/                      Circom ZK circuit + build artifacts
-│   ├── lib/forge-std/                 Forge Standard Library (submodule)
+│   ├── lib/forge-std/                 Foundry standard library (submodule)
 │   ├── foundry.toml                   Foundry configuration
 │   └── package.json                   Node dependencies (snarkjs for ZK)
 └── sources/
-    ├── Shah_Answer_to_History.txt      Mohammad Reza Shah's memoir
-    ├── Reza_Pahlavi_Winds_of_Change.*  Reza Pahlavi's political vision
-    ├── 1906_Constitution.txt           Iran's first constitution
+    ├── Shah_Answer_to_History.txt     Mohammad Reza Shah Pahlavi's memoir
+    ├── Reza_Pahlavi_Winds_of_Change.txt   Reza Pahlavi's vision for Iran
+    ├── Reza_Pahlavi_Winds_of_Change.pdf
+    ├── 1906_Constitution.txt          Iran's first constitution
     └── EmergPhase_v3_ENG-MUNICH-COPY-v2-1.pdf   IPP transition plan
 ```
 
-## Smart Contracts
+### Contracts
 
 | # | Contract | Purpose |
 |---|----------|---------|
@@ -50,26 +53,30 @@ The constitutional framework draws from Reza Pahlavi's *Winds of Change* (2002) 
 
 ## Running Tests
 
-Requirements: [Foundry](https://getfoundry.sh/) and Node.js.
+Prerequisites: [Foundry](https://book.getfoundry.sh/getting-started/installation) and [Node.js](https://nodejs.org/).
 
 ```bash
 cd contracts
-npm install          # Install snarkjs for ZK proof tests
-forge test           # Run all tests
+
+# Install Node dependencies (needed for ZK proof tests)
+npm install
+
+# Run ZK circuit setup (needed once, for passport proof tests)
+cd circuits && bash setup.sh && cd ..
+
+# Run all tests
+forge test
 ```
 
-For ZK integration tests, the circuit build artifacts must be present. If they're missing (e.g., after a fresh clone), regenerate them:
+## The Whitepaper
 
-```bash
-cd contracts/circuits
-./setup.sh           # Requires circom and snarkjs installed globally
-```
-
-## License
-
-This is a proof-of-concept for educational and research purposes.
+The full whitepaper is reproduced below. It is also available as:
+- Markdown: [whitepaper/whitepaper-shah.md](whitepaper/whitepaper-shah.md)
+- PDF (English): [whitepaper/Answer to the Future.pdf](<whitepaper/Answer to the Future.pdf>)
+- PDF (Persian): [whitepaper/پاسخ به آینده.pdf](<whitepaper/پاسخ به آینده.pdf>)
 
 ---
+
 # Answer to the Future
 ## A Constitutional Monarchy on the Blockchain
 
