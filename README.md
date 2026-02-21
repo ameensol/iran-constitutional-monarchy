@@ -22,6 +22,7 @@ The constitutional framework draws from Reza Pahlavi's *Winds of Change* (2002),
 │   ├── CONSTITUTION OF IRAN.pdf       English PDF
 │   └── قانون اساسی ایران.pdf           Persian PDF (فارسی)
 ├── contracts/
+│   ├── README.md                      Technical reference for developers and auditors
 │   ├── src/                           14 Solidity contracts
 │   ├── test/                          15 test files + helpers
 │   ├── circuits/                      Circom ZK circuit + build artifacts
@@ -68,10 +69,18 @@ cd circuits && bash setup.sh && cd ..
 forge test
 ```
 
+## The Constitution
+
+- Markdown (English): [constitution/Constitution.md](constitution/Constitution.md)
+- Markdown (Persian): [constitution/Constitution-fa.md](constitution/Constitution-fa.md)
+- PDF (English): [constitution/CONSTITUTION OF IRAN.pdf](<constitution/CONSTITUTION OF IRAN.pdf>)
+- PDF (Persian): [constitution/قانون اساسی ایران.pdf](<constitution/قانون اساسی ایران.pdf>)
+
 ## The Whitepaper
 
 The full whitepaper is reproduced below. It is also available as:
-- Markdown: [whitepaper/whitepaper-shah.md](whitepaper/whitepaper-shah.md)
+- Markdown (English): [whitepaper/whitepaper-shah.md](whitepaper/whitepaper-shah.md)
+- Markdown (Persian): [whitepaper/whitepaper-shah-fa.md](whitepaper/whitepaper-shah-fa.md)
 - PDF (English): [whitepaper/Answer to the Future.pdf](<whitepaper/Answer to the Future.pdf>)
 - PDF (Persian): [whitepaper/پاسخ به آینده.pdf](<whitepaper/پاسخ به آینده.pdf>)
 
