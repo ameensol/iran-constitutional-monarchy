@@ -1,0 +1,15 @@
+# Foundry build artifacts
+contracts/out/
+contracts/cache/
+
+# Node modules
+contracts/node_modules/
+
+# ZK circuit build artifacts (regenerate with circuits/setup.sh)
+contracts/circuits/build/*.ptau
+contracts/circuits/build/*.zkey
+contracts/circuits/build/*.r1cs
+contracts/circuits/build/*.sym
+
+# OS files
+.DS_Store
