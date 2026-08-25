@@ -4,6 +4,8 @@ contracts/cache/
 
 # Node modules
 contracts/node_modules/
+sdk/node_modules/
+simGov/app/node_modules/
 
 # ZK circuit build artifacts (regenerate with circuits/setup.sh)
 contracts/circuits/build/*.ptau
