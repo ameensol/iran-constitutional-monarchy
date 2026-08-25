@@ -1,0 +1,822 @@
+/* ── Dashboard — pixel-matched to dashboard.html mockup ── */
+
+/* ── Background Watermark ──────────────────────────── */
+.bg-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-watermark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(1);
+}
+
+/* ── Layout Shell ─────────────────────────────────── */
+.shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 40px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Global Header (always visible) ───────────────── */
+.global-header {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: var(--night);
+}
+.global-header .header {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 16px 40px;
+}
+
+/* ── Header ───────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--lapis);
+  position: relative;
+}
+.header-divider-ornament {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 24px;
+  width: 24px;
+  z-index: 2;
+  background: var(--night);
+  padding: 0 4px;
+}
+.header-divider-ornament img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo span { color: var(--pale-gold); font-weight: 400; }
+.logo-emblem {
+  height: 36px;
+  width: auto;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.date-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--pale-gold);
+  text-align: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tour-btn {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--pale-gold);
+  background: transparent;
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.tour-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.06);
+}
+.disaster-btn {
+  color: var(--rose);
+  border-color: rgba(139,58,74,0.3);
+}
+.disaster-btn:hover {
+  border-color: var(--rose);
+  color: var(--rose);
+  background: rgba(139,58,74,0.1);
+}
+
+/* ── Time Controls ────────────────────────────────── */
+.time-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.time-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  background: var(--obsidian);
+  color: var(--pale-gold);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.time-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--lapis);
+}
+.time-btn.active {
+  border-color: var(--gold);
+  color: var(--night);
+  background: var(--gold);
+}
+
+/* ── Section Titles ───────────────────────────────── */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--pale-gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+/* ── Section Divider with Palmette ─────────────────── */
+.section-divider {
+  height: 1px;
+  background: var(--lapis);
+  margin: 4px 0 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.palmette-divider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 32px;
+  width: 20px;
+  background: var(--night);
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.palmette-divider img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ── Institution Grid ─────────────────────────────── */
+.inst-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* ── Card ──────────────────────────────────────────── */
+.card {
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-top: 2px solid var(--gold);
+  border-radius: 6px;
+  padding: 20px 22px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.card-clickable {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.card-clickable:hover {
+  border-color: rgba(201,168,76,0.4);
+  box-shadow: 0 0 16px rgba(201,168,76,0.08);
+}
+.card-clickable:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.card-bg-motif {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 80px;
+  height: 80px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+.card-bg-motif img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: invert(1);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pearl);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-icon {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.health-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.health-dot.healthy { background: var(--emerald); }
+.health-dot.crisis {
+  background: var(--rose);
+  animation: pulse-crisis 1.5s ease-in-out infinite;
+}
+@keyframes pulse-crisis {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139,58,74,0.6); }
+  50% { box-shadow: 0 0 8px 3px rgba(139,58,74,0.4); }
+}
+
+.card-rows { display: flex; flex-direction: column; gap: 6px; }
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.card-label { color: var(--pale-gold); }
+.card-value { color: var(--pearl); font-weight: 500; }
+.card-value.gold { color: var(--gold); }
+.card-value.emerald { color: var(--emerald); }
+.card-value.rose { color: var(--rose); }
+.card-value.turquoise { color: var(--turquoise); }
+
+.countdown {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Bills Table ──────────────────────────────────── */
+.bills-card {
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-top: 2px solid var(--gold);
+  border-radius: 6px;
+  padding: 20px 22px 16px;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.bills-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.bills-table th {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--pale-gold);
+  text-align: left;
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--lapis);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.bills-table td {
+  padding: 10px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(26,33,64,0.5);
+}
+.bills-table tr:last-child td { border-bottom: none; }
+.bills-table tr {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.bills-table tbody tr:hover {
+  background: rgba(201,168,76,0.04);
+}
+
+.bill-id {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--gold);
+  font-size: 12px;
+}
+.bill-name-cell { color: var(--pearl); font-weight: 500; }
+.bill-countdown {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--gold);
+  font-size: 12px;
+  text-align: right;
+}
+
+/* ── Breaking News Banner ────────────────────────── */
+.breaking-banner {
+  background: var(--obsidian);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 14px 22px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: banner-slide-in 0.4s ease-out;
+  box-shadow: 0 0 20px rgba(201,168,76,0.12), 0 0 40px rgba(201,168,76,0.06);
+}
+.breaking-banner.dismissing {
+  animation: banner-fade-out 0.4s ease-in forwards;
+}
+@keyframes banner-slide-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes banner-fade-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+.breaking-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--night);
+  background: var(--rose);
+  padding: 3px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.breaking-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pearl);
+}
+.breaking-subtext {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: 0.8;
+}
+
+/* ── Event Log (Royal Gazette) ───────────────────── */
+.log-card {
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-top: 2px solid var(--gold);
+  border-radius: 6px;
+  padding: 20px 22px 16px;
+  position: relative;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* ── Headline Cards ──────────────────────────────── */
+.headline-card {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(26,33,64,0.4);
+}
+.headline-card:last-child { border-bottom: none; }
+
+.headline-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.headline-category {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.headline-category.LEGISLATION   { color: var(--turquoise); }
+.headline-category.CROWN         { color: var(--gold); }
+.headline-category.EXECUTIVE     { color: var(--emerald); }
+.headline-category.JUDICIARY      { color: var(--turquoise); }
+.headline-category.ELECTIONS     { color: var(--pale-gold); }
+.headline-category.CRISIS        { color: var(--rose); }
+.headline-category.BUDGET        { color: var(--emerald); }
+.headline-category.CONSTITUTIONAL { color: var(--gold); }
+
+.headline-day {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--pale-gold);
+  font-size: 11px;
+  opacity: 0.7;
+}
+.headline-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pearl);
+  line-height: 1.3;
+}
+.headline-subtext {
+  font-size: 12px;
+  color: var(--cream);
+  opacity: 0.8;
+  margin-top: 2px;
+}
+.headline-call {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--pale-gold);
+  opacity: 0.5;
+  margin-top: 3px;
+}
+
+/* ── Log Filter Bar ────────────────────────────── */
+
+.log-filter-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(26,33,64,0.4);
+}
+
+.log-filter-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: var(--pale-gold);
+  background: transparent;
+  border: 1px solid var(--lapis);
+  border-radius: 12px;
+  padding: 3px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+.log-filter-chip:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.log-filter-chip.active {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.1);
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.log-marker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.log-marker-dot.crown    { background: var(--gold); }
+.log-marker-dot.parl     { background: var(--turquoise); }
+.log-marker-dot.exec     { background: var(--emerald); }
+.log-marker-dot.court    { background: var(--turquoise); }
+.log-marker-dot.election { background: var(--pale-gold); }
+.log-marker-dot.budget   { background: var(--emerald); }
+
+.headline-card.clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.headline-card.clickable:hover {
+  background: rgba(201,168,76,0.04);
+}
+
+/* ── Event Log Search ─────────────────────────── */
+.log-search-bar {
+  padding-bottom: 8px;
+}
+.log-search {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--cream);
+  background: var(--night);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  padding: 6px 10px;
+  transition: border-color 0.2s;
+}
+.log-search::placeholder {
+  color: var(--pale-gold);
+  opacity: 0.6;
+}
+.log-search:focus {
+  border-color: var(--gold);
+  outline: none;
+}
+
+/* ── Health Dot Icons ──────────────────────────── */
+.health-dot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.health-icon {
+  font-size: 6px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--night);
+}
+.health-dot.healthy .health-icon { color: var(--night); }
+.health-dot.crisis .health-icon { color: var(--night); }
+
+/* ── Time Button Labels ───────────────────────── */
+.time-btn {
+  flex-direction: column;
+  gap: 2px;
+}
+.time-btn-label {
+  font-size: 8px;
+  letter-spacing: 0.3px;
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* ── Responsive — Tablet ─────────────────────── */
+@media (max-width: 1024px) {
+  .inst-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .shell {
+    padding: 20px 24px 40px;
+  }
+  .global-header .header {
+    padding: 16px 24px;
+  }
+}
+
+/* ── Responsive — Mobile ─────────────────────── */
+@media (max-width: 768px) {
+  .inst-grid {
+    grid-template-columns: 1fr;
+  }
+  .shell {
+    padding: 16px 12px 32px;
+  }
+  .global-header .header {
+    padding: 12px 12px;
+  }
+  .header {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+  .header-center {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .time-btn-label {
+    display: none;
+  }
+  .time-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+}
+
+/* ── Responsive — Phone ──────────────────────── */
+@media (max-width: 480px) {
+  .bg-watermark {
+    width: 300px;
+    height: 300px;
+  }
+  .shell {
+    padding: 8px 8px 20px;
+  }
+  .global-header .header {
+    padding: 8px 8px;
+  }
+
+  /* Header: compact two-row layout */
+  .header {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+  .header-divider-ornament {
+    display: none;
+  }
+  .logo {
+    font-size: 17px;
+    gap: 6px;
+  }
+  .logo-emblem {
+    height: 28px;
+  }
+  .date-display {
+    font-size: 13px;
+  }
+  .header-actions {
+    gap: 6px;
+  }
+  .tour-btn {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  .header-center {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+  .time-controls {
+    flex: 1;
+    justify-content: space-between;
+  }
+  .time-btn {
+    flex: 1;
+    min-width: 0;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  /* Section titles + dividers */
+  .section-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .section-divider {
+    margin: 2px 0 10px;
+  }
+  .palmette-divider {
+    display: none;
+  }
+  .inst-grid {
+    margin-bottom: 14px;
+  }
+
+  /* Institution cards */
+  .card {
+    padding: 14px 12px 12px;
+  }
+  .card-title {
+    font-size: 14px;
+  }
+  .card-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  .card-header {
+    margin-bottom: 8px;
+  }
+  .card-row {
+    font-size: 12px;
+    gap: 4px;
+  }
+  .card-rows {
+    gap: 3px;
+  }
+
+  /* Bills table → card layout */
+  .bills-card {
+    padding: 10px 10px 8px;
+    margin-bottom: 14px;
+  }
+  .bills-table,
+  .bills-table thead,
+  .bills-table tbody,
+  .bills-table th,
+  .bills-table td,
+  .bills-table tr {
+    display: block;
+  }
+  .bills-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .bills-table tr {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(26,33,64,0.5);
+  }
+  .bills-table tr:last-child {
+    border-bottom: none;
+  }
+  .bills-table td {
+    padding: 2px 0;
+    border-bottom: none;
+    text-align: left;
+  }
+  .bill-id {
+    display: inline;
+    font-size: 11px;
+  }
+  .bill-countdown {
+    text-align: left;
+    font-size: 11px;
+  }
+
+  /* Event log / Royal Gazette */
+  .log-card {
+    padding: 10px 8px 8px;
+    max-height: 300px;
+  }
+  .headline-text {
+    font-size: 13px;
+  }
+  .headline-subtext {
+    font-size: 11px;
+  }
+  .headline-call {
+    word-break: break-all;
+    font-size: 10px;
+  }
+  .log-filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    gap: 4px;
+  }
+  .log-filter-chip {
+    flex-shrink: 0;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  /* Breaking banner mobile */
+  .breaking-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+  .breaking-text {
+    font-size: 15px;
+  }
+}

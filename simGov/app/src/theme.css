@@ -1,0 +1,133 @@
+/* ── SimGov Theme — Persian Imperial ─────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --night:      #0B0F1A;
+  --obsidian:   #141929;
+  --lapis:      #1A2140;
+  --gold:       #C9A84C;
+  --pale-gold:  #E8D5A3;
+  --cream:      #F0E6D0;
+  --pearl:      #FAFAF5;
+  --rose:       #8B3A4A;
+  --emerald:    #2D6B4F;
+  --turquoise:  #1A7A7A;
+}
+
+body {
+  background: var(--night);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ── Persian Art Filters ───────────────────────── */
+.persian-art {
+  filter: invert(1) sepia(1) saturate(2.5) hue-rotate(10deg) brightness(0.9);
+  mix-blend-mode: screen;
+}
+.persian-art-dim {
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(0.9);
+  opacity: 0.35;
+}
+
+/* ── Badge (shared) ──────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+}
+.badge-active  { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.badge-ok      { background: rgba(45,107,79,0.15); color: var(--emerald); border: 1px solid rgba(45,107,79,0.3); }
+.badge-none    { background: rgba(26,33,64,0.5); color: var(--pale-gold); border: 1px solid var(--lapis); }
+.badge-waiting { background: rgba(26,122,122,0.15); color: var(--turquoise); border: 1px solid rgba(26,122,122,0.3); }
+
+/* ── Screen Reader Only ──────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── View Transition ─────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.view-enter {
+  animation: fadeIn 0.2s ease;
+}
+
+/* ── Global Focus Indicators ─────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.back-btn:focus-visible,
+.tour-btn:focus-visible,
+.time-btn:focus-visible,
+.inst-action-btn:focus-visible,
+.log-filter-chip:focus-visible,
+.decision-btn:focus-visible,
+.disaster-close:focus-visible,
+.seat-dot:focus-visible,
+.tour-close-btn:focus-visible,
+.tour-back-btn:focus-visible,
+.log-search:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ── Touch Feedback (mobile devices) ─────────── */
+@media (hover: none) and (pointer: coarse) {
+  /* Buttons and chips: opacity flash */
+  .tour-btn:active,
+  .time-btn:active,
+  .inst-action-btn:active,
+  .back-btn:active,
+  .log-filter-chip:active,
+  .decision-btn:active,
+  .disaster-close:active,
+  .tour-close-btn:active,
+  .tour-back-btn:active,
+  .tour-hub-back:active,
+  .context-menu-item:active {
+    opacity: 0.7;
+    transition: opacity 0.05s;
+  }
+
+  /* Cards: gold border flash */
+  .card-clickable:active,
+  .tour-card:active {
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,168,76,0.12);
+    transition: all 0.05s;
+  }
+
+  /* Table rows and list items: background highlight */
+  .bills-table tbody tr:active,
+  .log-entry.clickable:active,
+  .inst-list-item.clickable:active,
+  .person-card:active {
+    background: rgba(201,168,76,0.08);
+    transition: background 0.05s;
+  }
+
+  /* Seat dots: scale up */
+  .seat-dot:active:not(.vacant) {
+    transform: scale(1.8);
+    transition: transform 0.05s;
+  }
+}

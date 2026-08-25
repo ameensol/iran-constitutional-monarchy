@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimGov — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & Base ─────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --night:      #0B0F1A;
+    --obsidian:   #141929;
+    --lapis:      #1A2140;
+    --gold:       #C9A84C;
+    --pale-gold:  #E8D5A3;
+    --cream:      #F0E6D0;
+    --pearl:      #FAFAF5;
+    --rose:       #8B3A4A;
+    --emerald:    #2D6B4F;
+    --turquoise:  #1A7A7A;
+  }
+
+  body {
+    background: var(--night);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 1280px;
+    position: relative;
+  }
+
+  /* ── Persian Art Utility ───────────────────────────── */
+  .persian-art {
+    filter: invert(1) sepia(1) saturate(2.5) hue-rotate(10deg) brightness(0.9);
+    mix-blend-mode: screen;
+  }
+  .persian-art-dim {
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(0.6);
+    mix-blend-mode: screen;
+  }
+
+  /* ── Background Watermark ──────────────────────────── */
+  .bg-watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(1);
+  }
+
+  /* ── Layout Shell ─────────────────────────────────── */
+  .shell {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 24px 40px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Header ───────────────────────────────────────── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--lapis);
+    position: relative;
+  }
+  .header-divider-ornament {
+    position: absolute;
+    bottom: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 24px;
+    width: 24px;
+    z-index: 2;
+    background: var(--night);
+    padding: 0 4px;
+  }
+  .header-divider-ornament img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo span { color: var(--pale-gold); font-weight: 400; }
+  .logo-emblem {
+    height: 36px;
+    width: auto;
+  }
+
+  .date-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--pale-gold);
+    text-align: center;
+  }
+
+  .time-controls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .time-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--lapis);
+    border-radius: 4px;
+    background: var(--obsidian);
+    color: var(--pale-gold);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .time-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--lapis);
+  }
+  .time-btn.active {
+    border-color: var(--gold);
+    color: var(--night);
+    background: var(--gold);
+  }
+
+  /* ── Section Titles ───────────────────────────────── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--pale-gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-left: 4px;
+  }
+
+  /* ── Institution Grid ─────────────────────────────── */
+  .inst-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  /* ── Card ──────────────────────────────────────────── */
+  .card {
+    background: var(--obsidian);
+    border: 1px solid var(--lapis);
+    border-top: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 20px 22px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-bg-motif {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 80px;
+    height: 80px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .card-bg-motif img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(1);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--pearl);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-icon {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .health-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .health-dot.healthy { background: var(--emerald); }
+  .health-dot.crisis {
+    background: var(--rose);
+    animation: pulse-crisis 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse-crisis {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(139,58,74,0.6); }
+    50% { box-shadow: 0 0 8px 3px rgba(139,58,74,0.4); }
+  }
+
+  .card-rows { display: flex; flex-direction: column; gap: 6px; }
+
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+  .card-label { color: var(--pale-gold); }
+  .card-value { color: var(--pearl); font-weight: 500; }
+  .card-value.gold { color: var(--gold); }
+  .card-value.emerald { color: var(--emerald); }
+  .card-value.rose { color: var(--rose); }
+  .card-value.turquoise { color: var(--turquoise); }
+
+  .countdown {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+  }
+  .badge-active  { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .badge-ok      { background: rgba(45,107,79,0.15); color: var(--emerald); border: 1px solid rgba(45,107,79,0.3); }
+  .badge-none    { background: rgba(26,33,64,0.5); color: var(--pale-gold); border: 1px solid var(--lapis); }
+  .badge-waiting { background: rgba(26,122,122,0.15); color: var(--turquoise); border: 1px solid rgba(26,122,122,0.3); }
+
+  /* ── Bills Table ──────────────────────────────────── */
+  .bills-card {
+    background: var(--obsidian);
+    border: 1px solid var(--lapis);
+    border-top: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 20px 22px 16px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .bills-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .bills-table th {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--pale-gold);
+    text-align: left;
+    padding: 0 0 10px;
+    border-bottom: 1px solid var(--lapis);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .bills-table td {
+    padding: 10px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(26,33,64,0.5);
+  }
+  .bills-table tr:last-child td { border-bottom: none; }
+
+  .bill-id {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold);
+    font-size: 12px;
+  }
+  .bill-name { color: var(--pearl); font-weight: 500; }
+  .bill-countdown {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold);
+    font-size: 12px;
+    text-align: right;
+  }
+
+  /* ── Event Log ────────────────────────────────────── */
+  .log-card {
+    background: var(--obsidian);
+    border: 1px solid var(--lapis);
+    border-top: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 20px 22px 16px;
+    position: relative;
+  }
+
+  .log-entry {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(26,33,64,0.4);
+  }
+  .log-entry:last-child { border-bottom: none; }
+
+  .log-day {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--pale-gold);
+    font-size: 12px;
+    min-width: 56px;
+  }
+  .log-marker {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .log-marker.crown    { background: var(--gold); }
+  .log-marker.parl     { background: var(--turquoise); }
+  .log-marker.exec     { background: var(--emerald); }
+  .log-marker.court    { background: var(--turquoise); }
+  .log-marker.election { background: var(--pale-gold); }
+  .log-marker.budget   { background: var(--emerald); }
+
+  .log-event { color: var(--pale-gold); font-weight: 500; }
+  .log-detail { color: var(--cream); }
+
+  /* ── Section Divider with Palmette ─────────────────── */
+  .section-divider {
+    height: 1px;
+    background: var(--lapis);
+    margin: 4px 0 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .palmette-divider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 32px;
+    width: 20px;
+    background: var(--night);
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .palmette-divider img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Background Watermark ────────────────────────── -->
+<div class="bg-watermark">
+  <img src="assets/simorgh.svg" class="persian-art" alt="">
+</div>
+
+<div class="shell">
+
+  <!-- ── Header ──────────────────────────────────── -->
+  <header class="header">
+    <div class="logo">
+      <img src="assets/lamassu.svg" class="logo-emblem persian-art" alt="">
+      SIM<span>GOV</span>
+    </div>
+    <div class="date-display">Day 247, Year 2584 <span style="font-size:12px;color:var(--pale-gold);font-style:italic">Shāhanshāhi</span></div>
+    <div class="time-controls">
+      <button class="time-btn" title="Pause">&#9208;</button>
+      <button class="time-btn active" title="Play">&#9654;</button>
+      <button class="time-btn" title="Fast">&#9193;</button>
+      <button class="time-btn" title="Skip">&#9197;</button>
+    </div>
+    <div class="header-divider-ornament">
+      <img src="assets/palmette.svg" class="persian-art-dim" alt="">
+    </div>
+  </header>
+
+  <!-- ── Institutions ────────────────────────────── -->
+  <div class="section-title">Institutions</div>
+  <div class="inst-grid">
+
+    <!-- Crown -->
+    <div class="card">
+      <div class="card-bg-motif"><img src="assets/lamassu.svg" alt=""></div>
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#9812;</div>
+          The Crown
+        </div>
+        <div class="health-dot healthy"></div>
+      </div>
+      <div class="card-rows">
+        <div class="card-row">
+          <span class="card-label">Status</span>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Heirs in Succession</span>
+          <span class="card-value">3</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Suspended</span>
+          <span class="card-value emerald">No</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Pending Actions</span>
+          <span class="card-value gold">1</span>
+        </div>
+      </div>
+      <div class="countdown">&#9201; Crown action deadline: 12d 4h</div>
+    </div>
+
+    <!-- Parliament -->
+    <div class="card">
+      <div class="card-bg-motif"><img src="assets/three-courtiers.svg" alt=""></div>
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#9961;</div>
+          Parliament
+        </div>
+        <div class="health-dot healthy"></div>
+      </div>
+      <div class="card-rows">
+        <div class="card-row">
+          <span class="card-label">Majlis Seats</span>
+          <span class="card-value">142 <span style="color:var(--pale-gold);font-weight:300">/ 162</span></span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Senate Seats</span>
+          <span class="card-value">68 <span style="color:var(--pale-gold);font-weight:300">/ 70</span></span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Active Bills</span>
+          <span class="card-value gold">3</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Dissolved</span>
+          <span class="card-value emerald">No</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Quorum</span>
+          <span class="badge badge-ok">&#10003;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Executive -->
+    <div class="card">
+      <div class="card-bg-motif"><img src="assets/offering-bearer.svg" alt=""></div>
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#9878;</div>
+          Executive
+        </div>
+        <div class="health-dot healthy"></div>
+      </div>
+      <div class="card-rows">
+        <div class="card-row">
+          <span class="card-label">Prime Minister</span>
+          <span class="badge badge-active">Seated</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Caretaker</span>
+          <span class="card-value emerald">No</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Formation Stage</span>
+          <span class="badge badge-none">Idle</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Cabinet Ministers</span>
+          <span class="card-value">14</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supreme Court -->
+    <div class="card">
+      <div class="card-bg-motif"><img src="assets/king-and-courtier.svg" alt=""></div>
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#9878;</div>
+          Supreme Court
+        </div>
+        <div class="health-dot crisis"></div>
+      </div>
+      <div class="card-rows">
+        <div class="card-row">
+          <span class="card-label">Justices</span>
+          <span class="card-value">11 <span style="color:var(--rose);font-weight:300">/ 12</span></span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Active Reviews</span>
+          <span class="card-value turquoise">1</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Quorum</span>
+          <span class="badge badge-ok">&#10003;</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Appointment</span>
+          <span class="badge badge-waiting">Seat 7</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Elections -->
+    <div class="card">
+      <div class="card-bg-motif"><img src="assets/palmette.svg" alt=""></div>
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#9745;</div>
+          Elections
+        </div>
+        <div class="health-dot healthy"></div>
+      </div>
+      <div class="card-rows">
+        <div class="card-row">
+          <span class="card-label">Active Elections</span>
+          <span class="card-value">0</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">By-elections Pending</span>
+          <span class="card-value gold">2</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Next Scheduled</span>
+          <span class="card-value">42 days</span>
+        </div>
+      </div>
+      <div class="countdown">&#9201; Next election: 42d 0h</div>
+    </div>
+
+    <!-- Budget -->
+    <div class="card">
+      <div class="card-bg-motif"><img src="assets/noble-with-rhyton.svg" alt=""></div>
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#9878;</div>
+          Budget
+        </div>
+        <div class="health-dot healthy"></div>
+      </div>
+      <div class="card-rows">
+        <div class="card-row">
+          <span class="card-label">Fiscal Year</span>
+          <span class="card-value">2584</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Status</span>
+          <span class="badge badge-active">Active</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Allocated</span>
+          <span class="card-value pearl">72%</span>
+        </div>
+        <div class="card-row">
+          <span class="card-label">Audit</span>
+          <span class="badge badge-ok">&#10003;</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Active Bills ────────────────────────────── -->
+  <div class="section-title">Active Bills</div>
+  <div class="section-divider">
+    <div class="palmette-divider"><img src="assets/palmette.svg" class="persian-art-dim" alt=""></div>
+  </div>
+  <div class="bills-card">
+    <table class="bills-table">
+      <thead>
+        <tr>
+          <th style="width:60px">ID</th>
+          <th>Bill</th>
+          <th style="width:160px">Stage</th>
+          <th style="width:100px;text-align:right">Deadline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="bill-id">#1</span></td>
+          <td class="bill-name">Education Reform Act</td>
+          <td><span class="badge badge-active">Majlis Voting</span></td>
+          <td class="bill-countdown">2d 8h</td>
+        </tr>
+        <tr>
+          <td><span class="bill-id">#2</span></td>
+          <td class="bill-name">Infrastructure Budget</td>
+          <td><span class="badge badge-waiting">Senate Review</span></td>
+          <td class="bill-countdown">18d 0h</td>
+        </tr>
+        <tr>
+          <td><span class="bill-id">#3</span></td>
+          <td class="bill-name">Trade Agreement</td>
+          <td><span class="badge badge-active">Crown Action</span></td>
+          <td class="bill-countdown">12d 4h</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── Event Log ───────────────────────────────── -->
+  <div class="section-title">Event Log</div>
+  <div class="section-divider">
+    <div class="palmette-divider"><img src="assets/palmette.svg" class="persian-art-dim" alt=""></div>
+  </div>
+  <div class="log-card">
+    <div class="log-entry">
+      <span class="log-day">Day 247</span>
+      <span class="log-marker parl"></span>
+      <span class="log-event">BillSubmitted</span>
+      <span class="log-detail">#3 Trade Agreement</span>
+    </div>
+    <div class="log-entry">
+      <span class="log-day">Day 245</span>
+      <span class="log-marker exec"></span>
+      <span class="log-event">ConfidenceGranted</span>
+      <span class="log-detail">Prime Minister seated</span>
+    </div>
+    <div class="log-entry">
+      <span class="log-day">Day 242</span>
+      <span class="log-marker crown"></span>
+      <span class="log-event">BillSigned</span>
+      <span class="log-detail">#0 Judicial Reform Act enacted</span>
+    </div>
+    <div class="log-entry">
+      <span class="log-day">Day 240</span>
+      <span class="log-marker election"></span>
+      <span class="log-event">ElectionTallied</span>
+      <span class="log-detail">Majlis general election, 142 seats filled</span>
+    </div>
+    <div class="log-entry">
+      <span class="log-day">Day 238</span>
+      <span class="log-marker court"></span>
+      <span class="log-event">ReviewFiled</span>
+      <span class="log-detail">Constitutional review of Bill #1</span>
+    </div>
+    <div class="log-entry">
+      <span class="log-day">Day 235</span>
+      <span class="log-marker budget"></span>
+      <span class="log-event">BudgetApproved</span>
+      <span class="log-detail">FY 2584 budget enacted</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

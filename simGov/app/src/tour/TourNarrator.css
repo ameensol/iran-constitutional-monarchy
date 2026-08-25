@@ -1,0 +1,234 @@
+/* ── App Layout ──────────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.app-main {
+  flex: 1;
+  min-width: 0;
+  transition: flex 0.35s ease;
+}
+
+/* ── Narrator — Right Sidebar ────────────────── */
+.narrator {
+  width: 380px;
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  background: var(--obsidian);
+  border-left: 1px solid var(--gold);
+  padding: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Narrator Header ─────────────────────────── */
+.narrator-header {
+  padding: 20px 20px 0;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.narrator-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--pale-gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 6px;
+}
+.commentary-trigger {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--turquoise);
+  text-align: center;
+  margin-top: 6px;
+  padding: 3px 10px;
+  opacity: 0.85;
+}
+.narrator-frame-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--pearl);
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* ── Narrator content area ─────────────────── */
+.narrator-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ── Narrator content overrides ──────────────── */
+.narrator .shah-dialogue {
+  padding: 16px 20px 12px;
+  gap: 14px;
+}
+.narrator .shah-avatar {
+  width: 48px;
+  height: 48px;
+}
+.narrator .shah-text {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.narrator .decisions {
+  padding: 16px 20px 12px;
+  flex-direction: column;
+  gap: 10px;
+}
+.narrator .decision-btn {
+  padding: 12px 12px;
+  font-size: 13px;
+  max-width: none;
+}
+.narrator .decision-sub {
+  font-size: 10px;
+}
+.narrator .flowchart {
+  margin: 12px 20px 0;
+}
+
+/* ── Narrator Footer ─────────────────────────── */
+.narrator-footer {
+  padding: 12px 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--lapis);
+  margin: 0 12px;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* ── Narrator close button override ──────────── */
+.narrator .tour-close-btn {
+  top: 12px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+
+/* ── Corner ornaments smaller ────────────────── */
+.narrator .corner-ornament {
+  width: 14px;
+  height: 14px;
+}
+.narrator .corner-tl { top: 6px; left: 8px; }
+.narrator .corner-tr { top: 6px; right: 8px; }
+.narrator .corner-bl { bottom: 6px; left: 8px; }
+.narrator .corner-br { bottom: 6px; right: 8px; }
+
+/* ── Mobile — Narrator pushes content up from bottom ── */
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+  }
+  .app-main {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  .narrator {
+    position: static;
+    width: 100%;
+    height: 30vh;
+    height: 30dvh;
+    flex-shrink: 0;
+    border-left: none;
+    border-top: 1px solid var(--gold);
+    border-radius: 0;
+  }
+  .narrator-body {
+    flex: 1;
+    min-height: 0;
+  }
+  .narrator-header {
+    padding: 8px 16px 0;
+  }
+  .narrator-title {
+    margin-top: 2px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+  .commentary-trigger {
+    font-size: 9px;
+    margin-top: 3px;
+    padding: 2px 8px;
+  }
+  .narrator-frame-title {
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  .narrator-footer {
+    padding: 6px 16px 8px;
+    margin: 0 8px;
+  }
+  .narrator .shah-dialogue {
+    padding: 8px 16px 6px;
+    gap: 10px;
+  }
+  .narrator .shah-avatar {
+    width: 36px;
+    height: 36px;
+  }
+  .narrator .shah-text {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .narrator .decisions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 6px 16px;
+    gap: 6px;
+  }
+  .narrator .decision-btn {
+    flex: 1;
+    min-width: 90px;
+    padding: 8px 8px;
+    font-size: 12px;
+  }
+  .narrator .decision-sub {
+    font-size: 9px;
+    margin-top: 3px;
+  }
+  .narrator .tour-close-btn {
+    top: 6px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+  .narrator .flowchart {
+    margin: 4px 16px 0;
+  }
+  /* Corner ornaments: hide on mobile */
+  .narrator .corner-ornament {
+    display: none;
+  }
+}
+
+/* ── Phone — even more compact ───────────────── */
+@media (max-width: 480px) {
+  .narrator .shah-dialogue {
+    padding: 6px 12px 4px;
+    gap: 8px;
+  }
+  .narrator .decisions {
+    padding: 4px 12px;
+  }
+  .narrator .flowchart {
+    margin: 4px 12px 0;
+  }
+}

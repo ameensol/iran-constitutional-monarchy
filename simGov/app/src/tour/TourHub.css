@@ -1,0 +1,171 @@
+/* ── Tour Hub ─────────────────────────────────── */
+.tour-hub {
+  min-height: 100vh;
+  background: var(--night);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tour-hub-header {
+  text-align: center;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.tour-hub-back {
+  background: none;
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  color: var(--pale-gold);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 24px;
+}
+.tour-hub-back:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tour-hub-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin: 0 0 8px;
+}
+
+.tour-hub-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--pale-gold);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Section headers ──────────────────────────── */
+.tour-hub-section {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 32px;
+}
+
+.tour-hub-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+
+/* ── Card Grid ────────────────────────────────── */
+.tour-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 700px;
+  width: 100%;
+}
+
+/* ── Tour Card ────────────────────────────────── */
+.tour-card {
+  position: relative;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-align: left;
+  padding: 0;
+  font-family: inherit;
+  color: inherit;
+}
+.tour-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(201,168,76,0.1);
+  transform: translateY(-2px);
+}
+
+.tour-card-art {
+  height: 120px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,168,76,0.03);
+  border-bottom: 1px solid var(--lapis);
+}
+.tour-card-art img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  opacity: 0.15;
+}
+
+.tour-card-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.tour-card-body {
+  padding: 20px;
+}
+
+.tour-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin-bottom: 8px;
+}
+
+.tour-card-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--cream);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.tour-card-meta {
+  display: flex;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--pale-gold);
+}
+
+.tour-card-warning {
+  color: var(--rose);
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 768px) {
+  .tour-hub {
+    padding: 24px 16px;
+  }
+  .tour-hub-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,182 @@
+/* ── Person Detail View ──────────────────────────── */
+
+.person-detail-shell {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 40px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.person-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.person-detail-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin: 0;
+}
+
+.person-detail-meta {
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.person-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(26,33,64,0.4);
+}
+.person-meta-row:last-child {
+  border-bottom: none;
+}
+
+.person-meta-label {
+  color: var(--pale-gold);
+}
+
+.person-meta-value {
+  color: var(--pearl);
+  font-weight: 500;
+}
+
+.person-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Person Dot (for seating charts) ────────────── */
+
+.person-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.15s;
+}
+.person-dot:hover {
+  transform: scale(1.6);
+}
+.person-dot.dead::after {
+  content: '\u2715';
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  font-size: 8px;
+  color: var(--rose);
+  font-weight: bold;
+}
+.person-dot.incapacitated {
+  opacity: 0.4;
+}
+.person-dot.selected {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+/* ── Context Menu ───────────────────────────────── */
+
+.person-context-menu {
+  position: fixed;
+  z-index: 200;
+  background: var(--obsidian);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 4px 0;
+  min-width: 140px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.context-menu-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--cream);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.1s;
+}
+.context-menu-item:hover {
+  background: rgba(201,168,76,0.1);
+}
+.context-menu-item.danger {
+  color: var(--rose);
+}
+.context-menu-item.danger:hover {
+  background: rgba(139,58,74,0.15);
+}
+
+/* ── Bulk Selector ──────────────────────────────── */
+
+.bulk-selector {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--obsidian);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 150;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+
+.bulk-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+}
+
+/* ── Responsive — Mobile ─────────────────────── */
+@media (max-width: 768px) {
+  .person-detail-shell {
+    padding: 16px 12px 32px;
+  }
+  .person-detail-name {
+    font-size: 22px;
+  }
+}
+
+/* ── Responsive — Phone ──────────────────────── */
+@media (max-width: 480px) {
+  .person-detail-shell {
+    padding: 12px 8px 24px;
+  }
+  .person-detail-name {
+    font-size: 20px;
+  }
+  .person-detail-meta {
+    padding: 12px 14px;
+  }
+  .person-actions {
+    flex-wrap: wrap;
+  }
+  .person-actions .inst-action-btn {
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+  }
+  .person-meta-row {
+    font-size: 12px;
+  }
+}

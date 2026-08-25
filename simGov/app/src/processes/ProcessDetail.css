@@ -1,0 +1,227 @@
+/* ── Process Detail Views ──────────────────────── */
+
+.process-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.process-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--lapis);
+  position: relative;
+}
+
+.process-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  color: var(--pale-gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.process-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin: 0 0 10px;
+}
+
+.process-header-ornament {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 36px;
+  width: 22px;
+  background: var(--night);
+  padding: 0 4px;
+  z-index: 2;
+}
+.process-header-ornament img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.process-empty {
+  text-align: center;
+  color: var(--pale-gold);
+  font-size: 14px;
+  padding: 60px 0;
+}
+
+.process-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 20px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.process-info-label {
+  font-size: 12px;
+  color: var(--pale-gold);
+}
+
+.process-info-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--pearl);
+  font-weight: 500;
+}
+
+/* ── Shared Flowchart Layout ─────────────────────── */
+
+.flow-chart {
+  padding: 20px 0 8px;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+}
+
+.flow-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Spacer to skip a column in row 2 */
+.flow-spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+.flow-step .node {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding: 14px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--lapis);
+  background: var(--obsidian);
+  transition: all 0.2s;
+}
+
+/* Horizontal arrow between nodes */
+.flow-arrow-h {
+  flex-shrink: 0;
+  width: 32px;
+  color: var(--lapis);
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+}
+.flow-arrow-h.gold {
+  color: var(--gold);
+}
+.flow-arrow-h svg {
+  width: 100%;
+  height: 12px;
+}
+
+/* Vertical connector between rows */
+.flow-connector {
+  display: flex;
+  height: 32px;
+}
+.flow-connector-line {
+  color: var(--lapis);
+  display: flex;
+  justify-content: center;
+}
+.flow-connector-line.gold {
+  color: var(--gold);
+}
+.flow-connector-line svg {
+  width: 12px;
+  height: 100%;
+}
+
+/* L-shaped fallback connector: right col → left col between rows */
+.flow-l-connector {
+  position: relative;
+  height: 32px;
+}
+.flow-l-connector svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Down-arrow labels between rows */
+.flow-down-row {
+  display: flex;
+  height: 32px;
+}
+.flow-down-cell {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  color: var(--lapis);
+}
+.flow-down-cell.gold {
+  color: var(--gold);
+}
+.flow-down-cell svg {
+  width: 12px;
+  height: 100%;
+}
+
+/* ── Responsive — Mobile ─────────────────────── */
+@media (max-width: 768px) {
+  .process-shell {
+    padding: 16px 12px 32px;
+  }
+  .process-title {
+    font-size: 22px;
+  }
+  .flow-step .node {
+    padding: 10px 6px;
+  }
+  .flow-arrow-h {
+    width: 20px;
+  }
+}
+
+/* ── Responsive — Phone ──────────────────────── */
+@media (max-width: 480px) {
+  .process-shell {
+    padding: 12px 8px 24px;
+  }
+  .process-title {
+    font-size: 18px;
+  }
+  .process-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+  .process-info {
+    padding: 10px 14px;
+    width: 100%;
+  }
+  .flow-arrow-h {
+    width: 14px;
+  }
+  .flow-step .node {
+    padding: 8px 4px;
+  }
+  .node-label {
+    font-size: 11px;
+  }
+  .node-sub {
+    font-size: 10px;
+  }
+}

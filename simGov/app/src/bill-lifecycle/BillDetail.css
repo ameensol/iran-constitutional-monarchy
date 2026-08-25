@@ -1,0 +1,317 @@
+/* ── Bill Lifecycle — pixel-matched to bill-lifecycle.html ── */
+
+/* ── Background Watermark ──────────────────────────── */
+.bill-bg-watermark {
+  position: fixed;
+  bottom: -60px;
+  right: -40px;
+  width: 500px;
+  height: 500px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 0;
+}
+.bill-bg-watermark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(1);
+}
+
+.bill-shell {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Back Button ───────────────────────────────────── */
+.back-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--pale-gold);
+  background: none;
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.back-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── Bill Header ───────────────────────────────── */
+.bill-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--lapis);
+  position: relative;
+}
+.bill-header-ornament {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 36px;
+  width: 22px;
+  background: var(--night);
+  padding: 0 4px;
+  z-index: 2;
+}
+.bill-header-ornament img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bill-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  color: var(--pale-gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.bill-detail-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin-bottom: 10px;
+}
+.bill-meta {
+  font-size: 13px;
+  color: var(--pale-gold);
+}
+.bill-meta span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--cream);
+}
+
+/* ── Node Styling (shared across all flowcharts) ─── */
+.node {
+  position: relative;
+  text-align: center;
+  padding: 14px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--lapis);
+  background: var(--obsidian);
+  transition: all 0.2s;
+}
+
+.node-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.node-sub {
+  font-size: 11px;
+  color: var(--pale-gold);
+  margin-top: 4px;
+}
+
+/* State variants */
+.node.completed {
+  border-color: rgba(201,168,76,0.4);
+}
+.node.completed::after {
+  content: '\2713';
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background: var(--gold);
+  color: var(--night);
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.node.completed .node-label { color: var(--pale-gold); }
+
+.node.current {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.08);
+  box-shadow: 0 0 24px rgba(201,168,76,0.15);
+}
+.node.current::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: var(--gold);
+}
+.node.current .node-label { color: var(--gold); }
+
+.node.future {
+  border-color: rgba(26,33,64,0.7);
+  background: rgba(20,25,41,0.5);
+}
+.node.future .node-label { color: rgba(240,230,208,0.35); }
+.node.future .node-sub { color: rgba(232,213,163,0.25); }
+
+.node.terminal-enacted {
+  border-color: var(--emerald);
+  background: rgba(45,107,79,0.1);
+}
+.node.terminal-enacted .node-label { color: var(--emerald); }
+
+.node.terminal-rejected {
+  border-color: var(--rose);
+  background: rgba(139,58,74,0.1);
+}
+.node.terminal-rejected .node-label { color: var(--rose); }
+
+/* Flower ornament on current node */
+.node-ornament {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background: var(--obsidian);
+  padding: 0 2px;
+  z-index: 3;
+}
+.node-ornament img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── Status Bar ────────────────────────────────── */
+.status-bar {
+  margin-top: 20px;
+  padding: 20px 28px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-top: 2px solid var(--gold);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.status-label {
+  font-size: 12px;
+  color: var(--pale-gold);
+}
+.status-value {
+  font-size: 13px;
+  color: var(--pearl);
+  font-weight: 500;
+}
+.status-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 3px;
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.3);
+}
+.status-countdown {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+}
+
+/* ── Legend ─────────────────────────────────────── */
+.legend {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  margin-top: 24px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--pale-gold);
+}
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+.legend-swatch.completed-sw { border: 1px solid rgba(201,168,76,0.4); background: var(--obsidian); }
+.legend-swatch.current-sw   { border: 1px solid var(--gold); background: rgba(201,168,76,0.15); box-shadow: 0 0 4px rgba(201,168,76,0.3); }
+.legend-swatch.future-sw    { border: 1px solid rgba(26,33,64,0.7); background: rgba(20,25,41,0.5); }
+.legend-swatch.enacted-sw   { border: 1px solid var(--emerald); background: rgba(45,107,79,0.15); }
+.legend-swatch.rejected-sw  { border: 1px solid var(--rose); background: rgba(139,58,74,0.15); }
+
+/* ── Responsive — Tablet ─────────────────────── */
+@media (max-width: 1024px) {
+  .bill-shell { padding: 24px 24px 40px; }
+  .bill-detail-name { font-size: 22px; }
+}
+
+/* ── Responsive — Mobile ─────────────────────── */
+@media (max-width: 768px) {
+  .bill-shell { padding: 16px 12px 32px; }
+  .bill-detail-name { font-size: 18px; }
+  .legend { flex-wrap: wrap; gap: 12px; }
+  .status-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .status-group { flex-wrap: wrap; gap: 12px; }
+}
+
+/* ── Responsive — Phone ──────────────────────── */
+@media (max-width: 480px) {
+  .bill-shell {
+    padding: 12px 8px 24px;
+  }
+  .bill-detail-name {
+    font-size: 16px;
+  }
+  .bill-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+  .status-bar {
+    padding: 14px 16px;
+  }
+  .status-label {
+    font-size: 11px;
+  }
+  .legend {
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  .legend-item {
+    font-size: 11px;
+    gap: 4px;
+  }
+}

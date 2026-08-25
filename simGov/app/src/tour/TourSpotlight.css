@@ -1,0 +1,47 @@
+/* ── Tour Spotlight System ─────────────────────── */
+
+.tour-highlight {
+  box-shadow:
+    0 0 0 2px var(--gold),
+    0 0 20px rgba(201,168,76,0.25);
+  transition: box-shadow 0.4s ease;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+@keyframes spotlight-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--gold), 0 0 20px rgba(201,168,76,0.25); }
+  50% { box-shadow: 0 0 0 2px var(--gold), 0 0 30px rgba(201,168,76,0.4); }
+}
+
+.tour-highlight {
+  animation: spotlight-pulse 2s ease-in-out infinite;
+}
+
+.tour-dimmed {
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* ── Tour Action Target (button-level highlight) ── */
+
+@keyframes tour-action-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px var(--gold),
+      0 0 14px rgba(201,168,76,0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px var(--gold),
+      0 0 30px rgba(201,168,76,0.6);
+    transform: scale(1.04);
+  }
+}
+
+.tour-action-target {
+  animation: tour-action-pulse 1.5s ease-in-out infinite;
+  border-color: var(--gold) !important;
+}

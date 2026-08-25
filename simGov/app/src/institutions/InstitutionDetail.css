@@ -1,0 +1,771 @@
+/* ── Institution Detail Views ─────────────────────── */
+
+.inst-detail {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 40px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.back-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--pale-gold);
+  background: transparent;
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+.back-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.06);
+}
+
+.inst-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.inst-detail-icon {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--gold);
+}
+.inst-detail-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin: 0;
+}
+
+.inst-detail-divider {
+  height: 1px;
+  background: var(--lapis);
+  margin: 0 0 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inst-detail-divider img {
+  height: 24px;
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--night);
+  padding: 0 8px;
+  opacity: 0.15;
+}
+
+.inst-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Section ────────────────────────────────────── */
+
+.inst-section {
+  margin-bottom: 24px;
+}
+
+.inst-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pale-gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.inst-empty {
+  color: var(--pale-gold);
+  font-size: 13px;
+  opacity: 0.7;
+  padding: 12px 0;
+}
+
+/* ── Alert Banner ───────────────────────────────── */
+
+.inst-alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.inst-alert.rose {
+  background: rgba(139,58,74,0.15);
+  border: 1px solid rgba(139,58,74,0.3);
+  color: var(--rose);
+}
+.inst-alert.turquoise {
+  background: rgba(26,122,122,0.15);
+  border: 1px solid rgba(26,122,122,0.3);
+  color: var(--turquoise);
+}
+
+/* ── List ────────────────────────────────────────── */
+
+.inst-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inst-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: default;
+  transition: background 0.15s;
+}
+.inst-list-item:hover {
+  background: rgba(201,168,76,0.04);
+}
+
+.inst-list-rank {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  min-width: 24px;
+}
+
+.inst-list-name {
+  color: var(--pearl);
+  font-weight: 500;
+  flex: 1;
+}
+
+.inst-list-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+/* ── Action Buttons ─────────────────────────────── */
+
+.inst-action-group {
+  display: flex;
+  gap: 6px;
+}
+
+.inst-action-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--night);
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.inst-action-btn:hover {
+  background: var(--pale-gold);
+}
+.inst-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.inst-action-btn.small {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+.inst-action-btn.secondary {
+  background: transparent;
+  color: var(--pale-gold);
+  border-color: var(--lapis);
+}
+.inst-action-btn.secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.inst-action-btn.danger {
+  background: rgba(139,58,74,0.2);
+  color: var(--rose);
+  border-color: rgba(139,58,74,0.4);
+}
+.inst-action-btn.danger:hover {
+  background: rgba(139,58,74,0.3);
+}
+
+.inst-btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.inst-btn-row.compact {
+  margin-top: 0;
+  margin-left: auto;
+  gap: 4px;
+}
+
+.inst-deadline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  margin-top: 8px;
+}
+
+/* ── Person Card ────────────────────────────────── */
+
+.person-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.person-card:hover {
+  background: rgba(201,168,76,0.06);
+}
+.person-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--pearl);
+}
+
+/* ── Quorum Bar ─────────────────────────────────── */
+
+.inst-quorum-bar {
+  position: relative;
+  height: 20px;
+  background: var(--lapis);
+  border-radius: 4px;
+  overflow: visible;
+  margin-bottom: 12px;
+}
+.quorum-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emerald), rgba(45,107,79,0.6));
+  border-radius: 4px 0 0 4px;
+  transition: width 0.3s;
+}
+.quorum-line {
+  position: absolute;
+  top: -4px;
+  height: 28px;
+  width: 2px;
+  background: var(--gold);
+}
+.quorum-label {
+  position: absolute;
+  top: -18px;
+  right: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--pale-gold);
+}
+
+/* ── Seating Chart ──────────────────────────────── */
+
+.seating-chart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 12px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+}
+
+.seat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.seat-dot:hover {
+  transform: scale(1.8);
+}
+.seat-dot.vacant {
+  background: var(--lapis);
+  cursor: default;
+}
+.seat-dot.vacant:hover {
+  transform: none;
+}
+.seat-dot.crown-appointed {
+  outline: 1px solid var(--gold);
+  outline-offset: 1px;
+}
+
+/* ── Party Chips ────────────────────────────────── */
+
+.inst-party-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.party-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--cream);
+  padding: 3px 8px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 3px;
+}
+
+.party-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.party-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+}
+
+/* ── Justice Grid (4x3) ─────────────────────────── */
+
+.justice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.justice-seat {
+  padding: 12px;
+  border-radius: 4px;
+  text-align: center;
+  transition: background 0.15s;
+}
+.justice-seat.occupied {
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  cursor: pointer;
+}
+.justice-seat.occupied:hover {
+  background: rgba(201,168,76,0.06);
+}
+.justice-seat.vacant {
+  background: rgba(26,33,64,0.3);
+  border: 1px dashed var(--lapis);
+}
+.justice-seat.in-progress {
+  background: rgba(26,122,122,0.1);
+  border: 1px solid rgba(26,122,122,0.3);
+}
+
+.justice-seat-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--pale-gold);
+  margin-bottom: 4px;
+}
+.justice-seat-name {
+  font-size: 12px;
+  color: var(--pearl);
+  font-weight: 500;
+}
+.justice-seat-status {
+  font-size: 11px;
+  color: var(--turquoise);
+}
+
+/* ── Formation Pipeline ─────────────────────────── */
+
+.formation-pipeline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 12px 0;
+}
+
+.formation-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 80px;
+}
+
+.formation-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--lapis);
+  background: transparent;
+}
+
+.formation-step.current .formation-dot {
+  border-color: var(--gold);
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(201,168,76,0.4);
+}
+.formation-step.past .formation-dot {
+  border-color: var(--emerald);
+  background: var(--emerald);
+}
+.formation-step.future .formation-dot {
+  border-color: var(--lapis);
+  background: transparent;
+}
+
+.formation-label {
+  font-size: 10px;
+  color: var(--pale-gold);
+  text-align: center;
+}
+.formation-step.current .formation-label {
+  color: var(--gold);
+  font-weight: 600;
+}
+.formation-step.past .formation-label {
+  color: var(--emerald);
+}
+
+/* ── Budget Bar ─────────────────────────────────── */
+
+.budget-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.budget-bar {
+  flex: 1;
+  height: 16px;
+  background: var(--lapis);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.budget-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--pale-gold));
+  border-radius: 4px 0 0 4px;
+  transition: width 0.3s;
+}
+.budget-bar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+  min-width: 36px;
+}
+
+/* ── Clickable List Items ──────────────────────── */
+
+.inst-list-item.clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.inst-list-item.clickable:hover {
+  background: rgba(201,168,76,0.06);
+}
+
+/* ── Link Button ────────────────────────────────── */
+
+.inst-link-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--gold);
+  background: none;
+  border: none;
+  padding: 6px 0;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: color 0.15s;
+}
+.inst-link-btn:hover {
+  color: var(--pale-gold);
+  text-decoration: underline;
+}
+
+/* ── Seat Dot Tooltips ─────────────────────────── */
+.seat-dot {
+  position: relative;
+}
+.seat-dot:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--night);
+  color: var(--cream);
+  border: 1px solid var(--gold);
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 20;
+  pointer-events: none;
+}
+.seat-dot.vacant:hover::after {
+  border-color: var(--lapis);
+}
+
+/* ── Province Grid ─────────────────────────────── */
+
+.province-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px;
+}
+
+.province-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  font-size: 12px;
+  transition: border-color 0.15s;
+}
+.province-chip:hover {
+  border-color: rgba(201,168,76,0.3);
+}
+
+.province-name {
+  color: var(--pearl);
+  font-weight: 500;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.province-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.province-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--emerald);
+}
+.province-count.incomplete {
+  color: var(--rose);
+}
+
+.province-cohort {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--pale-gold);
+  opacity: 0.7;
+}
+
+.province-result {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+}
+
+.province-damaged {
+  border-color: rgba(139,58,74,0.4);
+  background: rgba(139,58,74,0.08);
+}
+
+/* Election phase colors on province chips */
+.province-chip.phase-registration {
+  border-left: 3px solid var(--turquoise);
+}
+.province-chip.phase-voting {
+  border-left: 3px solid var(--gold);
+}
+.province-chip.phase-seated {
+  border-left: 3px solid var(--emerald);
+}
+
+/* ── Action Rows (InstitutionActions) ─────────── */
+
+.inst-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inst-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.inst-action-row:hover:not(.disabled):not(.confirming) {
+  background: rgba(201,168,76,0.04);
+}
+.inst-action-row.disabled {
+  opacity: 0.55;
+}
+
+.inst-action-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.inst-action-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pearl);
+}
+
+.inst-action-desc {
+  font-size: 11px;
+  color: var(--pale-gold);
+  opacity: 0.7;
+}
+.inst-action-row.disabled .inst-action-desc {
+  color: var(--rose);
+  opacity: 0.9;
+}
+
+.inst-action-row.confirming {
+  border-color: rgba(139,58,74,0.4);
+  background: rgba(139,58,74,0.08);
+}
+
+.inst-action-confirm-text {
+  flex: 1;
+  font-size: 12px;
+  color: var(--rose);
+  font-weight: 500;
+}
+
+.inst-action-confirm-btns {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── Responsive — Tablet ─────────────────────── */
+@media (max-width: 1024px) {
+  .inst-detail { padding: 20px 24px 40px; }
+}
+
+/* ── Responsive — Mobile ─────────────────────── */
+@media (max-width: 768px) {
+  .inst-detail { padding: 16px 12px 32px; }
+  .justice-grid { grid-template-columns: repeat(2, 1fr); }
+  .inst-detail-title { font-size: 20px; }
+  .province-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+}
+
+/* ── Responsive — Phone ──────────────────────── */
+@media (max-width: 480px) {
+  .inst-detail {
+    padding: 12px 8px 24px;
+  }
+  .inst-detail-title {
+    font-size: 18px;
+  }
+  .inst-detail-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  /* Justice grid: 3 columns */
+  .justice-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .justice-seat {
+    padding: 8px 4px;
+  }
+  .justice-seat-name {
+    font-size: 11px;
+  }
+  .justice-seat-number {
+    font-size: 9px;
+  }
+
+  /* Formation pipeline: wrap into rows */
+  .formation-pipeline {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .formation-step {
+    flex: 0 0 calc(33.33% - 4px);
+    min-width: 0;
+  }
+
+  /* General tightening */
+  .inst-section {
+    margin-bottom: 16px;
+  }
+  .inst-section-title {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .person-card {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .person-card-name {
+    font-size: 14px;
+  }
+  .inst-action-group {
+    flex-wrap: wrap;
+  }
+  .inst-action-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .inst-list-item {
+    padding: 6px 8px;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .province-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 4px;
+  }
+  .province-chip {
+    padding: 6px 8px;
+  }
+  .province-name {
+    font-size: 11px;
+  }
+}

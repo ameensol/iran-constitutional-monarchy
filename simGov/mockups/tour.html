@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimGov — Tour: Can I Trust the Crown?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --night:      #0B0F1A;
+    --obsidian:   #141929;
+    --lapis:      #1A2140;
+    --gold:       #C9A84C;
+    --pale-gold:  #E8D5A3;
+    --cream:      #F0E6D0;
+    --pearl:      #FAFAF5;
+    --rose:       #8B3A4A;
+    --emerald:    #2D6B4F;
+    --turquoise:  #1A7A7A;
+  }
+
+  body {
+    background: var(--night);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 1280px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Persian Art Utility ───────────────────────────── */
+  .persian-art {
+    filter: invert(1) sepia(1) saturate(2.5) hue-rotate(10deg) brightness(0.9);
+    mix-blend-mode: screen;
+  }
+  .persian-art-dim {
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(0.6);
+    mix-blend-mode: screen;
+  }
+
+  /* ── Dimmed Dashboard Background ───────────────── */
+  .bg-dashboard {
+    position: fixed;
+    inset: 0;
+    opacity: 0.25;
+    pointer-events: none;
+    background: var(--night);
+    padding: 24px 40px;
+  }
+
+  .bg-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--lapis);
+    margin-bottom: 28px;
+  }
+  .bg-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bg-logo img {
+    height: 32px;
+    width: auto;
+  }
+  .bg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1240px;
+  }
+  .bg-card {
+    background: var(--obsidian);
+    border: 1px solid var(--lapis);
+    border-top: 2px solid var(--gold);
+    border-radius: 6px;
+    height: 140px;
+  }
+
+  /* ── Overlay ───────────────────────────────────── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .tour-panel {
+    width: 720px;
+    background: var(--obsidian);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 0;
+    position: relative;
+    box-shadow:
+      0 0 60px rgba(201,168,76,0.08),
+      0 0 120px rgba(11,15,26,0.6);
+    overflow: hidden;
+  }
+
+  /* ── Panel background watermark ────────────────── */
+  .panel-watermark {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    width: 280px;
+    height: 280px;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+  .panel-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(1);
+  }
+
+  /* ── Corner ornaments (palmettes) ────────────── */
+  .corner-ornament {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    z-index: 3;
+  }
+  .corner-ornament img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .corner-tl { top: 10px; left: 12px; }
+  .corner-tr { top: 10px; right: 12px; }
+  .corner-bl { bottom: 10px; left: 12px; }
+  .corner-br { bottom: 10px; right: 12px; }
+
+  /* ── Tour Header ───────────────────────────────── */
+  .tour-header {
+    padding: 20px 28px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .tour-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--pale-gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* ── Shah Dialogue ─────────────────────────────── */
+  .shah-dialogue {
+    padding: 28px 36px 20px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+
+  .shah-avatar {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: rgba(201,168,76,0.06);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shah-avatar img {
+    width: 110%;
+    height: 110%;
+    object-fit: cover;
+    object-position: 70% 15%;
+  }
+
+  .shah-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--cream);
+    padding-top: 4px;
+  }
+
+  /* ── State Card ────────────────────────────────── */
+  .state-card {
+    margin: 0 36px;
+    background: var(--night);
+    border: 1px solid var(--lapis);
+    border-radius: 6px;
+    padding: 16px 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .state-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pearl);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .state-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .state-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .state-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  .state-label { color: var(--pale-gold); }
+  .state-value { color: var(--pearl); }
+  .state-value.gold { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ── Decision Buttons ──────────────────────────── */
+  .decisions {
+    display: flex;
+    gap: 14px;
+    padding: 28px 36px 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .decision-btn {
+    flex: 1;
+    max-width: 200px;
+    padding: 18px 16px;
+    background: var(--night);
+    border: 1px solid var(--lapis);
+    border-radius: 6px;
+    color: var(--cream);
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .decision-btn::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: var(--lapis);
+    transition: all 0.25s;
+  }
+  .decision-btn:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+    box-shadow: 0 0 20px rgba(201,168,76,0.1);
+  }
+  .decision-btn:hover::before {
+    background: var(--gold);
+    left: 10%;
+    right: 10%;
+  }
+
+  .decision-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--pale-gold);
+    margin-top: 6px;
+    font-style: normal;
+  }
+
+  /* ── Tour Footer ───────────────────────────────── */
+  .tour-footer {
+    padding: 16px 36px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--lapis);
+    margin: 0 28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tour-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--pale-gold);
+    font-style: italic;
+  }
+
+  .tour-progress {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .progress-dot {
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--lapis);
+    transform: rotate(45deg);
+  }
+  .progress-dot.completed {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .progress-dot.current {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 6px rgba(201,168,76,0.5);
+  }
+  .progress-dot.future {
+    background: transparent;
+    border-color: var(--lapis);
+  }
+
+  .frame-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--pale-gold);
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ── Dimmed Dashboard Background ─────────────── -->
+  <div class="bg-dashboard">
+    <div class="bg-header">
+      <div class="bg-logo">
+        <img src="assets/lamassu.svg" class="persian-art" alt="">
+        SIMGOV
+      </div>
+      <div style="color:var(--pale-gold);font-family:'Playfair Display',serif">Day 247, Year 2584 <span style="font-size:12px;font-style:italic">Shāhanshāhi</span></div>
+    </div>
+    <div class="bg-grid">
+      <div class="bg-card"></div>
+      <div class="bg-card"></div>
+      <div class="bg-card"></div>
+      <div class="bg-card"></div>
+      <div class="bg-card"></div>
+      <div class="bg-card"></div>
+    </div>
+  </div>
+
+  <!-- ── Tour Overlay ────────────────────────────── -->
+  <div class="overlay">
+    <div class="tour-panel">
+
+      <!-- Corner ornaments -->
+      <div class="corner-ornament corner-tl"><img src="assets/palmette.svg" class="persian-art-dim" alt=""></div>
+      <div class="corner-ornament corner-tr"><img src="assets/palmette.svg" class="persian-art-dim" alt=""></div>
+      <div class="corner-ornament corner-bl"><img src="assets/palmette.svg" class="persian-art-dim" alt=""></div>
+      <div class="corner-ornament corner-br"><img src="assets/palmette.svg" class="persian-art-dim" alt=""></div>
+
+      <!-- Background watermark: Simorgh -->
+      <div class="panel-watermark"><img src="assets/simorgh.svg" alt=""></div>
+
+      <div class="tour-header">
+        <div class="tour-title">Tour 1 &mdash; Can I Trust the Crown?</div>
+      </div>
+
+      <!-- Shah speaks -->
+      <div class="shah-dialogue">
+        <div class="shah-avatar">
+          <img src="assets/king-and-noble.svg" class="persian-art" alt="">
+        </div>
+        <div class="shah-text">
+          &ldquo;Now the bill sits before the Crown. The king has fourteen days. He can sign it into law, return it to the Majlis for reconsideration, or do nothing at all, and let the deadline pass. What would you have the king do?&rdquo;
+        </div>
+      </div>
+
+      <!-- Current state -->
+      <div class="state-card">
+        <div class="state-card-title">
+          Bill #1: Education Reform Act
+          <span class="state-badge">Crown Action</span>
+        </div>
+        <div class="state-rows">
+          <div class="state-row">
+            <span class="state-label">Majlis vote</span>
+            <span class="state-value">3 yes / 2 no</span>
+          </div>
+          <div class="state-row">
+            <span class="state-label">Senate vote</span>
+            <span class="state-value">3 yes / 0 no</span>
+          </div>
+          <div class="state-row">
+            <span class="state-label">Crown deadline</span>
+            <span class="state-value gold">&#9201; 14 days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decision buttons -->
+      <div class="decisions">
+        <button class="decision-btn">
+          Sign the bill
+          <div class="decision-sub">Enact into law</div>
+        </button>
+        <button class="decision-btn">
+          Return it
+          <div class="decision-sub">Send back to Majlis</div>
+        </button>
+        <button class="decision-btn">
+          Do nothing
+          <div class="decision-sub">Let the deadline pass</div>
+        </button>
+      </div>
+
+      <!-- Tour footer -->
+      <div class="tour-footer">
+        <div class="tour-label">Can I Trust the Crown?</div>
+        <div class="tour-progress">
+          <div class="progress-dot completed"></div>
+          <div class="progress-dot completed"></div>
+          <div class="progress-dot current"></div>
+          <div class="progress-dot future"></div>
+          <div class="progress-dot future"></div>
+          <div class="progress-dot future"></div>
+          <span class="frame-label">3 / 6</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

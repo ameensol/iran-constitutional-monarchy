@@ -1,0 +1,737 @@
+/* ── Elections Participation ─────────────────────── */
+
+/* ── Passport Card ────────────────────────────────── */
+
+.passport-card {
+  background: var(--obsidian);
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  animation: passportAppear 0.5s ease;
+}
+
+@keyframes passportAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.passport-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.passport-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.passport-card-seal {
+  font-size: 28px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.passport-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin-bottom: 4px;
+}
+
+.passport-card-province {
+  font-size: 13px;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+
+.passport-card-details {
+  display: flex;
+  gap: 24px;
+}
+
+.passport-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.passport-card-label {
+  font-size: 10px;
+  color: var(--pale-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.passport-card-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--pale-gold);
+}
+
+/* ── Passport Issuance Flow ──────────────────────── */
+
+.passport-issuance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px 24px;
+}
+
+.passport-issuance-hero {
+  text-align: center;
+  max-width: 400px;
+}
+
+.passport-issuance-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pearl);
+  margin-bottom: 12px;
+}
+
+.passport-issuance-hero p {
+  font-size: 14px;
+  color: var(--cream);
+  line-height: 1.6;
+}
+
+.passport-issuance-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.passport-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.passport-input-group label {
+  font-size: 12px;
+  color: var(--pale-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.passport-input-group input {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--pearl);
+  background: var(--night);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.passport-input-group input:focus {
+  border-color: var(--gold);
+}
+
+.passport-input-group input::placeholder {
+  color: rgba(232, 213, 163, 0.3);
+}
+
+/* ── Province Picker ─────────────────────────────── */
+
+.province-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 720px;
+}
+
+.province-picker-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.province-picker-card:hover {
+  border-color: rgba(201, 168, 76, 0.4);
+  background: rgba(201, 168, 76, 0.04);
+}
+
+.province-picker-card.selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.15);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.province-picker-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pearl);
+}
+
+.province-picker-meta {
+  display: flex;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--pale-gold);
+  opacity: 0.7;
+}
+
+/* ── Issuance Button ─────────────────────────────── */
+
+.passport-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--night);
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: center;
+}
+
+.passport-btn:hover {
+  background: var(--pale-gold);
+}
+
+.passport-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.passport-btn.secondary {
+  background: transparent;
+  color: var(--pale-gold);
+  border-color: var(--lapis);
+}
+
+.passport-btn.secondary:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── Step Indicator ──────────────────────────────── */
+
+.passport-steps {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.passport-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lapis);
+  transition: background 0.2s;
+}
+
+.passport-step-dot.active {
+  background: var(--gold);
+}
+
+.passport-step-dot.done {
+  background: var(--emerald);
+}
+
+/* ── Voting Booth ────────────────────────────────── */
+
+.voting-booth {
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.voting-booth-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--pearl);
+  margin-bottom: 4px;
+}
+
+.voting-booth-deadline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.party-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.party-option:hover {
+  background: rgba(201, 168, 76, 0.04);
+}
+
+.party-option.selected {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.party-option-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--lapis);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+
+.party-option.selected .party-option-radio {
+  border-color: var(--gold);
+}
+
+.party-option-radio-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.15s;
+}
+
+.party-option.selected .party-option-radio-inner {
+  background: var(--gold);
+}
+
+.party-option-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.party-option-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pearl);
+}
+
+.party-option-desc {
+  font-size: 12px;
+  color: var(--pale-gold);
+  opacity: 0.7;
+  margin-left: auto;
+}
+
+/* ── Vote Result ─────────────────────────────────── */
+
+.vote-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--cream);
+}
+
+.vote-result.won {
+  border-color: rgba(45, 107, 79, 0.4);
+  background: rgba(45, 107, 79, 0.08);
+}
+
+.vote-result-icon {
+  font-size: 18px;
+}
+
+/* ── Voter Counter ──────────────────────────────── */
+
+.voter-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(201, 168, 76, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--pale-gold);
+}
+
+.voter-counter-icon {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.voter-counter-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* ── ZK Proof Animation ────────────────────────── */
+
+.zk-proof-animation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+.zk-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--obsidian);
+  border: 1px solid var(--lapis);
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.zk-step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zk-step.active {
+  border-color: rgba(201, 168, 76, 0.3);
+}
+
+.zk-step.done {
+  border-color: rgba(45, 107, 79, 0.4);
+  background: rgba(45, 107, 79, 0.06);
+}
+
+.zk-step-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.zk-step.active .zk-step-icon {
+  animation: zkPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes zkPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.zk-step-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.zk-step-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.zk-step.done .zk-step-label {
+  color: var(--pearl);
+}
+
+.zk-step-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--pale-gold);
+  opacity: 0.7;
+}
+
+.zk-step.done .zk-step-status {
+  color: var(--emerald);
+  opacity: 1;
+}
+
+.zk-step-check {
+  font-size: 18px;
+  color: var(--emerald);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.zk-step.done .zk-step-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.zk-progress {
+  height: 3px;
+  background: var(--lapis);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.zk-progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 1.4s linear;
+}
+
+.zk-step.done .zk-progress-fill {
+  background: var(--emerald);
+}
+
+.zk-explanations {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.zk-explanation {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--cream);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.zk-explanation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zk-explanation-bullet {
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Ballot Receipt ─────────────────────────────── */
+
+.ballot-receipt {
+  background: var(--obsidian);
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  padding: 24px;
+  animation: receiptAppear 0.5s ease;
+}
+
+@keyframes receiptAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ballot-receipt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.ballot-receipt-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--pearl);
+}
+
+.ballot-receipt-seal {
+  font-size: 24px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.ballot-receipt-hashes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.ballot-receipt-hash {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ballot-receipt-hash-label {
+  font-size: 10px;
+  color: var(--pale-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ballot-receipt-hash-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+  word-break: break-all;
+}
+
+.ballot-receipt-privacy {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.5;
+  padding: 12px 0;
+  border-top: 1px solid var(--lapis);
+  border-bottom: 1px solid var(--lapis);
+  margin-bottom: 16px;
+}
+
+.ballot-receipt-verify {
+  cursor: pointer;
+  user-select: none;
+}
+
+.ballot-receipt-verify-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--pale-gold);
+  padding: 8px 0;
+}
+
+.ballot-receipt-verify-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.ballot-receipt-verify-arrow.open {
+  transform: rotate(90deg);
+}
+
+.ballot-receipt-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0 4px 4px;
+}
+
+.ballot-receipt-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--cream);
+}
+
+.ballot-receipt-check-icon {
+  color: var(--emerald);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── Vote Confirmation ───────────────────────────── */
+
+.vote-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(45, 107, 79, 0.08);
+  border: 1px solid rgba(45, 107, 79, 0.3);
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+.vote-confirmation-icon {
+  font-size: 20px;
+  color: var(--emerald);
+}
+
+.vote-confirmation-text {
+  font-size: 14px;
+  color: var(--cream);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .passport-card {
+    padding: 16px;
+  }
+  .passport-card-name {
+    font-size: 18px;
+  }
+  .passport-issuance {
+    padding: 24px 12px;
+  }
+  .passport-issuance-hero h2 {
+    font-size: 22px;
+  }
+  .province-picker {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .passport-card-details {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .province-picker {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 6px;
+  }
+  .province-picker-card {
+    padding: 8px 10px;
+  }
+  .province-picker-name {
+    font-size: 12px;
+  }
+  .party-option-desc {
+    display: none;
+  }
+}

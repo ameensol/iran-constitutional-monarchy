@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimGov — Bill Lifecycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --night:      #0B0F1A;
+    --obsidian:   #141929;
+    --lapis:      #1A2140;
+    --gold:       #C9A84C;
+    --pale-gold:  #E8D5A3;
+    --cream:      #F0E6D0;
+    --pearl:      #FAFAF5;
+    --rose:       #8B3A4A;
+    --emerald:    #2D6B4F;
+    --turquoise:  #1A7A7A;
+  }
+
+  body {
+    background: var(--night);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    min-width: 1280px;
+    position: relative;
+  }
+
+  /* ── Persian Art Utility ───────────────────────────── */
+  .persian-art {
+    filter: invert(1) sepia(1) saturate(2.5) hue-rotate(10deg) brightness(0.9);
+    mix-blend-mode: screen;
+  }
+  .persian-art-dim {
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(0.6);
+    mix-blend-mode: screen;
+  }
+
+  /* ── Background Watermark ──────────────────────────── */
+  .bg-watermark {
+    position: fixed;
+    bottom: -60px;
+    right: -40px;
+    width: 500px;
+    height: 500px;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: invert(1) sepia(1) saturate(2) hue-rotate(10deg) brightness(1);
+  }
+
+  .shell {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 40px 40px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Bill Header ───────────────────────────────── */
+  .bill-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--lapis);
+    position: relative;
+  }
+  .bill-header-ornament {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 36px;
+    width: 22px;
+    background: var(--night);
+    padding: 0 4px;
+    z-index: 2;
+  }
+  .bill-header-ornament img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .bill-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    color: var(--pale-gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .bill-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--pearl);
+    margin-bottom: 10px;
+  }
+  .bill-meta {
+    font-size: 13px;
+    color: var(--pale-gold);
+  }
+  .bill-meta span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cream);
+  }
+
+  /* ── Flowchart ─────────────────────────────────── */
+  .flow-container {
+    position: relative;
+    padding: 20px 0 40px;
+  }
+
+  /* SVG arrows layer */
+  .flow-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .flow-svg line, .flow-svg path {
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    fill: none;
+  }
+  .flow-svg polygon {
+    fill: var(--gold);
+  }
+
+  /* Node grid (positioned absolutely) */
+  .flow-nodes {
+    position: relative;
+    height: 560px;
+    z-index: 2;
+  }
+
+  .node {
+    position: absolute;
+    width: 140px;
+    text-align: center;
+    padding: 14px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--lapis);
+    background: var(--obsidian);
+    transition: all 0.2s;
+  }
+
+  .node-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  .node-sub {
+    font-size: 11px;
+    color: var(--pale-gold);
+    margin-top: 4px;
+  }
+
+  /* State variants */
+  .node.completed {
+    border-color: rgba(201,168,76,0.4);
+  }
+  .node.completed::after {
+    content: '✓';
+    position: absolute;
+    top: -8px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    background: var(--gold);
+    color: var(--night);
+    border-radius: 50%;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .node.completed .node-label { color: var(--pale-gold); }
+
+  .node.current {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    box-shadow: 0 0 24px rgba(201,168,76,0.15);
+  }
+  .node.current::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: var(--gold);
+  }
+  .node.current .node-label { color: var(--gold); }
+
+  .node.future {
+    border-color: rgba(26,33,64,0.7);
+    background: rgba(20,25,41,0.5);
+  }
+  .node.future .node-label { color: rgba(240,230,208,0.35); }
+  .node.future .node-sub { color: rgba(232,213,163,0.25); }
+
+  .node.terminal-enacted {
+    border-color: var(--emerald);
+    background: rgba(45,107,79,0.1);
+  }
+  .node.terminal-enacted .node-label { color: var(--emerald); }
+
+  .node.terminal-rejected {
+    border-color: var(--rose);
+    background: rgba(139,58,74,0.1);
+  }
+  .node.terminal-rejected .node-label { color: var(--rose); }
+
+  /* Flower ornament on current node */
+  .node-ornament {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: var(--obsidian);
+    padding: 0 2px;
+    z-index: 3;
+  }
+  .node-ornament img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* ── Status Bar ────────────────────────────────── */
+  .status-bar {
+    margin-top: 20px;
+    padding: 20px 28px;
+    background: var(--obsidian);
+    border: 1px solid var(--lapis);
+    border-top: 2px solid var(--gold);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .status-group {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status-label {
+    font-size: 12px;
+    color: var(--pale-gold);
+  }
+  .status-value {
+    font-size: 13px;
+    color: var(--pearl);
+    font-weight: 500;
+  }
+  .status-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .status-countdown {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+  }
+
+  /* ── Legend ─────────────────────────────────────── */
+  .legend {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--pale-gold);
+  }
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+  }
+  .legend-swatch.completed-sw { border: 1px solid rgba(201,168,76,0.4); background: var(--obsidian); }
+  .legend-swatch.current-sw   { border: 1px solid var(--gold); background: rgba(201,168,76,0.15); box-shadow: 0 0 4px rgba(201,168,76,0.3); }
+  .legend-swatch.future-sw    { border: 1px solid rgba(26,33,64,0.7); background: rgba(20,25,41,0.5); }
+  .legend-swatch.enacted-sw   { border: 1px solid var(--emerald); background: rgba(45,107,79,0.15); }
+  .legend-swatch.rejected-sw  { border: 1px solid var(--rose); background: rgba(139,58,74,0.15); }
+</style>
+</head>
+<body>
+
+<!-- ── Background Watermark: Gryphon ─────────────── -->
+<div class="bg-watermark">
+  <img src="assets/lamassu.svg" alt="">
+</div>
+
+<div class="shell">
+
+  <!-- ── Bill Header ─────────────────────────────── -->
+  <div class="bill-header">
+    <div class="bill-label">Bill Lifecycle</div>
+    <div class="bill-name">Education Reform Act</div>
+    <div class="bill-meta">
+      Bill <span>#1</span> &nbsp;·&nbsp; Sponsor: <span>citizen1</span> &nbsp;·&nbsp; Submitted: <span>Day 241, Year 2584</span>
+    </div>
+    <div class="bill-header-ornament">
+      <img src="assets/palmette.svg" class="persian-art-dim" alt="">
+    </div>
+  </div>
+
+  <!-- ── Flowchart ───────────────────────────────── -->
+  <div class="flow-container">
+
+    <!-- SVG arrow layer -->
+    <svg class="flow-svg" viewBox="0 0 1240 560" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow-gold" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#C9A84C"/>
+        </marker>
+        <marker id="arrow-dim" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#1A2140"/>
+        </marker>
+      </defs>
+
+      <!-- Row 1: Introduced → Majlis Voting → Senate Review → Crown Action -->
+      <line x1="180" y1="45" x2="280" y2="45" marker-end="url(#arrow-gold)"/>
+      <line x1="460" y1="45" x2="560" y2="45" marker-end="url(#arrow-gold)"/>
+      <line x1="740" y1="45" x2="840" y2="45" marker-end="url(#arrow-gold)"/>
+
+      <!-- Crown Action → Enacted (right and down) -->
+      <path d="M 980 70 L 980 130 L 1060 130 L 1060 180" marker-end="url(#arrow-dim)"/>
+
+      <!-- Majlis Voting → Rejected (down) -->
+      <line x1="370" y1="70" x2="370" y2="150" marker-end="url(#arrow-dim)"/>
+
+      <!-- Senate Review → Senate Objected (down) -->
+      <line x1="650" y1="70" x2="650" y2="150" marker-end="url(#arrow-dim)"/>
+
+      <!-- Crown Action → Returned (down) -->
+      <line x1="910" y1="70" x2="910" y2="150" marker-end="url(#arrow-dim)"/>
+
+      <!-- Senate Objected → Majlis Override (down) -->
+      <line x1="650" y1="230" x2="650" y2="310" marker-end="url(#arrow-dim)"/>
+
+      <!-- Returned → Referred (down) -->
+      <line x1="910" y1="230" x2="910" y2="310" marker-end="url(#arrow-dim)"/>
+
+      <!-- Referred → Vetoed (down) -->
+      <line x1="910" y1="390" x2="910" y2="460" marker-end="url(#arrow-dim)"/>
+    </svg>
+
+    <!-- Nodes -->
+    <div class="flow-nodes">
+
+      <!-- Row 1 — Main path -->
+      <div class="node completed" style="left:40px; top:16px;">
+        <div class="node-label">Introduced</div>
+        <div class="node-sub">Day 241</div>
+      </div>
+
+      <div class="node completed" style="left:300px; top:16px;">
+        <div class="node-label">Majlis Voting</div>
+        <div class="node-sub">3 yes / 2 no</div>
+      </div>
+
+      <div class="node completed" style="left:580px; top:16px;">
+        <div class="node-label">Senate Review</div>
+        <div class="node-sub">3 yes / 0 no</div>
+      </div>
+
+      <div class="node current" style="left:860px; top:16px;">
+        <div class="node-ornament"><img src="assets/rosette.svg" class="persian-art" alt=""></div>
+        <div class="node-label">Crown Action</div>
+        <div class="node-sub">&#9201; 12 days</div>
+      </div>
+
+      <!-- Row 2 — Branches -->
+      <div class="node terminal-rejected future" style="left:300px; top:170px;">
+        <div class="node-label">Rejected</div>
+        <div class="node-sub">Majlis failed</div>
+      </div>
+
+      <div class="node future" style="left:580px; top:170px;">
+        <div class="node-label">Senate Objected</div>
+        <div class="node-sub">Returns to Majlis</div>
+      </div>
+
+      <div class="node future" style="left:860px; top:170px;">
+        <div class="node-label">Returned</div>
+        <div class="node-sub">Crown returns bill</div>
+      </div>
+
+      <!-- Row 2 right — Enacted -->
+      <div class="node terminal-enacted future" style="left:1000px; top:200px;">
+        <div class="node-label">Enacted</div>
+        <div class="node-sub">Becomes law</div>
+      </div>
+
+      <!-- Row 3 — Deep branches -->
+      <div class="node future" style="left:580px; top:330px;">
+        <div class="node-label">Majlis Override</div>
+        <div class="node-sub">2/3 supermajority</div>
+      </div>
+
+      <div class="node future" style="left:860px; top:330px;">
+        <div class="node-label">Referred</div>
+        <div class="node-sub">Reconsidered</div>
+      </div>
+
+      <!-- Row 4 — Terminal -->
+      <div class="node terminal-rejected future" style="left:860px; top:480px;">
+        <div class="node-label">Vetoed</div>
+        <div class="node-sub">Override failed</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Status Bar ──────────────────────────────── -->
+  <div class="status-bar">
+    <div class="status-group">
+      <div class="status-item">
+        <span class="status-label">Current stage:</span>
+        <span class="status-badge">Crown Action</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Majlis:</span>
+        <span class="status-value">3 yes / 2 no</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Senate:</span>
+        <span class="status-value">3 yes / 0 no</span>
+      </div>
+    </div>
+    <div class="status-countdown">&#9201; Crown deadline: 12 days</div>
+  </div>
+
+  <!-- ── Legend ───────────────────────────────────── -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch completed-sw"></div> Completed
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch current-sw"></div> Current
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch future-sw"></div> Future
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch enacted-sw"></div> Enacted
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch rejected-sw"></div> Rejected / Vetoed
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
