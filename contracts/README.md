@@ -2391,6 +2391,26 @@ This table shows which contracts can call into which, and the modifier that enfo
 
 ## 17. Build and Test
 
+### Setup
+
+The ZK ballot tests shell out to `circuits/prove-ffi.js`, which needs the Node
+dependencies installed:
+
+```shell
+npm ci
+```
+
+The proving key (`circuits/build/PassportBallot_final.zkey`) and circuit WASM
+are committed, so the tests run straight after `npm ci`. The trusted-setup
+intermediates (`.ptau`, `.r1cs`, `.sym`) are not committed. Regenerate the whole
+setup with `./circuits/setup.sh`, which needs [circom](https://docs.circom.io/)
+on your PATH. Note that `setup.sh` runs a fresh ceremony: it produces a new
+proving key and overwrites `src/verifiers/GeneratedBallotVerifier.sol`, so
+commit the regenerated verifier and key together or proof verification will
+fail.
+
+### Commands
+
 ```shell
 # Build (default profile, no via_ir)
 forge build
@@ -2410,7 +2430,7 @@ FOUNDRY_PROFILE=deploy forge build
 
 ### Test Organization
 
-964 tests across 14 test files:
+963 tests across 14 test files:
 
 | File | Coverage |
 |---|---|

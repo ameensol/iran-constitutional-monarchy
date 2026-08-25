@@ -7,9 +7,11 @@ contracts/node_modules/
 sdk/node_modules/
 simGov/app/node_modules/
 
-# ZK circuit build artifacts (regenerate with circuits/setup.sh)
+# ZK trusted-setup intermediates (regenerate with circuits/setup.sh).
+# The proving key itself is committed so the ballot tests run from a clone.
 contracts/circuits/build/*.ptau
 contracts/circuits/build/*.zkey
+!contracts/circuits/build/PassportBallot_final.zkey
 contracts/circuits/build/*.r1cs
 contracts/circuits/build/*.sym
 
