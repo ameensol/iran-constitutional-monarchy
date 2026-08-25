@@ -7,14 +7,12 @@
     ".": "./src/index.ts",
     "./types": "./src/types/index.ts",
     "./client": "./src/client/index.ts",
-    "./conformance": "./src/conformance/index.ts",
     "./abi": "./src/abi/index.ts"
   },
   "scripts": {
     "build": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "test:conformance": "vitest run --dir test/conformance"
+    "test:watch": "vitest"
   },
   "dependencies": {
     "viem": "^2.21.0"

@@ -82,7 +82,3 @@ browser build would need the artifacts inlined.
 24,576 bytes: Parliament (36,153), Crown (28,914) and SupremeCourt (28,865).
 They deploy fine against a local node configured this way, and will not deploy
 to a chain that enforces the standard limit.
-
-**Dead export.** `package.json` maps `./conformance` to
-`src/conformance/index.ts`, which does not exist. `src/workflows/` and
-`src/zk/` are likewise empty. Importing that subpath will fail.
