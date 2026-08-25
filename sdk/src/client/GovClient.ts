@@ -86,6 +86,20 @@ export class Contract {
       account: this.walletClient.account!.address as Address,
     });
 
+    // Estimate with headroom instead of letting viem send the bare estimate.
+    // Estimation runs against a different block than execution, so a function
+    // whose cost depends on block-level values can be more expensive when mined.
+    // Parliament.initializeSenateStagger picks a branch per senator from
+    // block.prevrandao, which differs between the two, and without headroom the
+    // inner call runs out of gas and the transaction reverts with empty data.
+    const gas = await this.publicClient.estimateContractGas({
+      address: this.address,
+      abi: this.artifact.abi as any,
+      functionName,
+      args,
+      account: this.walletClient.account!.address as Address,
+    });
+
     const hash = await this.walletClient.writeContract({
       address: this.address,
       abi: this.artifact.abi as any,
@@ -93,8 +107,18 @@ export class Contract {
       args,
       account: this.walletClient.account!,
       chain: this.walletClient.chain,
+      gas: gas + gas / 4n,
     });
-    await this.publicClient.waitForTransactionReceipt({ hash });
+
+    // A transaction can simulate cleanly and still revert when mined. Without
+    // this check the failure is silent: state never changes, no error is
+    // raised, and the test fails later somewhere unrelated.
+    const receipt = await this.publicClient.waitForTransactionReceipt({ hash });
+    if (receipt.status !== 'success') {
+      throw new Error(
+        `Transaction reverted when mined: ${functionName} on ${this.address} (tx ${hash})`,
+      );
+    }
     return hash;
   }
 

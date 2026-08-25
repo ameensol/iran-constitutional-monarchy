@@ -58,8 +58,12 @@ const count = await contracts.parliament.read('billCount');
 ```
 
 Every contract wrapper exposes `read(fn, args)`, `write(fn, args)` and
-`encode(fn, args)`. `write` simulates before sending, so a revert throws with
-the decoded error rather than silently mining a failed transaction.
+`encode(fn, args)`. `write` guards both ends of a transaction: it simulates
+first, so a revert throws with the decoded error, and it checks the receipt
+afterwards, so a transaction that simulates cleanly but reverts when mined
+raises rather than passing silently. It also sends 25% above the gas estimate,
+because estimation and execution happen in different blocks and a function
+whose cost depends on block-level values can be more expensive when mined.
 
 `deployGov` stops at registry initialization. Coronation, seating members of
 parliament, forming a government and the other setup an actual scenario needs
@@ -78,13 +82,6 @@ browser build would need the artifacts inlined.
 24,576 bytes: Parliament (36,153), Crown (28,914) and SupremeCourt (28,865).
 They deploy fine against a local node configured this way, and will not deploy
 to a chain that enforces the standard limit.
-
-**Two failing tests.** `initializeSenateStagger: happy case` and
-`initializeSenateStagger: revert already initialized`, both in
-`test/rpc/parliament.test.ts`. The contract guard itself is correct and an
-isolated reproduction of the same two calls behaves as expected, so the fault
-appears to be in the test harness rather than in `Parliament.sol`. The
-remaining 636 tests pass.
 
 **Dead export.** `package.json` maps `./conformance` to
 `src/conformance/index.ts`, which does not exist. `src/workflows/` and
