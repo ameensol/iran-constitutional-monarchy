@@ -1,4 +1,6 @@
 import type { FormationStage } from '../simulation/types';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber } from '../i18n/simulatorFormat';
 
 interface Props {
   currentStage: FormationStage;
@@ -21,16 +23,16 @@ interface FlowNode {
 }
 
 const row1: FlowNode[] = [
-  { stage: 'CrownNom1',  label: 'Crown Nom. 1',   sub: 'Monarch nominates' },
-  { stage: 'Confidence1', label: 'Confidence Vote', sub: 'Majlis votes' },
-  { stage: 'CrownNom2',  label: 'Crown Nom. 2',   sub: 'Second attempt' },
-  { stage: 'Confidence2', label: 'Confidence Vote', sub: 'Majlis votes again' },
+  { stage: 'CrownNom1', label: 'flow.crownNom1', sub: 'flow.monarchNominates' },
+  { stage: 'Confidence1', label: 'flow.confidence', sub: 'flow.majlisVotes' },
+  { stage: 'CrownNom2', label: 'flow.crownNom2', sub: 'flow.secondAttempt' },
+  { stage: 'Confidence2', label: 'flow.confidence', sub: 'flow.majlisVotesAgain' },
 ];
 
 const row2: FlowNode[] = [
-  { stage: 'MajlisList', label: 'Majlis List',  sub: 'Majlis presents 3 names' },
-  { stage: 'CrownPick',  label: 'Crown Pick',   sub: 'Monarch chooses from 3' },
-  { stage: 'Dissolved',  label: 'Dissolved',     sub: 'New elections called' },
+  { stage: 'MajlisList', label: 'flow.majlisList', sub: 'flow.presentsThree' },
+  { stage: 'CrownPick', label: 'flow.crownPick', sub: 'flow.choosesThree' },
+  { stage: 'Dissolved', label: 'flow.dissolved', sub: 'flow.newElection' },
 ];
 
 const mainPath: FormationStage[] = ['CrownNom1', 'Confidence1', 'CrownNom2', 'Confidence2'];
@@ -81,6 +83,8 @@ function VArrow() {
 }
 
 export default function FormationFlowchart({ currentStage, deadline, currentDay, nomineeName }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
   const daysLeft = deadline ? deadline - currentDay : null;
   const inFallback = fallbackPath.includes(currentStage);
   const showIdle = currentStage === 'Idle';
@@ -100,10 +104,10 @@ export default function FormationFlowchart({ currentStage, deadline, currentDay,
                     <img src="/assets/rosette.svg" className="persian-art" alt="" />
                   </div>
                 )}
-                <div className="node-label">{node.label}</div>
+                <div className="node-label">{t(node.label)}</div>
                 <div className="node-sub">
-                  {isCurrent && nomineeName ? nomineeName : node.sub}
-                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${daysLeft}d`}
+                  {isCurrent && nomineeName ? nomineeName : t(node.sub)}
+                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${t('process.daysLeft', { days: formatNumber(daysLeft, locale) })}`}
                 </div>
               </div>
               {i < row1.length - 1 && (
@@ -131,8 +135,8 @@ export default function FormationFlowchart({ currentStage, deadline, currentDay,
         {showIdle ? (
           <div className="flow-step">
             <div className="node terminal-enacted">
-              <div className="node-label">PM Seated</div>
-              <div className="node-sub">No formation needed</div>
+              <div className="node-label">{t('flow.pmSeated')}</div>
+              <div className="node-sub">{t('flow.noFormation')}</div>
             </div>
           </div>
         ) : (
@@ -149,10 +153,10 @@ export default function FormationFlowchart({ currentStage, deadline, currentDay,
                     <img src="/assets/rosette.svg" className="persian-art" alt="" />
                   </div>
                 )}
-                <div className="node-label">{node.label}</div>
+                <div className="node-label">{t(node.label)}</div>
                 <div className="node-sub">
-                  {isCurrent && nomineeName ? nomineeName : node.sub}
-                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${daysLeft}d`}
+                  {isCurrent && nomineeName ? nomineeName : t(node.sub)}
+                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${t('process.daysLeft', { days: formatNumber(daysLeft, locale) })}`}
                 </div>
               </div>
               {i < row2.length - 1 && (

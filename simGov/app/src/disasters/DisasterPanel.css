@@ -2,14 +2,11 @@
 
 .disaster-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0,0,0,0.5);
   z-index: 180;
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
 }
 
 .disaster-panel {
@@ -17,7 +14,7 @@
   max-width: 90vw;
   height: 100vh;
   background: var(--night);
-  border-left: 1px solid var(--lapis);
+  border-inline-start: 1px solid var(--lapis);
   overflow-y: auto;
   padding: 24px;
   animation: slideIn 0.2s ease;
@@ -38,7 +35,7 @@
 }
 
 .disaster-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: 20px;
   font-weight: 700;
   color: var(--rose);
@@ -73,7 +70,7 @@
 .disaster-card {
   background: var(--obsidian);
   border: 1px solid var(--lapis);
-  border-left: 3px solid var(--rose);
+  border-inline-start: 3px solid var(--rose);
   border-radius: 4px;
   padding: 16px;
 }
@@ -87,7 +84,7 @@
 }
 
 .disaster-card-name {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: 14px;
   font-weight: 600;
   color: var(--pearl);
@@ -131,7 +128,7 @@
   .disaster-panel {
     width: 100vw;
     max-width: 100vw;
-    border-left: none;
+    border-inline-start: none;
     border-radius: 0;
     padding: 12px;
   }
@@ -156,3 +153,6 @@
     text-align: center;
   }
 }
+
+[dir='rtl'] .disaster-panel { animation-name: slideInRtl; }
+@keyframes slideInRtl { from { transform: translateX(-100%); } to { transform: translateX(0); } }

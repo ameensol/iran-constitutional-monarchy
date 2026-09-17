@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTourAction, findTourTarget } from '../tour/TourActionContext';
 
 export interface ActionItem {
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function InstitutionActions({ title, actions }: Props) {
+  const { t } = useTranslation('simulator');
   const [confirmingIndex, setConfirmingIndex] = useState<number | null>(null);
   const { tourMode, activeTargets } = useTourAction();
 
@@ -57,13 +59,13 @@ export default function InstitutionActions({ title, actions }: Props) {
                     className={`inst-action-btn small ${action.danger ? 'danger' : ''}`}
                     onClick={() => { handleClick(); setConfirmingIndex(null); }}
                   >
-                    Confirm
+                    {t('actions.confirm')}
                   </button>
                   <button
                     className="inst-action-btn small secondary"
                     onClick={() => setConfirmingIndex(null)}
                   >
-                    Cancel
+                    {t('actions.cancel')}
                   </button>
                 </div>
               </div>

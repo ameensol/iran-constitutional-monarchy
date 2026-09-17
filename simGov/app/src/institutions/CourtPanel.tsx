@@ -1,6 +1,7 @@
 import type { GovState, GovAction } from '../simulation/types';
-import { personName } from '../simulation/types';
 import { activeJustices } from '../simulation/selectors';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber, namedEntityDisplayName, personDisplayName } from '../i18n/simulatorFormat';
 import InstitutionShell from './InstitutionShell';
 import InstitutionActions from '../shared/InstitutionActions';
 import type { ActionItem } from '../shared/InstitutionActions';
@@ -17,28 +18,24 @@ interface Props {
   hideBack?: boolean;
 }
 
-function getApptLabels(suspended: boolean, hasPM: boolean): Record<string, string> {
-  const nominator = suspended ? (hasPM ? 'PM' : 'Frozen') : 'Crown';
-  const picker = suspended ? (hasPM ? 'PM' : 'Senate') : 'Crown';
-  return {
-    'CrownNom1': `${nominator} 1st Nomination`,
-    'SenateVote1': 'Senate Vote (1st)',
-    'CrownNom2': `${nominator} 2nd Nomination`,
-    'SenateVote2': 'Senate Vote (2nd)',
-    'SenateList': 'Senate List',
-    'CrownPick': `${picker} Pick`,
-    'Seated': 'Seated',
-  };
-}
-
 const INSTITUTIONS = ['Crown', 'Parliament', 'Executive', 'Supreme Court'];
 
 export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onClickProcess, readOnly, hideBack }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const n = (value: number) => formatNumber(value, locale);
+  const institutionLabel = (value: string) => ({ Crown: t('institutions.crown'), Parliament: t('institutions.parliament'), Executive: t('institutions.executive'), 'Supreme Court': t('institutions.court'), PM: t('labels.primeMinister') }[value] ?? value);
   const { tourMode, activeTargets } = useTourAction();
   const showActions = !readOnly || tourMode;
   const justices = activeJustices(state);
   const referredBills = state.bills.filter((b) => b.stage === 'Referred');
-  const APPT_LABELS = getApptLabels(state.crown.suspended, state.executive.pmSeated);
+  const nominator = state.crown.suspended ? (state.executive.pmSeated ? t('labels.primeMinister') : t('courtPanel.frozen')) : t('institutions.crown');
+  const picker = state.crown.suspended ? (state.executive.pmSeated ? t('labels.primeMinister') : t('institutions.senate')) : t('institutions.crown');
+  const APPT_LABELS: Record<string, string> = {
+    CrownNom1: t('courtPanel.firstNom', { institution: nominator }), SenateVote1: t('courtPanel.senateVote1'),
+    CrownNom2: t('courtPanel.secondNom', { institution: nominator }), SenateVote2: t('courtPanel.senateVote2'),
+    SenateList: t('courtPanel.senateList'), CrownPick: t('courtPanel.pick', { institution: picker }), Seated: t('labels.seated'),
+  };
 
   const activeReviews = state.reviews.filter((r) => r.phase !== 'Resolved');
   const activeDisputes = state.disputes.filter((d) => d.phase !== 'Resolved');
@@ -53,57 +50,57 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
   // ── Filing actions ──
   const filingActions: ActionItem[] = [
     {
-      label: 'File Review (Crown)',
-      description: 'Crown files constitutional review of a law',
+      label: t('courtPanel.fileCrown'),
+      description: t('courtPanel.fileCrownDesc'),
       onClick: () => dispatch({ type: 'FILE_CONSTITUTIONAL_REVIEW', petitioner: 'Crown', lawDescription: 'Existing law under constitutional challenge' }),
       enabled: !state.crown.suspended,
-      disabledReason: 'Crown is suspended',
+      disabledReason: t('courtPanel.crownSuspended'),
     },
     {
-      label: 'File Review (PM)',
-      description: 'PM files constitutional review of a law',
+      label: t('courtPanel.filePm'),
+      description: t('courtPanel.filePmDesc'),
       onClick: () => dispatch({ type: 'FILE_CONSTITUTIONAL_REVIEW', petitioner: 'PM', lawDescription: 'Law challenged by the Executive' }),
       enabled: state.executive.pmSeated,
-      disabledReason: 'No PM seated',
+      disabledReason: t('courtPanel.noPm'),
     },
     {
-      label: 'File Review (Parliament)',
-      description: 'Parliament files constitutional review of a law',
+      label: t('courtPanel.fileParliament'),
+      description: t('courtPanel.fileParliamentDesc'),
       onClick: () => dispatch({ type: 'FILE_CONSTITUTIONAL_REVIEW', petitioner: 'Parliament', lawDescription: 'Law referred by Parliament for review' }),
       enabled: !state.parliament.dissolved,
-      disabledReason: 'Parliament is dissolved',
+      disabledReason: t('courtPanel.parliamentDissolved'),
     },
     {
-      label: 'File Dispute',
-      description: 'File a dispute between constitutional organs',
+      label: t('courtPanel.fileDispute'),
+      description: t('courtPanel.fileDisputeDesc'),
       onClick: () => {
         const pet = INSTITUTIONS[Math.floor(Math.random() * 2)]; // Crown or Parliament
         const resp = INSTITUTIONS.find((i) => i !== pet) || 'Executive';
         dispatch({ type: 'FILE_DISPUTE', petitioner: pet, respondent: resp, description: 'Jurisdictional boundary dispute' });
       },
       enabled: justices.length > 0,
-      disabledReason: 'No justices seated',
+      disabledReason: t('courtPanel.noJustices'),
     },
     {
-      label: 'Create Petition',
-      description: 'Parliament member creates a collective petition to the Court',
+      label: t('courtPanel.createPetition'),
+      description: t('courtPanel.createPetitionDesc'),
       onClick: () => dispatch({ type: 'CREATE_PETITION', title: 'Petition for Court review of executive overreach' }),
       enabled: !state.parliament.dissolved && (state.parliament.majlisSeats + state.parliament.senateSeats) > 0,
-      disabledReason: 'Parliament is dissolved or has no members',
+      disabledReason: t('courtPanel.noMembers'),
     },
   ];
 
   return (
-    <InstitutionShell title="Supreme Court" icon={'\u2696'} healthy={!state.court.crisis} onBack={onBack} hideBack={hideBack}>
+    <InstitutionShell title={t('institutions.court')} icon={'\u2696'} healthy={!state.court.crisis} onBack={onBack} hideBack={hideBack}>
       {state.court.crisis && (
         <div className="inst-alert rose">
-          Court in crisis: {justices.length}/{state.court.totalSeats} justices (need {Math.ceil(state.court.totalSeats * 2 / 3)} for quorum)
+          {t('courtPanel.crisis', { current: n(justices.length), total: n(state.court.totalSeats), quorum: n(Math.ceil(state.court.totalSeats * 2 / 3)) })}
         </div>
       )}
 
       {/* Justice Grid (4x3) */}
       <div className="inst-section" data-tour-id="court-grid">
-        <h3 className="inst-section-title">Justice Seats ({justices.length}/{state.court.totalSeats})</h3>
+        <h3 className="inst-section-title">{t('courtPanel.seats', { current: n(justices.length), total: n(state.court.totalSeats) })}</h3>
         <div className="justice-grid">
           {Array.from({ length: state.court.totalSeats }).map((_, i) => {
             const seat = i + 1;
@@ -117,13 +114,13 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
                 className={`justice-seat ${isActive ? 'occupied' : appt ? 'in-progress' : 'vacant'}`}
                 onClick={isActive && onClickPerson ? () => onClickPerson(justice.id) : undefined}
               >
-                <div className="justice-seat-number">Seat {seat}</div>
+                <div className="justice-seat-number">{t('labels.seat', { number: n(seat) })}</div>
                 {isActive ? (
-                  <div className="justice-seat-name">{personName(justice)}</div>
+                  <div className="justice-seat-name">{personDisplayName(justice, locale)}</div>
                 ) : appt ? (
                   <div className="justice-seat-status">{APPT_LABELS[appt.phase]}</div>
                 ) : (
-                  <div className="justice-seat-status">Vacant</div>
+                  <div className="justice-seat-status">{t('labels.vacant')}</div>
                 )}
               </div>
             );
@@ -134,20 +131,20 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
       {/* Appointment Pipelines */}
       {state.court.appointments.length > 0 && (
         <div className="inst-section" data-tour-id="court-appointments">
-          <h3 className="inst-section-title">Appointment Pipelines</h3>
+          <h3 className="inst-section-title">{t('courtPanel.pipelines')}</h3>
           {state.court.appointments.map((appt) => {
             const isNomPhase = appt.phase === 'CrownNom1' || appt.phase === 'CrownNom2';
             const isVotePhase = appt.phase === 'SenateVote1' || appt.phase === 'SenateVote2';
             const isListPhase = appt.phase === 'SenateList' || appt.phase === 'CrownPick';
             const frozen = appt._frozen || (state.crown.suspended && !state.executive.pmSeated && isNomPhase);
-            const nomLabel = state.crown.suspended ? (state.executive.pmSeated ? 'PM Nominates' : 'Frozen') : 'Crown Nominates';
+            const nomLabel = state.crown.suspended ? (state.executive.pmSeated ? t('courtPanel.pmNominates') : t('courtPanel.frozen')) : t('courtPanel.crownNominates');
 
             return (
               <div key={appt.seatNumber} className="inst-list-item">
-                <span className="inst-list-name" style={{ cursor: onClickProcess ? 'pointer' : undefined }} onClick={() => onClickProcess?.(`appointment-${appt.seatNumber}`)}>Seat {appt.seatNumber}</span>
+                <span className="inst-list-name" style={{ cursor: onClickProcess ? 'pointer' : undefined }} onClick={() => onClickProcess?.(`appointment-${appt.seatNumber}`)}>{t('labels.seat', { number: n(appt.seatNumber) })}</span>
                 <Badge label={APPT_LABELS[appt.phase]} variant="turquoise" />
                 {appt.deadline && (
-                  <span className="inst-list-meta">{appt.deadline - state.day}d</span>
+                  <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(appt.deadline - state.day) })}</span>
                 )}
                 {showActions && !tourMode && isNomPhase && (
                   <button
@@ -168,13 +165,13 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
                       className="inst-action-btn small"
                       onClick={() => dispatch({ type: 'RESOLVE_JUSTICE_VOTE', seatNumber: appt.seatNumber, outcome: 'approve' })}
                     >
-                      Confirm
+                      {t('courtPanel.confirm')}
                     </button>
                     <button
                       className="inst-action-btn small danger"
                       onClick={() => dispatch({ type: 'RESOLVE_JUSTICE_VOTE', seatNumber: appt.seatNumber, outcome: 'reject' })}
                     >
-                      Reject
+                      {t('courtPanel.reject')}
                     </button>
                   </div>
                 )}
@@ -183,7 +180,7 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
                     className="inst-action-btn small"
                     onClick={() => dispatch({ type: 'RESOLVE_JUSTICE_VOTE', seatNumber: appt.seatNumber, outcome: 'approve' })}
                   >
-                    {appt.phase === 'SenateList' ? 'Crown Picks' : 'Appoint'}
+                    {appt.phase === 'SenateList' ? t('courtPanel.crownPicks') : t('courtPanel.appoint')}
                   </button>
                 )}
               </div>
@@ -194,15 +191,15 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
 
       {/* Constitutional Reviews (bill referrals) */}
       <div className="inst-section">
-        <h3 className="inst-section-title">Bill Reviews ({referredBills.length})</h3>
+        <h3 className="inst-section-title">{t('courtPanel.billReviews', { count: n(referredBills.length) })}</h3>
         {referredBills.length === 0 ? (
-          <div className="inst-empty">No bills referred for review</div>
+          <div className="inst-empty">{t('courtPanel.noBills')}</div>
         ) : (
           <div className="inst-list">
             {referredBills.map((bill) => (
               <div key={bill.id} className="inst-list-item">
-                <span className="inst-list-name">{bill.name}</span>
-                <span className="inst-list-meta">{bill.deadline - state.day}d</span>
+                <span className="inst-list-name">{namedEntityDisplayName(bill.name, locale, t)}</span>
+                <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(bill.deadline - state.day) })}</span>
                 {showActions && (() => {
                   const tUphold = findTourTarget(activeTargets, 'COURT_UPHOLD_BILL', bill.id);
                   const tStrike = findTourTarget(activeTargets, 'COURT_STRIKE_BILL', bill.id);
@@ -215,13 +212,13 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
                         className={`inst-action-btn small ${tUphold ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'COURT_UPHOLD_BILL', billId: bill.id }); tUphold?.onActionTaken(); }}
                       >
-                        Uphold
+                        {t('courtPanel.uphold')}
                       </button>}
                       {showStrike && <button
                         className={`inst-action-btn small danger ${tStrike ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'COURT_STRIKE_BILL', billId: bill.id }); tStrike?.onActionTaken(); }}
                       >
-                        Strike Down
+                        {t('courtPanel.strike')}
                       </button>}
                     </div>
                   );
@@ -235,29 +232,29 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
       {/* Direct Constitutional Reviews */}
       {(activeReviews.length > 0 || state.reviews.length > 0) && (
         <div className="inst-section">
-          <h3 className="inst-section-title">Constitutional Reviews ({activeReviews.length} active)</h3>
+          <h3 className="inst-section-title">{t('courtPanel.reviews', { count: n(activeReviews.length) })}</h3>
           {activeReviews.length === 0 ? (
-            <div className="inst-empty">No active reviews</div>
+            <div className="inst-empty">{t('courtPanel.noReviews')}</div>
           ) : (
             <div className="inst-list">
               {activeReviews.map((review) => (
                 <div key={review.id} className="inst-list-item">
                   <span className="inst-list-name">{review.lawDescription}</span>
-                  <Badge label={`by ${review.petitioner}`} variant="turquoise" />
-                  <span className="inst-list-meta">{review.deadline - state.day}d</span>
+                  <Badge label={t('courtPanel.by', { petitioner: institutionLabel(review.petitioner) })} variant="turquoise" />
+                  <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(review.deadline - state.day) })}</span>
                   {showActions && !tourMode && (
                     <div className="inst-btn-row compact">
                       <button
                         className="inst-action-btn small"
                         onClick={() => dispatch({ type: 'RESOLVE_REVIEW', reviewId: review.id, outcome: 'constitutional' })}
                       >
-                        Constitutional
+                        {t('courtPanel.constitutional')}
                       </button>
                       <button
                         className="inst-action-btn small danger"
                         onClick={() => dispatch({ type: 'RESOLVE_REVIEW', reviewId: review.id, outcome: 'unconstitutional' })}
                       >
-                        Unconstitutional
+                        {t('courtPanel.unconstitutional')}
                       </button>
                     </div>
                   )}
@@ -271,29 +268,29 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
       {/* Disputes */}
       {(activeDisputes.length > 0 || state.disputes.length > 0) && (
         <div className="inst-section">
-          <h3 className="inst-section-title">Disputes ({activeDisputes.length} active)</h3>
+          <h3 className="inst-section-title">{t('courtPanel.disputes', { count: n(activeDisputes.length) })}</h3>
           {activeDisputes.length === 0 ? (
-            <div className="inst-empty">No active disputes</div>
+            <div className="inst-empty">{t('courtPanel.noDisputes')}</div>
           ) : (
             <div className="inst-list">
               {activeDisputes.map((dispute) => (
                 <div key={dispute.id} className="inst-list-item">
-                  <span className="inst-list-name">{dispute.petitioner} vs. {dispute.respondent}</span>
+                  <span className="inst-list-name">{t('courtPanel.versus', { petitioner: institutionLabel(dispute.petitioner), respondent: institutionLabel(dispute.respondent) })}</span>
                   <Badge label={dispute.phase} variant="turquoise" />
-                  <span className="inst-list-meta">{dispute.deadline - state.day}d</span>
+                  <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(dispute.deadline - state.day) })}</span>
                   {showActions && !tourMode && (
                     <div className="inst-btn-row compact">
                       <button
                         className="inst-action-btn small"
                         onClick={() => dispatch({ type: 'RESOLVE_DISPUTE', disputeId: dispute.id, outcome: 'petitioner' })}
                       >
-                        {dispute.petitioner} Wins
+                        {t('courtPanel.wins', { institution: institutionLabel(dispute.petitioner) })}
                       </button>
                       <button
                         className="inst-action-btn small"
                         onClick={() => dispatch({ type: 'RESOLVE_DISPUTE', disputeId: dispute.id, outcome: 'respondent' })}
                       >
-                        {dispute.respondent} Wins
+                        {t('courtPanel.wins', { institution: institutionLabel(dispute.respondent) })}
                       </button>
                     </div>
                   )}
@@ -307,22 +304,22 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
       {/* Collective Petitions */}
       {(activePetitions.length > 0 || state.petitions.length > 0) && (
         <div className="inst-section">
-          <h3 className="inst-section-title">Collective Petitions ({activePetitions.length} active)</h3>
+          <h3 className="inst-section-title">{t('courtPanel.petitions', { count: n(activePetitions.length) })}</h3>
           {activePetitions.length === 0 ? (
-            <div className="inst-empty">No active petitions</div>
+            <div className="inst-empty">{t('courtPanel.noPetitions')}</div>
           ) : (
             <div className="inst-list">
               {activePetitions.map((petition) => (
                 <div key={petition.id} className="inst-list-item">
                   <span className="inst-list-name">{petition.title}</span>
-                  <Badge label={`${petition.signatures}/${petition.requiredSignatures}`} variant={petition.signatures >= petition.requiredSignatures ? 'emerald' : 'turquoise'} />
-                  <span className="inst-list-meta">{petition.deadline - state.day}d</span>
+                  <Badge label={`${n(petition.signatures)}/${n(petition.requiredSignatures)}`} variant={petition.signatures >= petition.requiredSignatures ? 'emerald' : 'turquoise'} />
+                  <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(petition.deadline - state.day) })}</span>
                   {showActions && !tourMode && !petition.activated && (
                     <button
                       className="inst-action-btn small"
                       onClick={() => dispatch({ type: 'SIGN_PETITION', petitionId: petition.id })}
                     >
-                      Sign (+1)
+                      {t('courtPanel.sign')}
                     </button>
                   )}
                 </div>
@@ -333,14 +330,14 @@ export default function CourtPanel({ state, dispatch, onBack, onClickPerson, onC
       )}
 
       {/* Filing Actions */}
-      {showActions && !tourMode && <InstitutionActions title="Court Filings" actions={filingActions} />}
+      {showActions && !tourMode && <InstitutionActions title={t('courtPanel.filings')} actions={filingActions} />}
 
       {/* Quorum Indicator */}
       <div className="inst-section" data-tour-id="court-quorum">
         <div className="inst-quorum-bar">
           <div className="quorum-fill" style={{ width: `${(justices.length / state.court.totalSeats) * 100}%` }} />
           <div className="quorum-line" style={{ left: `${(2/3) * 100}%` }} />
-          <span className="quorum-label">Quorum: {Math.ceil(state.court.totalSeats * 2 / 3)}</span>
+          <span className="quorum-label">{t('courtPanel.quorum', { count: n(Math.ceil(state.court.totalSeats * 2 / 3)) })}</span>
         </div>
       </div>
     </InstitutionShell>

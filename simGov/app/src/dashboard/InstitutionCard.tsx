@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface CardRow {
   label: string;
@@ -26,6 +27,7 @@ export default function InstitutionCard({
   onClick,
   tourId,
 }: InstitutionCardProps) {
+  const { t } = useTranslation('simulator');
   return (
     <div
       className={`card ${onClick ? 'card-clickable' : ''}`}
@@ -43,9 +45,9 @@ export default function InstitutionCard({
           <div className="card-icon">{icon}</div>
           {title}
         </div>
-        <div className={`health-dot ${healthy ? 'healthy' : 'crisis'}`} aria-label={healthy ? 'Healthy' : 'Crisis'}>
+        <div className={`health-dot ${healthy ? 'healthy' : 'crisis'}`} aria-label={t(healthy ? 'labels.healthy' : 'labels.crisis')}>
           <span className="health-icon">{healthy ? '\u2713' : '!'}</span>
-          <span className="sr-only">{healthy ? 'Healthy' : 'Crisis'}</span>
+          <span className="sr-only">{t(healthy ? 'labels.healthy' : 'labels.crisis')}</span>
         </div>
       </div>
       <div className="card-rows">

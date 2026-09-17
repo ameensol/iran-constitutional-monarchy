@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Headline } from '../simulation/types';
+import { useTranslation } from 'react-i18next';
 
 interface BreakingNewsBannerProps {
   headline: Headline | null;
@@ -8,18 +9,15 @@ interface BreakingNewsBannerProps {
 }
 
 export default function BreakingNewsBanner({ headline, autoDismissMs, onDismiss }: BreakingNewsBannerProps) {
-  const [dismissing, setDismissing] = useState(false);
-
-  // Reset dismissing state when headline changes
-  useEffect(() => {
-    setDismissing(false);
-  }, [headline]);
+  const { t } = useTranslation('simulator');
+  const [dismissingHeadline, setDismissingHeadline] = useState<Headline | null>(null);
+  const dismissing = headline !== null && dismissingHeadline === headline;
 
   // Auto-dismiss timer
   useEffect(() => {
     if (!headline || autoDismissMs <= 0) return;
     const timer = setTimeout(() => {
-      setDismissing(true);
+      setDismissingHeadline(headline);
       setTimeout(onDismiss, 400); // match fade-out duration
     }, autoDismissMs);
     return () => clearTimeout(timer);
@@ -28,7 +26,7 @@ export default function BreakingNewsBanner({ headline, autoDismissMs, onDismiss 
   if (!headline) return null;
 
   const handleClick = () => {
-    setDismissing(true);
+    setDismissingHeadline(headline);
     setTimeout(onDismiss, 400);
   };
 
@@ -38,7 +36,7 @@ export default function BreakingNewsBanner({ headline, autoDismissMs, onDismiss 
       onClick={handleClick}
       role="alert"
     >
-      <span className="breaking-label">BREAKING</span>
+      <span className="breaking-label">{t('gazette.breaking')}</span>
       <span className="breaking-text">{headline.text}</span>
       {headline.subtext && <span className="breaking-subtext">{headline.subtext}</span>}
     </div>

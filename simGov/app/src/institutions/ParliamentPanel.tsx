@@ -1,6 +1,7 @@
 import type { GovState, GovAction } from '../simulation/types';
-import { personName } from '../simulation/types';
 import { activeMajlisMembers, activeSenators, provincialCouncilMembers } from '../simulation/selectors';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, billStageLabel, formatNumber, namedEntityDisplayName, partyDisplayName, personDisplayName, provinceDisplayName } from '../i18n/simulatorFormat';
 import { PARTY_COLORS } from '../simulation/nameGen';
 import InstitutionShell from './InstitutionShell';
 import InstitutionActions from '../shared/InstitutionActions';
@@ -19,6 +20,9 @@ interface Props {
 }
 
 export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson, onClickBill, readOnly, hideBack }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const n = (value: number) => formatNumber(value, locale);
   const { tourMode, activeTargets } = useTourAction();
   const showActions = !readOnly || tourMode;
   const majlis = activeMajlisMembers(state);
@@ -42,135 +46,135 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
   // ── Majlis actions ──
   const majlisActions: ActionItem[] = [
     {
-      label: 'Submit New Bill',
-      description: 'Introduce a legislative proposal to the Majlis',
+      label: t('parliamentPanel.submit'),
+      description: t('parliamentPanel.submitDesc'),
       onClick: () => dispatch({ type: 'SUBMIT_BILL', name: 'New Legislative Proposal', sponsor: 'citizen10' }),
       enabled: !state.parliament.dissolved,
-      disabledReason: 'Parliament is dissolved',
+      disabledReason: t('parliamentPanel.dissolved'),
       tourActionId: 'SUBMIT_BILL',
     },
     {
-      label: 'File No-Confidence',
-      description: 'Challenge the Prime Minister\'s mandate',
+      label: t('parliamentPanel.noConfidence'),
+      description: t('parliamentPanel.noConfidenceDesc'),
       onClick: () => dispatch({ type: 'FILE_NO_CONFIDENCE' }),
       enabled: state.executive.pmSeated && !state.executive.noConfidence && !state.parliament.dissolved,
-      disabledReason: !state.executive.pmSeated ? 'No PM seated' : state.executive.noConfidence ? 'Motion already pending' : 'Parliament is dissolved',
+      disabledReason: !state.executive.pmSeated ? t('parliamentPanel.noPm') : state.executive.noConfidence ? t('parliamentPanel.motionPending') : t('parliamentPanel.dissolved'),
       danger: true,
-      confirmText: 'File a no-confidence motion against the Prime Minister?',
+      confirmText: t('parliamentPanel.noConfidenceConfirm'),
     },
     {
-      label: 'Override Senate',
+      label: t('parliamentPanel.override'),
       description: senateObjectedBills.length > 0
-        ? `Override Senate objection on ${senateObjectedBills[0].name}`
-        : 'No bills awaiting override',
+        ? t('parliamentPanel.overrideDesc', { bill: senateObjectedBills[0].name })
+        : t('parliamentPanel.noOverride'),
       onClick: () => {
         if (senateObjectedBills.length > 0) {
           dispatch({ type: 'MAJLIS_OVERRIDE_SENATE', billId: senateObjectedBills[0].id });
         }
       },
       enabled: senateObjectedBills.length > 0 && !state.parliament.dissolved,
-      disabledReason: senateObjectedBills.length === 0 ? 'No bills awaiting override' : 'Parliament is dissolved',
+      disabledReason: senateObjectedBills.length === 0 ? t('parliamentPanel.noOverride') : t('parliamentPanel.dissolved'),
       tourActionId: 'MAJLIS_OVERRIDE_SENATE',
     },
     {
-      label: 'Propose Amendment',
-      description: 'Propose a constitutional amendment for Parliament vote',
+      label: t('parliamentPanel.propose'),
+      description: t('parliamentPanel.proposeDesc'),
       onClick: () => dispatch({ type: 'PROPOSE_AMENDMENT', title: 'Constitutional Reform Proposal' }),
       enabled: !state.parliament.dissolved,
-      disabledReason: 'Parliament is dissolved',
+      disabledReason: t('parliamentPanel.dissolved'),
     },
     {
-      label: 'Emergency Amendment',
-      description: 'Enact by 3/4 Parliament vote, no referendum (expires in 1 year unless ratified)',
+      label: t('parliamentPanel.emergencyAmend'),
+      description: t('parliamentPanel.emergencyDesc'),
       onClick: () => dispatch({ type: 'PROPOSE_EMERGENCY_AMENDMENT', title: 'Emergency Constitutional Measure' }),
       enabled: !state.parliament.dissolved,
-      disabledReason: 'Parliament is dissolved',
+      disabledReason: t('parliamentPanel.dissolved'),
       danger: true,
-      confirmText: 'Propose an emergency amendment? This bypasses referendum but expires in 1 year.',
+      confirmText: t('parliamentPanel.emergencyConfirm'),
     },
   ];
 
   // ── Senate actions ──
   const senateActions: ActionItem[] = [
     {
-      label: 'Approve Bill',
+      label: t('parliamentPanel.approveBill'),
       description: senateReviewBills.length > 0
-        ? `Approve ${senateReviewBills[0].name}`
-        : 'No bills in Senate review',
+        ? t('parliamentPanel.approveBillDesc', { bill: namedEntityDisplayName(senateReviewBills[0].name, locale, t) })
+        : t('parliamentPanel.noSenateBill'),
       onClick: () => {
         if (senateReviewBills.length > 0) {
           dispatch({ type: 'SENATE_APPROVE_BILL', billId: senateReviewBills[0].id });
         }
       },
       enabled: senateReviewBills.length > 0,
-      disabledReason: 'No bills in Senate review',
+      disabledReason: t('parliamentPanel.noSenateBill'),
       tourActionId: 'SENATE_APPROVE_BILL',
     },
     {
-      label: 'Object to Bill',
+      label: t('parliamentPanel.objectBill'),
       description: senateReviewBills.length > 0
-        ? `Object to ${senateReviewBills[0].name}`
-        : 'No bills in Senate review',
+        ? t('parliamentPanel.objectBillDesc', { bill: namedEntityDisplayName(senateReviewBills[0].name, locale, t) })
+        : t('parliamentPanel.noSenateBill'),
       onClick: () => {
         if (senateReviewBills.length > 0) {
           dispatch({ type: 'SENATE_OBJECT_BILL', billId: senateReviewBills[0].id });
         }
       },
       enabled: senateReviewBills.length > 0,
-      disabledReason: 'No bills in Senate review',
+      disabledReason: t('parliamentPanel.noSenateBill'),
       tourActionId: 'SENATE_OBJECT_BILL',
     },
     {
-      label: 'Initiate Formation',
-      description: 'Begin PM formation during Crown suspension (Art. VI.5)',
+      label: t('parliamentPanel.initiateFormation'),
+      description: t('parliamentPanel.initiateFormationDesc'),
       onClick: () => dispatch({ type: 'SENATE_START_FORMATION' }),
       enabled: state.crown.suspended && !state.executive.pmSeated && state.executive.formation.stage === 'Idle',
-      disabledReason: !state.crown.suspended ? 'Crown is active' : state.executive.pmSeated ? 'PM is seated' : 'Formation already in progress',
+      disabledReason: !state.crown.suspended ? t('parliamentPanel.crownActive') : state.executive.pmSeated ? t('parliamentPanel.pmSeated') : t('parliamentPanel.formationOpen'),
     },
     {
-      label: 'Confirm Justice',
+      label: t('parliamentPanel.confirmJustice'),
       description: pendingJusticeVotes.length > 0
-        ? `Confirm nominee for Seat ${pendingJusticeVotes[0].seatNumber}`
-        : 'No nominees pending',
+        ? t('parliamentPanel.confirmJusticeDesc', { seat: n(pendingJusticeVotes[0].seatNumber) })
+        : t('parliamentPanel.noNominees'),
       onClick: () => {
         if (pendingJusticeVotes.length > 0) {
           dispatch({ type: 'RESOLVE_JUSTICE_VOTE', seatNumber: pendingJusticeVotes[0].seatNumber, outcome: 'approve' });
         }
       },
       enabled: pendingJusticeVotes.length > 0,
-      disabledReason: 'No nominees pending',
+      disabledReason: t('parliamentPanel.noNominees'),
       tourActionId: 'RESOLVE_JUSTICE_VOTE_APPROVE',
     },
     {
-      label: 'Reject Justice',
+      label: t('parliamentPanel.rejectJustice'),
       description: pendingJusticeVotes.length > 0
-        ? `Reject nominee for Seat ${pendingJusticeVotes[0].seatNumber}`
-        : 'No nominees pending',
+        ? t('parliamentPanel.rejectJusticeDesc', { seat: n(pendingJusticeVotes[0].seatNumber) })
+        : t('parliamentPanel.noNominees'),
       onClick: () => {
         if (pendingJusticeVotes.length > 0) {
           dispatch({ type: 'RESOLVE_JUSTICE_VOTE', seatNumber: pendingJusticeVotes[0].seatNumber, outcome: 'reject' });
         }
       },
       enabled: pendingJusticeVotes.length > 0,
-      disabledReason: 'No nominees pending',
+      disabledReason: t('parliamentPanel.noNominees'),
       danger: true,
       tourActionId: 'RESOLVE_JUSTICE_VOTE_REJECT',
     },
   ];
 
   return (
-    <InstitutionShell title="Parliament" icon={'\u26E9'} healthy={!state.parliament.dissolved} onBack={onBack} hideBack={hideBack}>
+    <InstitutionShell title={t('institutions.parliament')} icon={'\u26E9'} healthy={!state.parliament.dissolved} onBack={onBack} hideBack={hideBack}>
       {state.parliament.dissolved && (
-        <div className="inst-alert rose">Parliament is dissolved. Elections required within 60 days.</div>
+        <div className="inst-alert rose">{t('parliamentPanel.dissolved')}</div>
       )}
 
       {/* Majlis Section */}
       <div className="inst-section" data-tour-id="parl-majlis">
-        <h3 className="inst-section-title">Majlis ({majlis.length}/{state.parliament.majlisTotal})</h3>
+        <h3 className="inst-section-title">{t('parliamentPanel.majlis', { current: n(majlis.length), total: n(state.parliament.majlisTotal) })}</h3>
         <div className="inst-quorum-bar">
           <div className="quorum-fill" style={{ width: `${(majlis.length / state.parliament.majlisTotal) * 100}%` }} />
           <div className="quorum-line" style={{ left: '50%' }} />
-          <span className="quorum-label">Quorum: {Math.ceil(state.parliament.majlisTotal / 2 + 1)}</span>
+          <span className="quorum-label">{t('parliamentPanel.quorum', { count: n(Math.ceil(state.parliament.majlisTotal / 2 + 1)) })}</span>
         </div>
 
         {/* Party distribution */}
@@ -180,7 +184,7 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
             .map(([party, count]) => (
               <div key={party} className="party-chip">
                 <span className="party-dot" style={{ background: PARTY_COLORS[party] || 'var(--pale-gold)' }} />
-                {party} <span className="party-count">{count}</span>
+                {partyDisplayName(party, locale, t)} <span className="party-count">{n(count)}</span>
               </div>
             ))}
         </div>
@@ -192,25 +196,25 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
               key={p.id}
               className="seat-dot"
               style={{ background: PARTY_COLORS[p.party] || 'var(--pale-gold)' }}
-              data-tooltip={`${personName(p)} (${p.party})`}
-              title={`${personName(p)} (${p.party})`}
+              data-tooltip={`${personDisplayName(p, locale)} (${partyDisplayName(p.party, locale, t)})`}
+              title={`${personDisplayName(p, locale)} (${partyDisplayName(p.party, locale, t)})`}
               onClick={() => onClickPerson?.(p.id)}
             />
           ))}
           {Array.from({ length: state.parliament.majlisTotal - majlis.length }).map((_, i) => (
-            <div key={`vacant-${i}`} className="seat-dot vacant" data-tooltip="Vacant seat" title="Vacant seat" />
+            <div key={`vacant-${i}`} className="seat-dot vacant" data-tooltip={t('parliamentPanel.vacantSeat')} title={t('parliamentPanel.vacantSeat')} />
           ))}
         </div>
       </div>
 
       {/* Majlis Actions */}
-      {showActions && <InstitutionActions title="Majlis Actions" actions={majlisActions} />}
+      {showActions && <InstitutionActions title={t('parliamentPanel.majlisActions')} actions={majlisActions} />}
 
       {/* No-confidence inline (if active) */}
       {state.executive.noConfidence && !state.executive.noConfidence.resolved && (
         <div className="inst-section">
           <div className="inst-alert rose">
-            No-confidence vote in progress — {state.executive.noConfidence.yesVotes} yes / {state.executive.noConfidence.noVotes} no — {state.executive.noConfidence.deadline - state.day}d remaining
+            {t('parliamentPanel.confidence', { yes: n(state.executive.noConfidence.yesVotes), no: n(state.executive.noConfidence.noVotes), days: n(state.executive.noConfidence.deadline - state.day) })}
           </div>
           {showActions && (() => {
             const tPass = findTourTarget(activeTargets, 'RESOLVE_NO_CONFIDENCE_PASS');
@@ -224,13 +228,13 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                   className={`inst-action-btn danger ${tPass ? 'tour-action-target' : ''}`}
                   onClick={() => { dispatch({ type: 'RESOLVE_NO_CONFIDENCE', outcome: 'pass' }); tPass?.onActionTaken(); }}
                 >
-                  Motion Passes
+                  {t('parliamentPanel.motionPasses')}
                 </button>}
                 {showFail && <button
                   className={`inst-action-btn ${tFail ? 'tour-action-target' : ''}`}
                   onClick={() => { dispatch({ type: 'RESOLVE_NO_CONFIDENCE', outcome: 'fail' }); tFail?.onActionTaken(); }}
                 >
-                  Motion Fails
+                  {t('parliamentPanel.motionFails')}
                 </button>}
               </div>
             );
@@ -241,7 +245,7 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
       {/* Active Amendments */}
       {activeAmendments.length > 0 && (
         <div className="inst-section">
-          <h3 className="inst-section-title">Active Amendments ({activeAmendments.length})</h3>
+          <h3 className="inst-section-title">{t('parliamentPanel.amendments', { count: n(activeAmendments.length) })}</h3>
           <div className="inst-list">
             {activeAmendments.map((amend) => {
               const isProposed = amend.phase === 'Proposed';
@@ -249,17 +253,17 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
               const isRef = amend.phase === 'Referendum';
               return (
                 <div key={amend.id} className="inst-list-item">
-                  <span className="inst-list-name">{amend.title}</span>
-                  <Badge label={amend.phase} variant={isRef ? 'gold' : 'turquoise'} />
-                  <span className="inst-list-meta">{amend.deadline - state.day}d</span>
-                  {amend.emergency && <Badge label="Emergency" variant="rose" />}
+                  <span className="inst-list-name">{namedEntityDisplayName(amend.title, locale, t)}</span>
+                  <Badge label={t(`amendmentPhases.${amend.phase}`)} variant={isRef ? 'gold' : 'turquoise'} />
+                  <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(amend.deadline - state.day) })}</span>
+                  {amend.emergency && <Badge label={t('parliamentPanel.emergency')} variant="rose" />}
                   {showActions && isProposed && (
                     <div className="inst-btn-row compact">
                       <button
                         className="inst-action-btn small"
                         onClick={() => dispatch({ type: 'ADVANCE_AMENDMENT_TO_VOTE', amendmentId: amend.id })}
                       >
-                        Begin Parliament Vote
+                        {t('parliamentPanel.beginParliament')}
                       </button>
                     </div>
                   )}
@@ -275,13 +279,13 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                           className={`inst-action-btn small ${tParlPass ? 'tour-action-target' : ''}`}
                           onClick={() => { dispatch({ type: 'RESOLVE_AMENDMENT', amendmentId: amend.id, outcome: 'pass' }); tParlPass?.onActionTaken(); }}
                         >
-                          Parliament Approves
+                          {t('parliamentPanel.parliamentApproves')}
                         </button>}
                         {showParlFail && <button
                           className={`inst-action-btn small danger ${tParlFail ? 'tour-action-target' : ''}`}
                           onClick={() => { dispatch({ type: 'RESOLVE_AMENDMENT', amendmentId: amend.id, outcome: 'fail' }); tParlFail?.onActionTaken(); }}
                         >
-                          Parliament Rejects
+                          {t('parliamentPanel.parliamentRejects')}
                         </button>}
                       </div>
                     );
@@ -298,13 +302,13 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                           className={`inst-action-btn small ${tRefPass ? 'tour-action-target' : ''}`}
                           onClick={() => { dispatch({ type: 'RESOLVE_AMENDMENT', amendmentId: amend.id, outcome: 'pass' }); tRefPass?.onActionTaken(); }}
                         >
-                          Referendum Passes
+                          {t('parliamentPanel.referendumPasses')}
                         </button>}
                         {showRefFail && <button
                           className={`inst-action-btn small danger ${tRefFail ? 'tour-action-target' : ''}`}
                           onClick={() => { dispatch({ type: 'RESOLVE_AMENDMENT', amendmentId: amend.id, outcome: 'fail' }); tRefFail?.onActionTaken(); }}
                         >
-                          Referendum Fails
+                          {t('parliamentPanel.referendumFails')}
                         </button>}
                       </div>
                     );
@@ -318,30 +322,30 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
 
       {/* Senate Section */}
       <div className="inst-section" data-tour-id="parl-senate">
-        <h3 className="inst-section-title">Senate ({senators.length}/{state.parliament.senateTotal})</h3>
+        <h3 className="inst-section-title">{t('parliamentPanel.senate', { current: n(senators.length), total: n(state.parliament.senateTotal) })}</h3>
         <div className="seating-chart">
           {senators.map((p) => (
             <div
               key={p.id}
               className={`seat-dot ${p.role === 'crown_senator' ? 'crown-appointed' : ''}`}
               style={{ background: p.role === 'crown_senator' ? 'var(--gold)' : (PARTY_COLORS[p.party] || 'var(--pale-gold)') }}
-              data-tooltip={`${personName(p)}${p.role === 'crown_senator' ? ' (Crown-appointed)' : ` (${p.party})`}`}
-              title={`${personName(p)}${p.role === 'crown_senator' ? ' (Crown-appointed)' : ` (${p.party})`}`}
+              data-tooltip={`${personDisplayName(p, locale)} (${p.role === 'crown_senator' ? t('parliamentPanel.crownAppointed') : partyDisplayName(p.party, locale, t)})`}
+              title={`${personDisplayName(p, locale)} (${p.role === 'crown_senator' ? t('parliamentPanel.crownAppointed') : partyDisplayName(p.party, locale, t)})`}
               onClick={() => onClickPerson?.(p.id)}
             />
           ))}
           {Array.from({ length: state.parliament.senateTotal - senators.length }).map((_, i) => (
-            <div key={`vacant-${i}`} className="seat-dot vacant" data-tooltip="Vacant seat" title="Vacant seat" />
+            <div key={`vacant-${i}`} className="seat-dot vacant" data-tooltip={t('parliamentPanel.vacantSeat')} title={t('parliamentPanel.vacantSeat')} />
           ))}
         </div>
       </div>
 
       {/* Senate Actions */}
-      {showActions && <InstitutionActions title="Senate Actions" actions={senateActions} />}
+      {showActions && <InstitutionActions title={t('parliamentPanel.senateActions')} actions={senateActions} />}
 
       {/* Provincial Councils */}
       <div className="inst-section" data-tour-id="parl-councils">
-        <h3 className="inst-section-title">Provincial Councils ({state.provinces.length} Provinces)</h3>
+        <h3 className="inst-section-title">{t('parliamentPanel.councils', { count: n(state.provinces.length) })}</h3>
         <div className="province-grid">
           {state.provinces.map((province) => {
             const members = provincialCouncilMembers(state, province.id);
@@ -349,10 +353,10 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
             const damaged = members.length < province.councilSize;
             return (
               <div key={province.id} className={`province-chip ${damaged ? 'province-damaged' : ''}`}>
-                <span className="province-name">{province.name}</span>
+                <span className="province-name">{provinceDisplayName(province, locale)}</span>
                 <span className="province-meta">
-                  <span className={`province-count ${full ? '' : 'incomplete'}`}>{members.length}/{province.councilSize}</span>
-                  <span className="province-cohort">Cohort {province.senateCohort}</span>
+                  <span className={`province-count ${full ? '' : 'incomplete'}`}>{n(members.length)}/{n(province.councilSize)}</span>
+                  <span className="province-cohort">{t('parliamentPanel.cohort', { number: province.senateCohort })}</span>
                 </span>
               </div>
             );
@@ -362,9 +366,9 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
 
       {/* Active Bills */}
       <div className="inst-section" data-tour-id="parl-bills">
-        <h3 className="inst-section-title">Active Bills ({activeBills.length})</h3>
+        <h3 className="inst-section-title">{t('parliamentPanel.bills', { count: n(activeBills.length) })}</h3>
         {activeBills.length === 0 ? (
-          <div className="inst-empty">No active bills</div>
+          <div className="inst-empty">{t('parliamentPanel.noBills')}</div>
         ) : (
           <div className="inst-list">
             {activeBills.map((bill) => (
@@ -373,20 +377,20 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                 className={`inst-list-item ${onClickBill ? 'clickable' : ''}`}
                 onClick={() => onClickBill?.(bill.id)}
               >
-                <span className="inst-list-name">{bill.name}</span>
-                <Badge label={bill.stage} variant="gold" />
-                <span className="inst-list-meta">{bill.deadline - state.day}d</span>
+                <span className="inst-list-name">{namedEntityDisplayName(bill.name, locale, t)}</span>
+                <Badge label={billStageLabel(bill.stage, t)} variant="gold" />
+                <span className="inst-list-meta">{t('courtPanel.remaining', { days: n(bill.deadline - state.day) })}</span>
                 {showActions && bill.stage === 'Introduced' && (() => {
-                  const t = findTourTarget(activeTargets, 'BEGIN_MAJLIS_VOTE', bill.id);
-                  const show = !readOnly || (tourMode && t);
+                  const tourTarget = findTourTarget(activeTargets, 'BEGIN_MAJLIS_VOTE', bill.id);
+                  const show = !readOnly || (tourMode && tourTarget);
                   if (!show) return null;
                   return (
                     <div className="inst-btn-row compact" onClick={(e) => e.stopPropagation()}>
                       <button
-                        className={`inst-action-btn small ${t ? 'tour-action-target' : ''}`}
-                        onClick={() => { dispatch({ type: 'ADVANCE_BILL_TO_STAGE', billId: bill.id, stage: 'Majlis Voting' }); t?.onActionTaken(); }}
+                        className={`inst-action-btn small ${tourTarget ? 'tour-action-target' : ''}`}
+                        onClick={() => { dispatch({ type: 'ADVANCE_BILL_TO_STAGE', billId: bill.id, stage: 'Majlis Voting' }); tourTarget?.onActionTaken(); }}
                       >
-                        Begin Majlis Vote
+                        {t('parliamentPanel.beginMajlis')}
                       </button>
                     </div>
                   );
@@ -403,13 +407,13 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                         className={`inst-action-btn small ${tPass ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'RESOLVE_MAJLIS_VOTE', billId: bill.id, outcome: 'pass' }); tPass?.onActionTaken(); }}
                       >
-                        Pass
+                        {t('parliamentPanel.pass')}
                       </button>}
                       {showReject && <button
                         className={`inst-action-btn small danger ${tReject ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'RESOLVE_MAJLIS_VOTE', billId: bill.id, outcome: 'fail' }); tReject?.onActionTaken(); }}
                       >
-                        Reject
+                        {t('parliamentPanel.reject')}
                       </button>}
                     </div>
                   );
@@ -426,13 +430,13 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                         className={`inst-action-btn small ${tRevote ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'RESOLVE_RETURNED_BILL', billId: bill.id, outcome: 'readopt' }); tRevote?.onActionTaken(); }}
                       >
-                        Begin Majlis Revote
+                        {t('parliamentPanel.beginRevote')}
                       </button>}
                       {showDrop && <button
                         className={`inst-action-btn small danger ${tDrop ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'RESOLVE_RETURNED_BILL', billId: bill.id, outcome: 'drop' }); tDrop?.onActionTaken(); }}
                       >
-                        Drop
+                        {t('parliamentPanel.drop')}
                       </button>}
                     </div>
                   );
@@ -449,13 +453,13 @@ export default function ParliamentPanel({ state, dispatch, onBack, onClickPerson
                         className={`inst-action-btn small ${tPass ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'RESOLVE_MAJLIS_VOTE', billId: bill.id, outcome: 'pass' }); tPass?.onActionTaken(); }}
                       >
-                        Pass
+                        {t('parliamentPanel.pass')}
                       </button>}
                       {showReject && <button
                         className={`inst-action-btn small danger ${tReject ? 'tour-action-target' : ''}`}
                         onClick={() => { dispatch({ type: 'RESOLVE_MAJLIS_VOTE', billId: bill.id, outcome: 'fail' }); tReject?.onActionTaken(); }}
                       >
-                        Reject
+                        {t('parliamentPanel.reject')}
                       </button>}
                     </div>
                   );

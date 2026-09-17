@@ -1,4 +1,6 @@
 import type { AppointmentPhase } from '../simulation/types';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber } from '../i18n/simulatorFormat';
 
 interface Props {
   currentPhase: AppointmentPhase;
@@ -21,16 +23,16 @@ interface FlowNode {
 }
 
 const row1: FlowNode[] = [
-  { phase: 'CrownNom1',  label: 'Crown Nom. 1', sub: 'Monarch nominates' },
-  { phase: 'SenateVote1', label: 'Senate Vote',  sub: 'Senate confirms/rejects' },
-  { phase: 'CrownNom2',  label: 'Crown Nom. 2', sub: 'Second nomination' },
-  { phase: 'SenateVote2', label: 'Senate Vote',  sub: 'Senate confirms/rejects' },
+  { phase: 'CrownNom1', label: 'flow.crownNom1', sub: 'flow.monarchNominates' },
+  { phase: 'SenateVote1', label: 'flow.senateVote', sub: 'flow.senateDecides' },
+  { phase: 'CrownNom2', label: 'flow.crownNom2', sub: 'flow.secondNomination' },
+  { phase: 'SenateVote2', label: 'flow.senateVote', sub: 'flow.senateDecides' },
 ];
 
 const row2: FlowNode[] = [
-  { phase: 'SenateList', label: 'Senate List', sub: 'Senate presents 3 names' },
-  { phase: 'CrownPick',  label: 'Crown Pick',  sub: 'Monarch chooses from 3' },
-  { phase: 'Seated',     label: 'Seated',       sub: 'Justice takes oath' },
+  { phase: 'SenateList', label: 'flow.senateList', sub: 'flow.senateThree' },
+  { phase: 'CrownPick', label: 'flow.crownPick', sub: 'flow.choosesThree' },
+  { phase: 'Seated', label: 'flow.seated', sub: 'flow.oath' },
 ];
 
 const mainPath: AppointmentPhase[] = ['CrownNom1', 'SenateVote1', 'CrownNom2', 'SenateVote2'];
@@ -80,6 +82,8 @@ function VArrow() {
 }
 
 export default function AppointmentFlowchart({ currentPhase, seatNumber, deadline, currentDay }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
   const daysLeft = deadline ? deadline - currentDay : null;
   const inFallback = fallbackPath.includes(currentPhase);
 
@@ -98,10 +102,10 @@ export default function AppointmentFlowchart({ currentPhase, seatNumber, deadlin
                     <img src="/assets/rosette.svg" className="persian-art" alt="" />
                   </div>
                 )}
-                <div className="node-label">{node.label}</div>
+                <div className="node-label">{t(node.label)}</div>
                 <div className="node-sub">
-                  {node.sub}
-                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${daysLeft}d`}
+                  {t(node.sub)}
+                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${t('process.daysLeft', { days: formatNumber(daysLeft, locale) })}`}
                 </div>
               </div>
               {i < row1.length - 1 && (
@@ -139,10 +143,10 @@ export default function AppointmentFlowchart({ currentPhase, seatNumber, deadlin
                     <img src="/assets/rosette.svg" className="persian-art" alt="" />
                   </div>
                 )}
-                <div className="node-label">{node.label}</div>
+                <div className="node-label">{t(node.label)}</div>
                 <div className="node-sub">
-                  {node.sub}
-                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${daysLeft}d`}
+                  {t(node.sub)}
+                  {isCurrent && daysLeft !== null && daysLeft > 0 && ` · ${t('process.daysLeft', { days: formatNumber(daysLeft, locale) })}`}
                 </div>
               </div>
               {i < row2.length - 1 && (
@@ -156,8 +160,8 @@ export default function AppointmentFlowchart({ currentPhase, seatNumber, deadlin
       </div>
 
       <div className="process-info">
-        <span className="process-info-label">Seat:</span>
-        <span className="process-info-value">#{seatNumber}</span>
+        <span className="process-info-label">{t('flow.seat')}:</span>
+        <span className="process-info-value">#{formatNumber(seatNumber, locale)}</span>
       </div>
     </div>
   );

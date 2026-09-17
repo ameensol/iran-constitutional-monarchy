@@ -1,6 +1,9 @@
 import ProgressBar from './ProgressBar';
 import './Tour.css';
 import './TourNarrator.css';
+import { useTranslation } from 'react-i18next';
+import { activeLocale } from '../i18n/simulatorFormat';
+import { localizeTourTitle } from '../i18n/tourCopy';
 
 interface TourNarratorProps {
   tourTitle: string;
@@ -23,6 +26,8 @@ export default function TourNarrator({
   canGoBack,
   children,
 }: TourNarratorProps) {
+  const { t, i18n } = useTranslation('tours');
+  const locale = activeLocale(i18n.language);
   return (
     <div className="narrator">
       {/* Corner ornaments */}
@@ -43,15 +48,16 @@ export default function TourNarrator({
       <button
         className="tour-close-btn"
         onClick={onClose}
-        title="Close tour"
+        title={t('narrator.close')}
+        aria-label={t('narrator.close')}
       >
         {'\u2715'}
       </button>
 
       {/* Header */}
       <div className="narrator-header">
-        <div className="narrator-title">{tourTitle}</div>
-        <div className="narrator-frame-title">{frameTitle}</div>
+        <div className="narrator-title">{localizeTourTitle(tourTitle, locale)}</div>
+        <div className="narrator-frame-title">{localizeTourTitle(frameTitle, locale)}</div>
       </div>
 
       {/* Scrollable content area */}
@@ -65,7 +71,7 @@ export default function TourNarrator({
           className="tour-back-btn"
           onClick={onBack}
           disabled={!canGoBack}
-          aria-label="Previous step"
+          aria-label={locale === 'fa' ? 'گام پیشین' : 'Previous step'}
         >
           {'\u2190'}
         </button>

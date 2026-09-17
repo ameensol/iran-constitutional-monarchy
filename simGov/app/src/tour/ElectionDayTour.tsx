@@ -166,7 +166,7 @@ export default function ElectionDayTour({ dispatch, speed, setSpeed, onClose, se
       canGoBack={stage > 0}
     >
       <div className={`tour-content ${fading ? 'fading' : ''}`}>
-        <ShahDialogue text={frame.shahText} />
+        <ShahDialogue text={frame.shahText} context={frame.title} />
         <div className="decisions">
           <button className="decision-btn" onClick={handleContinue}>
             {isLastFrame ? 'Return to Tour Hub' : 'Continue'}

@@ -4,7 +4,18 @@ A constitutional monarchy for Iran implemented as ten Solidity smart contracts o
 
 The constitutional framework draws from Reza Pahlavi's *Winds of Change* (2002), his vision for a secular, democratic constitutional monarchy, and is informed by Mohammad Reza Shah Pahlavi's *Answer to History* (1980). The project implements a minimum viable government: Crown, Parliament, Executive, Supreme Court, Elections with secret ballots using passport-based cryptographic proofs, Provincial Councils, Referendums, and Public Finance.
 
-864 tests cover every rule the contracts enforce, from simple checks (can only the Crown nominate a Prime Minister?) to full governance workflows (what happens when two Crown nominees fail and Parliament must dissolve?).
+963 tests cover every rule the contracts enforce, from simple checks (can only the Crown nominate a Prime Minister?) to full governance workflows (what happens when two Crown nominees fail and Parliament must dissolve?).
+
+## Constitution Lab
+
+The repository now includes a public-first English/Persian website for reading the constitution, learning the institutional model, and running SimGov without using GitHub, a wallet, or an account.
+
+```bash
+npm install --prefix simGov/app
+npm run dev
+```
+
+See [simGov/app/README.md](simGov/app/README.md) for routes, design-system documentation, and quality gates.
 
 ## Repository Structure
 

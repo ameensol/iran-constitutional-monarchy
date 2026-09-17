@@ -17,11 +17,43 @@
 body {
   background: var(--night);
   color: var(--cream);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body, 'IBM Plex Sans'), sans-serif;
   font-size: 14px;
   line-height: 1.5;
   min-height: 100vh;
   position: relative;
+}
+
+#root { min-height: 100vh; }
+
+.route-loading { min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 1rem; color: var(--civic-ink, #182133); background: var(--civic-parchment, #f3ead5); font-family: var(--font-body, sans-serif); }
+.route-loading img { width: 56px; height: 56px; animation: route-pulse 1.4s ease-in-out infinite; }
+@keyframes route-pulse { 50% { transform: rotate(22.5deg) scale(.9); opacity: .45; } }
+
+.simulator-ribbon { min-height: 42px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; padding-inline: clamp(.75rem, 2vw, 1.5rem); border-bottom: 1px solid rgba(232,213,163,.12); color: rgba(240,230,208,.7); background: #070a12; font-family: var(--font-body); font-size: 11px; }
+.simulator-ribbon a { color: var(--pale-gold); text-decoration: none; }.simulator-ribbon a:hover { color: var(--gold); }.simulator-ribbon button { justify-self: end; min-height: 30px; border: 0; color: rgba(240,230,208,.7); background: transparent; font: inherit; cursor: pointer; }.simulator-ribbon button:hover { color: var(--gold); }.simulator-ribbon__status { display: flex; align-items: center; gap: .45rem; }.simulator-ribbon__status i { width: 6px; height: 6px; border-radius: 50%; background: #4caa7f; box-shadow: 0 0 8px rgba(76,170,127,.6); }
+.simulator-ribbon__tools { justify-self: end; display: flex; align-items: center; gap: .75rem; }.simulator-ribbon__tools > button { min-block-size: 44px; }.simulator-language { border-color: rgba(232,213,163,.2); background: rgba(255,255,255,.03); }.simulator-language button { min-inline-size: 38px; min-block-size: 32px; padding-inline: .45rem; color: rgba(240,230,208,.66); }.simulator-language button[aria-pressed='true'] { color: #070a12; background: var(--gold); }
+.simulation-migration { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: .65rem 1rem; color: #d8ebff; background: #102a48; border-block-end: 1px solid rgba(86,164,215,.45); font-size: .78rem; }.simulation-migration button { inline-size: 36px; block-size: 36px; flex: 0 0 auto; border: 1px solid rgba(216,235,255,.3); border-radius: 50%; color: inherit; background: transparent; cursor: pointer; }
+.technical-ltr { direction: ltr; unicode-bidi: isolate; font-family: var(--font-mono); }
+.tour-authorship-disclosure { position: fixed; z-index: 950; inset-inline-end: 1rem; inset-block-end: .75rem; max-width: 340px; padding: .45rem .7rem; border: 1px solid rgba(201,168,76,.22); color: rgba(240,230,208,.64); background: rgba(7,10,18,.9); font-size: 10px; }
+
+@media (max-width: 720px) { .simulator-ribbon { grid-template-columns: 1fr auto; }.simulator-ribbon__status { display: none; }.tour-authorship-disclosure { inset-inline: .5rem; max-width: none; } }
+
+[dir='rtl'] .app-layout { font-family: var(--font-body-fa); }
+[dir='rtl'] .back-arrow, [dir='rtl'] .back-btn > span:first-child { display: inline-block; transform: scaleX(-1); }
+[dir='rtl'] .logo, [dir='rtl'] .section-title, [dir='rtl'] .card-title, [dir='rtl'] .inst-detail-title,
+[dir='rtl'] .inst-section-title, [dir='rtl'] .bill-detail-name, [dir='rtl'] .bill-label,
+[dir='rtl'] .node-label, [dir='rtl'] .narrator-title, [dir='rtl'] .narrator-frame-title,
+[dir='rtl'] .tour-hub-title, [dir='rtl'] .tour-card-title, [dir='rtl'] .disaster-title,
+[dir='rtl'] .disaster-card-name, [dir='rtl'] .shah-text { font-family: var(--font-display-fa), serif; letter-spacing: 0; }
+[dir='rtl'] .narrator { border-inline-start: 1px solid var(--gold); border-left: 0; }
+[dir='rtl'] .flow-arrow-h svg { transform: scaleX(-1); }
+[dir='rtl'] .simulator-ribbon__tools { justify-self: end; }
+[dir='rtl'] .headline-call, [dir='rtl'] .bill-id, [dir='rtl'] code { direction: ltr; unicode-bidi: isolate; text-align: left; font-family: var(--font-mono); }
+
+@media (prefers-reduced-motion: reduce) {
+  .view-enter, .route-loading img, .disaster-panel { animation: none !important; }
+  .app-main { transition: none; }
 }
 
 /* ── Persian Art Filters ───────────────────────── */

@@ -25,8 +25,10 @@ function simpleRandom(seed: number): number {
 }
 
 export interface ShahCommentaryResult {
+  quoteId: string;
   text: string;
-  trigger: string; // the event description that triggered this commentary
+  category: string;
+  triggerEvent: GovEvent;
 }
 
 /**
@@ -46,7 +48,7 @@ export function getShahCommentary(event: GovEvent, state: GovState): ShahComment
   if (matchingParallels.length > 0 && simpleRandom(state.day * 777) < 0.4) {
     const hp = matchingParallels[Math.floor(simpleRandom(state.day * 888) * matchingParallels.length)];
     recordCommentary(s, hp.id, state.day, hp.once);
-    return { text: hp.text, trigger: event.description };
+    return { quoteId: hp.id, text: hp.text, category: 'historical', triggerEvent: event };
   }
 
   // Regular commentary
@@ -54,5 +56,5 @@ export function getShahCommentary(event: GovEvent, state: GovState): ShahComment
   if (!entry) return null;
 
   recordCommentary(s, entry.id, state.day, entry.once ?? false);
-  return { text: entry.text, trigger: event.description };
+  return { quoteId: entry.id, text: entry.text, category: entry.category, triggerEvent: event };
 }

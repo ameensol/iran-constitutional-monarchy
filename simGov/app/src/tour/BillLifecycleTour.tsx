@@ -9,6 +9,7 @@ import DecisionButtons from './DecisionButtons';
 import BillFlowchart from './BillFlowchart';
 import { useTourCompletion } from './useTourCompletion';
 import { useTourSpotlight } from './useTourSpotlight';
+import TourActionHint from './TourActionHint';
 // genesis stages handled inline (BILL_TOUR_GENESIS_MAX)
 
 interface BillLifecycleTourProps {
@@ -494,13 +495,10 @@ export default function BillLifecycleTour({
       canGoBack={history.length > 1}
     >
       <div className={`tour-content ${fading ? 'fading' : ''}`}>
-        <ShahDialogue text={frame.shahText} />
+        <ShahDialogue text={frame.shahText} context={frame.title} />
         {frameId === '7' && <BillFlowchart activePath={activePath} />}
         {frame.mode === 'action' && (
-          <div className="tour-action-hint">
-            <span className="tour-action-hint-icon">{'\u261D'}</span>
-            <span>Use the buttons in the panel to continue</span>
-          </div>
+          <TourActionHint />
         )}
         {choices.length > 0 && <DecisionButtons choices={choices} onChoose={handleChoose} />}
       </div>

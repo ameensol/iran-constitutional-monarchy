@@ -1,0 +1,13 @@
+{
+  "name": "iran-constitutional-monarchy",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix simGov/app run dev",
+    "build": "npm --prefix simGov/app run build",
+    "lint": "npm --prefix simGov/app run lint",
+    "test:app": "npm --prefix simGov/app run test",
+    "test:e2e": "npm --prefix simGov/app run test:e2e",
+    "test:contracts": "forge test --root contracts",
+    "test:sdk": "npm --prefix sdk test"
+  }
+}
