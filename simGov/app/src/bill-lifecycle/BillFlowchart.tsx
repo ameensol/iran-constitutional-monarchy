@@ -1,4 +1,7 @@
 import type { Bill, BillStage } from '../simulation/types';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
+import { activeLocale, billStageLabel, formatNumber } from '../i18n/simulatorFormat';
 
 interface BillFlowchartProps {
   bill: Bill;
@@ -56,30 +59,30 @@ function isCompleted(fromStage: BillStage, current: BillStage): boolean {
   return cls.includes('completed') || cls.includes('terminal');
 }
 
-function getNodeSub(nodeStage: BillStage, bill: Bill, currentDay: number): string {
+function getNodeSub(nodeStage: BillStage, bill: Bill, currentDay: number, t: TFunction, n: (value: number) => string): string {
   switch (nodeStage) {
     case 'Introduced':
-      return `Day ${bill.submittedDay}`;
+      return t('labels.day', { day: n(bill.submittedDay) });
     case 'Majlis Voting':
-      if (bill.majlisYes > 0 || bill.majlisNo > 0) return `${bill.majlisYes} yes / ${bill.majlisNo} no`;
-      return 'Pending votes';
+      if (bill.majlisYes > 0 || bill.majlisNo > 0) return t('bills.voteResult', { yes: n(bill.majlisYes), no: n(bill.majlisNo) });
+      return t('bills.pendingVotes');
     case 'Senate Review':
-      if (bill.senateYes > 0 || bill.senateNo > 0) return `${bill.senateYes} yes / ${bill.senateNo} no`;
-      return 'Pending votes';
+      if (bill.senateYes > 0 || bill.senateNo > 0) return t('bills.voteResult', { yes: n(bill.senateYes), no: n(bill.senateNo) });
+      return t('bills.pendingVotes');
     case 'Crown Action': {
       if (bill.stage === 'Crown Action') {
         const daysLeft = bill.deadline - currentDay;
-        return daysLeft > 0 ? `\u23F1 ${daysLeft} days` : 'Overdue';
+        return daysLeft > 0 ? `\u23F1 ${t('labels.days', { count: n(daysLeft) })}` : t('bills.overdue');
       }
       return '';
     }
-    case 'Enacted':         return 'Becomes law';
-    case 'Rejected':        return 'Majlis failed';
-    case 'Senate Objected': return 'Returns to Majlis';
-    case 'Returned':        return 'Crown returns bill';
-    case 'Majlis Override':  return '2/3 supermajority';
-    case 'Referred':        return 'Reconsidered';
-    case 'Vetoed':          return 'Override failed';
+    case 'Enacted':         return t('bills.becomesLaw');
+    case 'Rejected':        return t('bills.majlisFailed');
+    case 'Senate Objected': return t('bills.returnsMajlis');
+    case 'Returned':        return t('bills.crownReturns');
+    case 'Majlis Override': return t('bills.supermajority');
+    case 'Referred':        return t('bills.reconsidered');
+    case 'Vetoed':          return t('bills.overrideFailed');
     default:                return '';
   }
 }
@@ -103,9 +106,12 @@ function VArrow() {
 }
 
 function Node({ stage, bill, currentDay }: { stage: BillStage; bill: Bill; currentDay: number }) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const n = (value: number) => formatNumber(value, locale);
   const cls = getNodeClass(stage, bill.stage);
   const isCurrent = stage === bill.stage;
-  const sub = getNodeSub(stage, bill, currentDay);
+  const sub = getNodeSub(stage, bill, currentDay, t, n);
   return (
     <div className={cls}>
       {isCurrent && (
@@ -113,7 +119,7 @@ function Node({ stage, bill, currentDay }: { stage: BillStage; bill: Bill; curre
           <img src="/assets/rosette.svg" className="persian-art" alt="" />
         </div>
       )}
-      <div className="node-label">{stage}</div>
+      <div className="node-label">{billStageLabel(stage, t)}</div>
       {sub && <div className="node-sub">{sub}</div>}
     </div>
   );

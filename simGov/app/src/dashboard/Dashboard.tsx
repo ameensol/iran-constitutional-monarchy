@@ -4,6 +4,7 @@ import InstitutionGrid from './InstitutionGrid';
 import BillsTable from './BillsTable';
 import EventLog from './EventLog';
 import BreakingNewsBanner from './BreakingNewsBanner';
+import { useTranslation } from 'react-i18next';
 import './Dashboard.css';
 
 interface DashboardProps {
@@ -15,6 +16,7 @@ interface DashboardProps {
 
 export default function Dashboard({ sim, onSelectBill, onClickInstitution, onClickEventInstitution }: DashboardProps) {
   const { state } = sim;
+  const { t } = useTranslation('simulator');
 
   return (
     <>
@@ -29,16 +31,16 @@ export default function Dashboard({ sim, onSelectBill, onClickInstitution, onCli
           onDismiss={sim.dismissBreaking}
         />
 
-        <div className="section-title">Institutions</div>
+        <div className="section-title">{t('sections.institutions')}</div>
         <InstitutionGrid state={state} onClickInstitution={onClickInstitution} />
 
-        <div className="section-title">Active Bills</div>
+        <div className="section-title">{t('sections.activeBills')}</div>
         <div className="section-divider" />
         <div data-tour-id="bills">
           <BillsTable bills={state.bills} currentDay={state.day} onSelectBill={onSelectBill} />
         </div>
 
-        <div className="section-title">The Royal Gazette</div>
+        <div className="section-title">{t('sections.gazette')}</div>
         <div className="section-divider" />
         <div data-tour-id="events">
           <EventLog

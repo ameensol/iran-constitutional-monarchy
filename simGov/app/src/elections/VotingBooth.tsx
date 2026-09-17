@@ -4,17 +4,8 @@ import { PARTY_NAMES, PARTY_COLORS } from '../simulation/nameGen';
 import { seededRandom } from '../simulation/engine';
 import ZkProofAnimation from './ZkProofAnimation';
 import BallotReceipt from './BallotReceipt';
-
-const PARTY_DESCRIPTORS: Record<string, string> = {
-  'Nokhostin':    'centrist reformers',
-  'Mihan':        'nationalist conservatives',
-  'Sabz':         'environmentalist progressives',
-  'Edalat':       'social democrats',
-  'Azadi':        'libertarian liberals',
-  'Omid':         'moderate technocrats',
-  'Pishraft':     'developmental modernizers',
-  'Hambastegi':   'labor / workers',
-};
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber, partyDisplayName } from '../i18n/simulatorFormat';
 
 type BoothPhase = 'selecting' | 'proving' | 'receipt';
 
@@ -46,6 +37,8 @@ function useVoterCounter(electionId: number, active: boolean): number {
 }
 
 export default function VotingBooth({ election, currentDay, playerVotes, dispatch, provinceName }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
   const [selectedParty, setSelectedParty] = useState<PartyId | null>(null);
   const [phase, setPhase] = useState<BoothPhase>('selecting');
   const [votedParty, setVotedParty] = useState<PartyId | null>(null);
@@ -71,9 +64,7 @@ export default function VotingBooth({ election, currentDay, playerVotes, dispatc
   }, []);
 
   const daysLeft = election.phaseDeadline - currentDay;
-  const electionLabel = election.electionType === 'majlis_general'
-    ? 'Majlis General Election'
-    : 'Provincial Council Election';
+  const electionLabel = t(election.electionType === 'majlis_general' ? 'election.majlisGeneral' : 'election.provincial');
 
   const displayParty = votedParty || existingVote?.party || '';
   const displayProofHash = existingVote?.proofHash || '';
@@ -87,7 +78,7 @@ export default function VotingBooth({ election, currentDay, playerVotes, dispatc
       {effectivePhase !== 'proving' && (
         <div className="voter-counter">
           <span className="voter-counter-icon">{'\uD83D\uDDF3\uFE0F'}</span>
-          <span><span className="voter-counter-number">{voterCount.toLocaleString()}</span> citizens have voted{provinceName ? ` in ${provinceName}` : ''}</span>
+          <span>{t(provinceName ? 'election.citizensVotedProvince' : 'election.citizensVoted', { count: formatNumber(voterCount, locale), province: provinceName })}</span>
         </div>
       )}
 
@@ -95,7 +86,7 @@ export default function VotingBooth({ election, currentDay, playerVotes, dispatc
       {effectivePhase === 'selecting' && (
         <>
           <div className="voting-booth-deadline">
-            Voting closes in {daysLeft} day{daysLeft !== 1 ? 's' : ''}
+            {t('election.closes', { count: formatNumber(daysLeft, locale) })}
           </div>
 
           {PARTY_NAMES.map((party) => (
@@ -108,8 +99,8 @@ export default function VotingBooth({ election, currentDay, playerVotes, dispatc
                 <div className="party-option-radio-inner" />
               </div>
               <div className="party-option-color" style={{ background: PARTY_COLORS[party] }} />
-              <span className="party-option-name">{party}</span>
-              <span className="party-option-desc">{PARTY_DESCRIPTORS[party] ?? ''}</span>
+              <span className="party-option-name">{partyDisplayName(party, locale, t)}</span>
+              <span className="party-option-desc">{t(`parties.${party}.description`)}</span>
             </div>
           ))}
 
@@ -119,7 +110,7 @@ export default function VotingBooth({ election, currentDay, playerVotes, dispatc
               disabled={!selectedParty}
               onClick={handleCastBallot}
             >
-              Cast Your Ballot
+              {t('election.cast')}
             </button>
           </div>
         </>

@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export type InstitutionId = 'crown' | 'parliament' | 'executive' | 'court' | 'elections' | 'budget';
 
@@ -23,73 +24,35 @@ export interface NavigationControls {
   goToTourHub: () => void;
 }
 
-const INITIAL_STATE: ViewState = { view: 'dashboard' };
-
-function navigate(setViewState: React.Dispatch<React.SetStateAction<ViewState>>, state: ViewState) {
-  setViewState(state);
-  history.pushState(state, '', null);
+function parseView(pathname: string): ViewState {
+  const marker = '/simulate';
+  const suffix = pathname.slice(pathname.indexOf(marker) + marker.length).replace(/^\/+|\/+$/g, '');
+  const [section, rawId] = suffix.split('/');
+  if (!section) return { view: 'dashboard' };
+  if (section === 'tours' && !rawId) return { view: 'tour-hub' };
+  if (section === 'tours' && rawId) return { view: 'tour', tourId: decodeURIComponent(rawId) };
+  if (section === 'institutions' && rawId) return { view: 'institution', institutionId: decodeURIComponent(rawId) as InstitutionId };
+  if (section === 'bills' && rawId) return { view: 'bill', billId: Number(rawId) };
+  if (section === 'people' && rawId) return { view: 'person', personId: Number(rawId) };
+  if (section === 'processes' && rawId) return { view: 'process', processId: decodeURIComponent(rawId) };
+  return { view: 'dashboard' };
 }
 
 export function useNavigation(): NavigationControls {
-  const [viewState, setViewState] = useState<ViewState>(INITIAL_STATE);
+  const { locale = 'en' } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const base = `/${locale}/simulate`;
+  const viewState = useMemo(() => parseView(location.pathname), [location.pathname]);
 
-  // Replace the initial history entry with our state so popstate always has ViewState
-  useEffect(() => {
-    history.replaceState(INITIAL_STATE, '', null);
+  const goBack = useCallback(() => navigate(-1), [navigate]);
+  const goToDashboard = useCallback(() => navigate(base), [base, navigate]);
+  const goToInstitution = useCallback((id: InstitutionId) => navigate(`${base}/institutions/${id}`), [base, navigate]);
+  const goToBill = useCallback((billId: number) => navigate(`${base}/bills/${billId}`), [base, navigate]);
+  const goToPerson = useCallback((personId: number) => navigate(`${base}/people/${personId}`), [base, navigate]);
+  const goToProcess = useCallback((processId: string) => navigate(`${base}/processes/${encodeURIComponent(processId)}`), [base, navigate]);
+  const goToTour = useCallback((tourId = 'genesis') => navigate(`${base}/tours/${tourId}`), [base, navigate]);
+  const goToTourHub = useCallback(() => navigate(`${base}/tours`), [base, navigate]);
 
-    const onPopState = (e: PopStateEvent) => {
-      if (e.state && typeof e.state.view === 'string') {
-        setViewState(e.state as ViewState);
-      } else {
-        setViewState(INITIAL_STATE);
-      }
-    };
-
-    window.addEventListener('popstate', onPopState);
-    return () => window.removeEventListener('popstate', onPopState);
-  }, []);
-
-  const goBack = useCallback(() => {
-    history.back();
-  }, []);
-
-  const goToDashboard = useCallback(() => {
-    navigate(setViewState, { view: 'dashboard' });
-  }, []);
-
-  const goToInstitution = useCallback((id: InstitutionId) => {
-    navigate(setViewState, { view: 'institution', institutionId: id });
-  }, []);
-
-  const goToBill = useCallback((billId: number) => {
-    navigate(setViewState, { view: 'bill', billId });
-  }, []);
-
-  const goToPerson = useCallback((personId: number) => {
-    navigate(setViewState, { view: 'person', personId });
-  }, []);
-
-  const goToProcess = useCallback((processId: string) => {
-    navigate(setViewState, { view: 'process', processId });
-  }, []);
-
-  const goToTour = useCallback((tourId?: string) => {
-    navigate(setViewState, { view: 'tour', tourId });
-  }, []);
-
-  const goToTourHub = useCallback(() => {
-    navigate(setViewState, { view: 'tour-hub' });
-  }, []);
-
-  return {
-    viewState,
-    goBack,
-    goToDashboard,
-    goToInstitution,
-    goToBill,
-    goToPerson,
-    goToProcess,
-    goToTour,
-    goToTourHub,
-  };
+  return { viewState, goBack, goToDashboard, goToInstitution, goToBill, goToPerson, goToProcess, goToTour, goToTourHub };
 }

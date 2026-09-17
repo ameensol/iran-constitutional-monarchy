@@ -1,6 +1,9 @@
 import { TOURS, TOUR_CATEGORIES } from './tourRegistry';
 import { useTourCompletion } from './useTourCompletion';
 import './TourHub.css';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber } from '../i18n/simulatorFormat';
+import { localizeTourCategory, localizeTourDescription, localizeTourTitle } from '../i18n/tourCopy';
 
 interface TourHubProps {
   onBack: () => void;
@@ -9,16 +12,18 @@ interface TourHubProps {
 
 export default function TourHub({ onBack, onStartTour }: TourHubProps) {
   const { isCompleted } = useTourCompletion();
+  const { t, i18n } = useTranslation('tours');
+  const locale = activeLocale(i18n.language);
 
   return (
     <div className="tour-hub">
       <div className="tour-hub-header">
         <button className="tour-hub-back" onClick={onBack}>
-          {'\u2190'} Dashboard
+          <span aria-hidden="true">{'\u2190'}</span> {t('hub.back')}
         </button>
-        <h1 className="tour-hub-title">Walkthroughs</h1>
+        <h1 className="tour-hub-title">{t('hub.title')}</h1>
         <p className="tour-hub-subtitle">
-          Learn how constitutional governance works, one institution at a time.
+          {t('hub.intro')}
         </p>
       </div>
 
@@ -27,7 +32,7 @@ export default function TourHub({ onBack, onStartTour }: TourHubProps) {
         if (tours.length === 0) return null;
         return (
           <div key={cat.key} className="tour-hub-section">
-            <h2 className="tour-hub-section-title">{cat.label}</h2>
+            <h2 className="tour-hub-section-title">{localizeTourCategory(cat.label, locale)}</h2>
             <div className="tour-hub-grid">
               {tours.map((tour) => {
                 const completed = isCompleted(tour.id);
@@ -42,18 +47,18 @@ export default function TourHub({ onBack, onStartTour }: TourHubProps) {
                     </div>
 
                     {completed && (
-                      <div className="tour-card-check" title="Completed">
+                      <div className="tour-card-check" title={t('hub.completed')}>
                         {'\u2713'}
                       </div>
                     )}
 
                     <div className="tour-card-body">
-                      <div className="tour-card-title">{tour.title}</div>
-                      <div className="tour-card-desc">{tour.description}</div>
+                      <div className="tour-card-title">{localizeTourTitle(tour.title, locale)}</div>
+                      <div className="tour-card-desc">{localizeTourDescription(tour.description, locale)}</div>
                       <div className="tour-card-meta">
-                        <span>{tour.totalSteps} steps</span>
+                        <span>{locale === 'fa' ? `${formatNumber(tour.totalSteps, locale)} گام` : `${tour.totalSteps} steps`}</span>
                         {tour.resetsState && (
-                          <span className="tour-card-warning">Resets simulation</span>
+                          <span className="tour-card-warning">{locale === 'fa' ? 'شبیه‌سازی را بازنشانی می‌کند' : 'Resets simulation'}</span>
                         )}
                       </div>
                     </div>

@@ -2,7 +2,7 @@
 .tour-close-btn {
   position: absolute;
   top: 12px;
-  right: 40px;
+  inset-inline-end: 40px;
   width: 28px;
   height: 28px;
   border: 1px solid var(--lapis);
@@ -63,7 +63,7 @@
   object-position: 70% 15%;
 }
 .shah-text {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-style: normal;
   font-size: 17px;
   line-height: 1.7;
@@ -88,7 +88,7 @@
   border: 1px solid var(--lapis);
   border-radius: 6px;
   color: var(--cream);
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: 15px;
   cursor: pointer;
   text-align: center;
@@ -116,7 +116,7 @@
   right: 10%;
 }
 .decision-sub {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 11px;
   color: var(--pale-gold);
   margin-top: 6px;

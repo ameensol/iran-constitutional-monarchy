@@ -1,0 +1,1124 @@
+[
+  {
+    "id": "I.1",
+    "en": {
+      "id": "I.1",
+      "title": "The State",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. Iran is constituted as a constitutional monarchy, in which sovereignty resides with the people and is exercised through democratic institutions established by this Constitution.\n2. The form of the State shall not be altered except in accordance with this Constitution.\n\n> **Implementation:** Off-chain (referenced). The contract system embodies this principle — all governance functions derive from the Constitution.sol registry, and amendment is the only path to change."
+    },
+    "fa": {
+      "id": "I.1",
+      "title": "دولت",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. ایران به‌صورت پادشاهی مشروطه تأسیس شده است که حاکمیت از آنِ مردم بوده و از طریق نهادهای دموکراتیک مقرر در این قانون اساسی اعمال می‌شود.\n2. شکل دولت جز بر طبق مقررات این قانون اساسی قابل تغییر نیست.\n\n> **اجرا:** خارج از زنجیره (ارجاعی). سامانه قراردادها مظهر این اصل است — تمامی وظایف حکمرانی از دفتر ثبت Constitution.sol مشتق شده و اصلاحیه تنها مسیر تغییر است."
+    }
+  },
+  {
+    "id": "I.2",
+    "en": {
+      "id": "I.2",
+      "title": "Supremacy of the Constitution",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. This Constitution is the supreme law of the State.\n2. Any law, regulation, decision, or act inconsistent with this Constitution is void to the extent of the inconsistency.\n3. All organs of the State derive their authority from this Constitution and shall act within its limits.\n\n> **Implementation:** On-chain (automated). Constitution.sol is the central registry. All other contracts reference it for role authorization and parameter values. Unauthorized actions revert."
+    },
+    "fa": {
+      "id": "I.2",
+      "title": "برتری قانون اساسی",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. این قانون اساسی عالی‌ترین قانون دولت است.\n2. هر قانون، مقررات، تصمیم یا اقدامی که با این قانون اساسی مغایر باشد، به میزان مغایرت باطل است.\n3. تمامی ارکان دولت اقتدار خود را از این قانون اساسی کسب کرده و در حدود آن عمل خواهند کرد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Constitution.sol دفتر ثبت مرکزی است. تمامی قراردادهای دیگر برای مجوز نقش و مقادیر پارامتر به آن مراجعه می‌کنند. اقدامات غیرمجاز برگشت می‌خورند."
+    }
+  },
+  {
+    "id": "I.3",
+    "en": {
+      "id": "I.3",
+      "title": "Democratic Authority",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. Democratic authority originates with the people.\n2. Democratic authority shall be exercised through:\n   1. free and regular elections;\n   2. representative institutions established by this Constitution;\n   3. constitutional procedures designed to ensure effective and continuous government.\n\n> **Implementation:** On-chain (automated). Election.sol conducts elections, Parliament.sol seats elected members, and all contracts enforce procedural rules."
+    },
+    "fa": {
+      "id": "I.3",
+      "title": "اقتدار دموکراتیک",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. اقتدار دموکراتیک ریشه در مردم دارد.\n2. اقتدار دموکراتیک از طرق زیر اعمال خواهد شد:\n   1. انتخابات آزاد و منظم؛\n   2. نهادهای نمایندگی مقرر در این قانون اساسی؛\n   3. تشریفات قانون اساسی طراحی‌شده برای تضمین حکومت مؤثر و مستمر.\n\n> **اجرا:** بر روی زنجیره (خودکار). Election.sol انتخابات را برگزار می‌کند، Parliament.sol اعضای منتخب را می‌نشاند، و تمامی قراردادها قواعد شکلی را اجرا می‌نمایند."
+    }
+  },
+  {
+    "id": "I.4",
+    "en": {
+      "id": "I.4",
+      "title": "Separation and Allocation of Powers",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. The powers of the State are exercised by:\n   1. the Crown;\n   2. Parliament;\n   3. the Executive;\n   4. the Supreme Court.\n2. Each institution shall exercise only those powers conferred upon it by this Constitution.\n\n> **Implementation:** On-chain (automated). Each contract enforces its own role boundaries via access control modifiers. Crown.sol cannot legislate; Parliament.sol cannot appoint judges; Executive.sol cannot dissolve the Majlis."
+    },
+    "fa": {
+      "id": "I.4",
+      "title": "تفکیک و تخصیص قوا",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. قوای دولت توسط نهادهای زیر اعمال می‌شود:\n   1. تاج؛\n   2. پارلمان؛\n   3. قوه مجریه؛\n   4. دیوان عالی.\n2. هر نهاد فقط آن اختیاراتی را اعمال خواهد کرد که این قانون اساسی به وی تفویض نموده باشد.\n\n> **اجرا:** بر روی زنجیره (خودکار). هر قرارداد محدودیت‌های نقش خود را از طریق تعدیل‌کننده‌های کنترل دسترسی اجرا می‌کند. Crown.sol قادر به قانون‌گذاری نیست؛ Parliament.sol قادر به انتصاب قاضی نیست؛ Executive.sol قادر به انحلال مجلس نیست."
+    }
+  },
+  {
+    "id": "I.5",
+    "en": {
+      "id": "I.5",
+      "title": "Continuity of the State",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. The State shall endure notwithstanding:\n   1. dissolution of Parliament;\n   2. resignation, removal, or incapacity of officeholders;\n   3. emergencies or extraordinary circumstances.\n2. This Constitution shall be interpreted to ensure the continuous operation of lawful authority.\n\n> **Implementation:** On-chain (automated). Caretaker provisions activate automatically. Budget continuity engages when no new budget is enacted. The Senate persists during Majlis dissolution."
+    },
+    "fa": {
+      "id": "I.5",
+      "title": "استمرار دولت",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. دولت علی‌رغم موارد زیر پایدار خواهد ماند:\n   1. انحلال پارلمان؛\n   2. استعفا، عزل یا عدم صلاحیت صاحب‌منصبان؛\n   3. شرایط اضطراری یا فوق‌العاده.\n2. این قانون اساسی به‌گونه‌ای تفسیر خواهد شد که عملکرد مستمر اقتدار قانونی تضمین گردد.\n\n> **اجرا:** بر روی زنجیره (خودکار). مقررات دولت سرپرست به‌صورت خودکار فعال می‌شوند. استمرار بودجه هنگامی که بودجه جدیدی تصویب نشده فعال می‌گردد. سنا در طول انحلال مجلس برقرار می‌ماند."
+    }
+  },
+  {
+    "id": "I.6",
+    "en": {
+      "id": "I.6",
+      "title": "Constitutional Interpretation",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. This Constitution shall be interpreted so as to:\n   1. preserve democratic legitimacy;\n   2. maintain the separation of powers;\n   3. ensure effective government;\n   4. prevent the indefinite suspension or blockage of constitutional functions.\n2. Where this Constitution prescribes procedural consequences or automatic outcomes, no organ shall substitute discretionary judgment for those consequences.\n\n> **Implementation:** On-chain (automated). Clause 2 is directly enforced — deadlines trigger automatic outcomes (e.g., Crown's failure to act does not block enactment; Senate's failure to act is deemed confirmation)."
+    },
+    "fa": {
+      "id": "I.6",
+      "title": "تفسیر قانون اساسی",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. این قانون اساسی به‌گونه‌ای تفسیر خواهد شد که:\n   1. مشروعیت دموکراتیک حفظ شود؛\n   2. تفکیک قوا برقرار بماند؛\n   3. حکومت مؤثر تضمین گردد؛\n   4. از تعلیق یا انسداد نامحدود وظایف قانون اساسی جلوگیری شود.\n2. در مواردی که این قانون اساسی عواقب شکلی یا نتایج خودکار مقرر نموده باشد، هیچ رکنی نمی‌تواند قضاوت صلاحدیدی را جایگزین آن عواقب نماید.\n\n> **اجرا:** بر روی زنجیره (خودکار). بند ۲ مستقیماً اجرا می‌شود — مهلت‌ها نتایج خودکار را فعال می‌سازند (مثلاً عدم اقدام تاج مانع لازم‌الاجرا شدن قانون نمی‌گردد؛ عدم اقدام سنا به‌منزله تأیید تلقی می‌شود)."
+    }
+  },
+  {
+    "id": "I.7",
+    "en": {
+      "id": "I.7",
+      "title": "Constitutional Parameters",
+      "partId": "I",
+      "partTitle": "FOUNDATIONAL PROVISIONS",
+      "body": "1. Constitutional parameters (term lengths, quorum requirements, deadlines, thresholds) are stored in the Constitution.sol registry.\n2. Parameters may be amended only through the constitutional amendment process defined in Part VII.\n3. All contracts read parameters from the central registry rather than hardcoding values.\n\n> **Implementation:** On-chain (automated). Constitution.sol stores all configurable parameters. amendParameter() is callable only by the Referendum contract after successful amendment.\n\n---"
+    },
+    "fa": {
+      "id": "I.7",
+      "title": "پارامترهای قانون اساسی",
+      "partId": "یکم",
+      "partTitle": "مقررات بنیادین",
+      "body": "1. پارامترهای قانون اساسی (مدت دوره‌ها، الزامات حد نصاب، مهلت‌ها، آستانه‌ها) در دفتر ثبت Constitution.sol ذخیره می‌شوند.\n2. پارامترها فقط از طریق فرایند اصلاح قانون اساسی مقرر در بخش هفتم قابل تغییر هستند.\n3. تمامی قراردادها پارامترها را از دفتر ثبت مرکزی می‌خوانند و مقادیر را در خود ثابت نمی‌کنند.\n\n> **اجرا:** بر روی زنجیره (خودکار). Constitution.sol تمامی پارامترهای قابل تنظیم را ذخیره می‌کند. `amendParameter()` فقط توسط قرارداد Referendum پس از اصلاحیه موفق قابل فراخوانی است.\n\n---"
+    }
+  },
+  {
+    "id": "II.1",
+    "en": {
+      "id": "II.1",
+      "title": "Nature of the Crown",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. The Crown is a constitutional office of continuity and guardianship.\n2. The Crown shall not govern, legislate, command the armed forces, or control public finances.\n3. The Crown shall exercise only those powers expressly conferred by this Constitution.\n4. The Crown shall not substitute its judgment for that of democratic institutions, except as expressly provided herein.\n\n> **Reza Pahlavi comments:** \"The best way for a monarch to serve the country is to be the guarantor of the constitutional process and to protect the constitution itself.\"\n\n> **Implementation:** On-chain (automated). Crown.sol restricts callable functions to those explicitly defined. The modifier `onlyMonarch` gates Crown actions; the contract exposes no governance functions beyond those listed below."
+    },
+    "fa": {
+      "id": "II.1",
+      "title": "ماهیت تاج",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. تاج یک مقام قانون اساسی برای استمرار و پاسداری است.\n2. تاج حق حکمرانی، قانون‌گذاری، فرماندهی نیروهای مسلح یا کنترل مالیه عمومی را ندارد.\n3. تاج فقط آن اختیاراتی را اعمال خواهد نمود که صریحاً توسط این قانون اساسی تفویض شده باشد.\n4. تاج قضاوت خود را جایگزین نهادهای دموکراتیک نخواهد کرد، مگر آنکه صریحاً در این قانون اساسی مقرر شده باشد.\n\n> **نظر رضا پهلوی:** «بهترین راه خدمت پادشاه به کشور آن است که ضامن فرایند قانون اساسی باشد و از خود قانون اساسی محافظت کند.»\n\n> **اجرا:** بر روی زنجیره (خودکار). Crown.sol توابع قابل فراخوانی را به موارد صریحاً تعریف‌شده محدود می‌کند. تعدیل‌کننده `onlyMonarch` اقدامات تاج را محدود می‌سازد؛ قرارداد هیچ تابع حکمرانی فراتر از موارد ذیل را ارائه نمی‌دهد."
+    }
+  },
+  {
+    "id": "II.2",
+    "en": {
+      "id": "II.2",
+      "title": "Ministerial Acts of the Crown",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. Where this Constitution requires a formal act of the Crown to acknowledge a legal outcome already determined by constitutional process, such act shall be ministerial.\n2. Ministerial acts shall not permit discretion as to timing, content, or result.\n3. Failure to perform a ministerial act within the prescribed deadline shall not delay or prevent the legal effect of the outcome acknowledged. The act shall be deemed performed automatically.\n4. Ministerial acts include the formal enactment of laws, the declaration of dissolution of the Majlis, and the recognition of constitutional facts certified by the Supreme Court.\n\n> **Implementation:** On-chain (automated). Each ministerial act has a deadline (`PARAM_CROWN_LAW_DEADLINE`). If the Crown does not act within the deadline, anyone may call `Parliament.claimCrownTimeout(billId)` to auto-enact the bill. Crown inaction equals assent."
+    },
+    "fa": {
+      "id": "II.2",
+      "title": "اقدامات وزارتی تاج",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. در مواردی که این قانون اساسی اقدام رسمی تاج را برای تأیید نتیجه قانونی که قبلاً توسط فرایند قانون اساسی تعیین شده الزامی می‌داند، چنین اقدامی وزارتی خواهد بود.\n2. اقدامات وزارتی اجازه صلاحدید در مورد زمان‌بندی، محتوا یا نتیجه را نخواهند داد.\n3. عدم انجام اقدام وزارتی در مهلت مقرر، اثر حقوقی نتیجه تأییدشده را به تأخیر نخواهد انداخت یا مانع آن نخواهد شد. اقدام به‌صورت خودکار انجام‌شده تلقی خواهد گشت.\n4. اقدامات وزارتی شامل لازم‌الاجرا نمودن رسمی قوانین، اعلام انحلال مجلس، و شناسایی وقایع قانون اساسی تأییدشده توسط دیوان عالی می‌باشد.\n\n> **اجرا:** بر روی زنجیره (خودکار). هر اقدام وزارتی دارای مهلت است (`PARAM_CROWN_LAW_DEADLINE`). اگر تاج در مهلت مقرر اقدام ننماید، هر شخصی می‌تواند `Parliament.claimCrownTimeout(billId)` را فراخوانی کرده و قانون را خودکار لازم‌الاجرا نماید. عدم اقدام تاج مساوی رضایت است."
+    }
+  },
+  {
+    "id": "II.3",
+    "en": {
+      "id": "II.3",
+      "title": "Appointment Powers",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. The Crown shall exercise appointment powers only where expressly authorized by this Constitution.\n2. Appointment powers shall not be used to govern, legislate, or direct policy.\n3. All appointments shall be subject to the qualifications and procedures prescribed by this Constitution.\n\n> **Implementation:** On-chain (human-triggered). Crown calls `nominatePrimeMinister()`, `nominateJustice()`, or `appointSenators()` — each validates preconditions and advances the appointment state machine."
+    },
+    "fa": {
+      "id": "II.3",
+      "title": "اختیارات انتصاب",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. تاج اختیارات انتصاب را فقط در مواردی اعمال خواهد کرد که صریحاً توسط این قانون اساسی مجاز شده باشد.\n2. اختیارات انتصاب برای حکمرانی، قانون‌گذاری یا هدایت خط‌مشی به کار نخواهد رفت.\n3. تمامی انتصابات تابع صلاحیت‌ها و تشریفات مقرر در این قانون اساسی خواهند بود.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). تاج `nominatePrimeMinister()`، `nominateJustice()` یا `appointSenators()` را فراخوانی می‌کند — هر یک پیش‌شرط‌ها را اعتبارسنجی کرده و ماشین حالت انتصاب را پیش می‌برد."
+    }
+  },
+  {
+    "id": "II.4",
+    "en": {
+      "id": "II.4",
+      "title": "Nomination of the Prime Minister",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. The Crown shall nominate a candidate for Prime Minister in accordance with Part IV.\n2. The Crown may make up to two nominations following a vacancy or loss of parliamentary confidence.\n3. Each nomination shall be submitted to the Majlis for a vote of confidence.\n4. Where the Crown's nominations fail to obtain confidence, subsequent procedures shall proceed as provided in Part IV.\n\n> **Implementation:** On-chain (human-triggered). Crown.sol.nominatePrimeMinister() validates that the formation cycle permits a Crown nomination (max 2), registers the candidate, and transitions the Executive.sol state machine to await a confidence vote."
+    },
+    "fa": {
+      "id": "II.4",
+      "title": "نامزدی نخست‌وزیر",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. تاج نامزدی برای نخست‌وزیری را مطابق بخش چهارم معرفی خواهد کرد.\n2. تاج می‌تواند حداکثر دو نامزد پس از خالی شدن پست یا از دست دادن اعتماد پارلمان معرفی نماید.\n3. هر نامزدی جهت رأی اعتماد به مجلس ارائه خواهد شد.\n4. در صورتی که نامزدهای تاج موفق به کسب اعتماد نشوند، تشریفات بعدی مطابق بخش چهارم اجرا خواهد شد.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Crown.sol.nominatePrimeMinister()` اعتبارسنجی می‌کند که چرخه تشکیل اجازه نامزدی تاج را می‌دهد (حداکثر ۲)، نامزد را ثبت کرده و ماشین حالت Executive.sol را به انتظار رأی اعتماد منتقل می‌نماید."
+    }
+  },
+  {
+    "id": "II.5",
+    "en": {
+      "id": "II.5",
+      "title": "Legislative Return and Constitutional Referral",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. The Crown may, once with respect to any proposed law adopted by Parliament, return that law to the Majlis for reconsideration.\n2. The return of a law shall suspend its enactment pending reconsideration.\n3. Upon reconsideration and re-adoption by the Majlis, the Crown may either enact the law or refer it to the Supreme Court for constitutional review.\n4. Referral to the Supreme Court shall prioritize constitutional review and shall not constitute a veto.\n5. If the Crown neither enacts, returns, nor refers a law within fourteen days of transmission, the law shall be deemed enacted.\n\n> **Implementation:** On-chain (human-triggered + automated). Crown calls `returnLaw()` or `referToSupremeCourt()` within the 14-day window. After 14 days, `Parliament.claimCrownTimeout(billId)` becomes callable by anyone to trigger automatic enactment."
+    },
+    "fa": {
+      "id": "II.5",
+      "title": "عودت قانون و ارجاع به دیوان عالی",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. تاج می‌تواند، یک بار در مورد هر قانون مصوب پارلمان، آن قانون را جهت تجدید نظر به مجلس بازگرداند.\n2. عودت قانون، لازم‌الاجرا شدن آن را تا تجدید نظر معلق می‌سازد.\n3. پس از تجدید نظر و تصویب مجدد توسط مجلس، تاج می‌تواند قانون را لازم‌الاجرا نماید یا آن را جهت بازنگری قانون اساسی به دیوان عالی ارجاع دهد.\n4. ارجاع به دیوان عالی بازنگری قانون اساسی را اولویت‌بندی کرده و به‌منزله وتو تلقی نمی‌شود.\n5. اگر تاج ظرف چهارده روز از ارسال، قانون را نه لازم‌الاجرا نماید، نه بازگرداند و نه ارجاع دهد، قانون لازم‌الاجرا شده تلقی خواهد شد.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خودکار). تاج `returnLaw()` یا `referToSupremeCourt()` را در پنجره ۱۴ روزه فراخوانی می‌کند. پس از ۱۴ روز، `Parliament.claimCrownTimeout(billId)` توسط هر شخصی برای لازم‌الاجرا شدن خودکار قابل فراخوانی می‌شود."
+    }
+  },
+  {
+    "id": "II.6",
+    "en": {
+      "id": "II.6",
+      "title": "Appointment of Senators",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. The Crown shall appoint Senators as provided in Part III.\n2. Crown-appointed Senators shall not constitute more than ten percent of the Senate.\n3. Crown-appointed Senators shall meet the same qualifications as other Senators.\n\n> **Implementation:** On-chain (human-triggered). Crown.sol.appointSenators() validates the 10% cap and forwards appointments to Parliament.sol."
+    },
+    "fa": {
+      "id": "II.6",
+      "title": "انتصاب سناتورها",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. تاج سناتورها را مطابق بخش سوم منصوب خواهد کرد.\n2. سناتورهای منصوب توسط تاج نباید بیش از ده درصد سنا را تشکیل دهند.\n3. سناتورهای منصوب توسط تاج باید واجد همان شرایط صلاحیت سایر سناتورها باشند.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Crown.sol.appointSenators()` سقف ۱۰ درصد را اعتبارسنجی کرده و انتصابات را به Parliament.sol ارسال می‌نماید."
+    }
+  },
+  {
+    "id": "II.7",
+    "en": {
+      "id": "II.7",
+      "title": "Declaration of Dissolution",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. Where this Constitution requires the dissolution of the Majlis, the Crown shall formally declare such dissolution.\n2. The declaration shall be a ministerial act, confirmatory in nature and without independent legal effect.\n3. Failure to declare dissolution within seven days shall not delay its legal effect.\n\n> **Implementation:** On-chain (human-triggered). Crown.sol.declareDissolution() calls Parliament.dissolveMajlis(). The dissolution deadline is tracked but auto-dissolution on Crown inaction is not currently enforced (dissolution requires an explicit trigger from Crown or Executive)."
+    },
+    "fa": {
+      "id": "II.7",
+      "title": "اعلام انحلال",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. در مواردی که این قانون اساسی انحلال مجلس را الزامی می‌داند، تاج رسماً چنین انحلالی را اعلام خواهد کرد.\n2. اعلام، اقدامی وزارتی و تأییدی بوده و فاقد اثر حقوقی مستقل است.\n3. عدم اعلام انحلال ظرف هفت روز اثر حقوقی آن را به تأخیر نخواهد انداخت.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Crown.sol.declareDissolution()` تابع `Parliament.dissolveMajlis()` را فراخوانی می‌نماید. مهلت انحلال ردیابی می‌شود اما انحلال خودکار در صورت عدم اقدام تاج در حال حاضر اجرا نمی‌شود (انحلال نیاز به فعال‌سازی صریح از سوی تاج یا قوه مجریه دارد)."
+    }
+  },
+  {
+    "id": "II.8",
+    "en": {
+      "id": "II.8",
+      "title": "Interpretive Limitation",
+      "partId": "II",
+      "partTitle": "THE CROWN",
+      "body": "1. The powers of the Crown shall be interpreted so as to minimize discretion, prevent accumulation of authority, and preserve democratic accountability.\n2. No power of the Crown may be expanded by custom, practice, or implication.\n3. In cases of doubt, interpretation shall favor democratic institutions.\n\n> **Reza Pahlavi comments:** \"The monarch must be above all political factions and be neutral, unbiased and impartial vis-à-vis all ideological, ethnic, religious, or other social and political groups.\"\n\n> **Implementation:** On-chain (automated). The Crown.sol contract has a fixed set of functions. No upgrade mechanism allows expansion of Crown powers outside the amendment process.\n\n---"
+    },
+    "fa": {
+      "id": "II.8",
+      "title": "محدودیت تفسیری",
+      "partId": "دوم",
+      "partTitle": "تاج",
+      "body": "1. اختیارات تاج به‌گونه‌ای تفسیر خواهند شد که صلاحدید به حداقل رسد، از تمرکز اقتدار جلوگیری شود و پاسخگویی دموکراتیک حفظ گردد.\n2. هیچ اختیاری از تاج نمی‌تواند توسط عرف، رویه یا استنباط گسترش یابد.\n3. در موارد تردید، تفسیر به نفع نهادهای دموکراتیک خواهد بود.\n\n> **نظر رضا پهلوی:** «پادشاه باید فراتر از تمامی جناح‌های سیاسی بوده و نسبت به تمامی گروه‌های ایدئولوژیک، قومی، مذهبی یا سایر گروه‌های اجتماعی و سیاسی بی‌طرف و بی‌غرض باشد.»\n\n> **اجرا:** بر روی زنجیره (خودکار). قرارداد Crown.sol مجموعه ثابتی از توابع دارد. هیچ سازوکار ارتقایی اجازه گسترش اختیارات تاج را خارج از فرایند اصلاحیه نمی‌دهد.\n\n---"
+    }
+  },
+  {
+    "id": "III.1",
+    "en": {
+      "id": "III.1",
+      "title": "Structure of Parliament",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. Parliament shall be bicameral, consisting of the Majlis and the Senate.\n2. The Majlis shall be the primary democratic chamber.\n3. The Senate shall be a chamber of review and continuity.\n\n> **Implementation:** On-chain (automated). Parliament.sol manages both chambers with separate member lists, voting rules, and powers."
+    },
+    "fa": {
+      "id": "III.1",
+      "title": "ساختار پارلمان",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. پارلمان دو مجلسی بوده و متشکل از مجلس شورای ملی و سنا خواهد بود.\n2. مجلس شورای ملی مجلس اصلی دموکراتیک است.\n3. سنا مجلس بازنگری و استمرار است.\n\n> **اجرا:** بر روی زنجیره (خودکار). Parliament.sol هر دو مجلس را با فهرست اعضا، قواعد رأی‌گیری و اختیارات جداگانه مدیریت می‌کند."
+    }
+  },
+  {
+    "id": "III.2",
+    "en": {
+      "id": "III.2",
+      "title": "The Majlis",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. The Majlis shall be composed of members elected by universal, equal, and direct suffrage in accordance with Part VIII.\n2. Elections shall be conducted by proportional representation within each province. Each province shall receive Majlis seats proportional to its population, with a minimum of one seat per province.\n3. Members shall serve renewable terms of four years.\n4. The total number of Majlis seats (`PARAM_TOTAL_MAJLIS_SEATS`) and the allocation of seats among provinces may be adjusted by Parliament through legislation, subject to Crown review and Supreme Court constitutional review, to reflect changes in population. The on-chain total must match the constitutional parameter.\n\n> **Implementation:** On-chain (automated). Election.sol conducts province-scoped Majlis elections via `startMajlisElection(provinceId)` and calls Parliament.sol.seatMajlisMemberWithProvince() to install elected members with province tracking. Seat allocation per province is stored in ProvincialCouncil.sol (`majlisSeatCount` in the Province struct). Reapportionment is handled by ProvincialCouncil.updateMajlisSeatAllocation(), callable by Parliament, which validates that the new allocation totals match `PARAM_TOTAL_MAJLIS_SEATS`. Term length is a constitutional parameter."
+    },
+    "fa": {
+      "id": "III.2",
+      "title": "مجلس شورای ملی",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. مجلس شورای ملی متشکل از اعضای منتخب به حق رأی همگانی، برابر و مستقیم مطابق بخش هشتم خواهد بود.\n2. انتخابات به نمایندگی تناسبی در هر استان برگزار خواهد شد. هر استان کرسی‌های مجلس متناسب با جمعیت خود دریافت می‌کند، با حداقل یک کرسی به ازای هر استان.\n3. اعضا دوره‌های چهارساله قابل تمدید خدمت خواهند کرد.\n4. مجموع کرسی‌های مجلس (`PARAM_TOTAL_MAJLIS_SEATS`) و تخصیص کرسی‌ها میان استان‌ها ممکن است توسط پارلمان از طریق قانون‌گذاری، با رعایت بازنگری تاج و بازنگری قانون اساسی دیوان عالی، برای انعکاس تغییرات جمعیتی تعدیل شود. مجموع بر روی زنجیره باید با پارامتر قانون اساسی مطابقت داشته باشد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Election.sol انتخابات مجلس را با محدوده استانی از طریق `startMajlisElection(provinceId)` برگزار کرده و `Parliament.sol.seatMajlisMemberWithProvince()` را برای نصب اعضای منتخب با ردیابی استان فراخوانی می‌نماید. تخصیص کرسی به ازای هر استان در ProvincialCouncil.sol (`majlisSeatCount` در ساختار Province) ذخیره می‌شود. تجدید تخصیص توسط `ProvincialCouncil.updateMajlisSeatAllocation()` که توسط پارلمان قابل فراخوانی است انجام شده و اعتبارسنجی می‌کند که مجموع تخصیص جدید با `PARAM_TOTAL_MAJLIS_SEATS` مطابقت دارد. مدت دوره یک پارامتر قانون اساسی است."
+    }
+  },
+  {
+    "id": "III.3",
+    "en": {
+      "id": "III.3",
+      "title": "Powers of the Majlis",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. The Majlis shall grant and withdraw confidence in the Prime Minister and Cabinet.\n2. The Majlis shall originate legislation and the annual budget.\n3. No executive authority shall be exercised except with the confidence of the Majlis.\n\n> **Implementation:** On-chain (automated). Confidence votes are tracked in Executive.sol. Bill origination is restricted to Majlis members in Parliament.sol. Budget origination is restricted per Budget.sol."
+    },
+    "fa": {
+      "id": "III.3",
+      "title": "اختیارات مجلس شورای ملی",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. مجلس شورای ملی اعتماد به نخست‌وزیر و هیئت وزیران را اعطا و سلب خواهد کرد.\n2. مجلس شورای ملی طرح قوانین و بودجه سالانه را ابتکار خواهد نمود.\n3. هیچ اقتدار اجرایی بدون اعتماد مجلس شورای ملی اعمال نخواهد شد.\n\n> **اجرا:** بر روی زنجیره (خودکار). آرای اعتماد در Executive.sol ردیابی می‌شوند. ابتکار لایحه به اعضای مجلس در Parliament.sol محدود است. ابتکار بودجه مطابق Budget.sol محدود شده است."
+    }
+  },
+  {
+    "id": "III.4",
+    "en": {
+      "id": "III.4",
+      "title": "The Senate",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. Senators shall be selected by election from Provincial Councils and by appointment by the Crown.\n2. Senators appointed by the Crown shall constitute no more than ten percent of the Senate.\n3. Senators shall serve non-renewable terms of six years, renewed by thirds every two years.\n4. The Senate shall remain constituted during dissolution of the Majlis.\n\n> **Implementation:** On-chain (automated). Parliament.sol tracks Senate membership, enforces the 10% Crown appointment cap, manages term expiry, and maintains Senate function during Majlis dissolution. **Two-tier selection (Art. III.4.1):** Citizens elect provincial council members via Election.startProvincialElection(). Council members then elect senators for their province via ProvincialCouncil.startSenateSelection(). Parliament.seatSenatorWithProvince() tracks which province each senator represents. **Staggering (Art. III.4.3):** Each senator has an individual `senateTermEnd` timestamp. On first formation, the Crown calls `initializeSenateStagger()` which assigns 2/4/6-year initial terms by `prevrandao` lottery, creating three natural cohorts. New senators seated after initialization receive fresh 6-year terms. `expireMember()` creates vacancies that feed into the by-election backstop (Art. VIII.8)."
+    },
+    "fa": {
+      "id": "III.4",
+      "title": "سنا",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. سناتورها از طریق انتخاب توسط انجمن‌های ایالتی و انتصاب توسط تاج برگزیده خواهند شد.\n2. سناتورهای منصوب توسط تاج نباید بیش از ده درصد سنا را تشکیل دهند.\n3. سناتورها دوره‌های غیرقابل‌تمدید شش‌ساله خدمت خواهند کرد که هر دو سال یک‌سوم آن تجدید می‌شود.\n4. سنا در طول انحلال مجلس شورای ملی تشکیل‌یافته باقی خواهد ماند.\n\n> **اجرا:** بر روی زنجیره (خودکار). Parliament.sol عضویت سنا را ردیابی کرده، سقف ۱۰ درصد انتصاب تاج را اجرا نموده، انقضای دوره را مدیریت کرده و عملکرد سنا را در طول انحلال مجلس حفظ می‌نماید. **انتخاب دو مرحله‌ای (اصل III.4.1):** شهروندان اعضای انجمن ایالتی را از طریق `Election.startProvincialElection()` انتخاب می‌کنند. سپس اعضای انجمن سناتورهای استان خود را از طریق `ProvincialCouncil.startSenateSelection()` برمی‌گزینند. `Parliament.seatSenatorWithProvince()` استان مبدأ هر سناتور را ردیابی می‌کند. **تناوب (اصل III.4.3):** هر سناتور مُهر زمانی `senateTermEnd` فردی دارد. در تشکیل اولیه، تاج `initializeSenateStagger()` را فراخوانی نموده که دوره‌های اولیه ۲/۴/۶ ساله را با قرعه‌کشی `prevrandao` تعیین کرده و سه دسته طبیعی ایجاد می‌نماید. سناتورهای جدید پس از راه‌اندازی، دوره‌های تازه ۶ ساله دریافت می‌کنند. `expireMember()` خلأهایی ایجاد می‌کند که به ضمانت انتخابات میان‌دوره‌ای (اصل VIII.8) وارد می‌شوند."
+    }
+  },
+  {
+    "id": "III.5",
+    "en": {
+      "id": "III.5",
+      "title": "Powers of the Senate",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. The Senate shall review legislation and budgets adopted by the Majlis.\n2. The Senate shall confirm or reject judicial appointments as provided in Part V.\n3. The Senate shall participate in constitutional amendment procedures.\n4. The Senate shall not originate legislation or budgets.\n\n> **Implementation:** On-chain (automated). Parliament.sol enforces that `submitBill()` reverts when called by a Senator. Senate functions are limited to review, confirmation, and amendment participation."
+    },
+    "fa": {
+      "id": "III.5",
+      "title": "اختیارات سنا",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. سنا قوانین و بودجه‌های مصوب مجلس شورای ملی را بازنگری خواهد کرد.\n2. سنا انتصابات قضایی را مطابق بخش پنجم تأیید یا رد خواهد نمود.\n3. سنا در تشریفات اصلاح قانون اساسی مشارکت خواهد کرد.\n4. سنا حق ابتکار قانون یا بودجه را ندارد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Parliament.sol اجرا می‌کند که `submitBill()` هنگام فراخوانی توسط سناتور برگشت بخورد. وظایف سنا به بازنگری، تأیید و مشارکت در اصلاحیه محدود است."
+    }
+  },
+  {
+    "id": "III.6",
+    "en": {
+      "id": "III.6",
+      "title": "Legislative Process",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. A member of the Majlis may introduce a bill by submitting its hash and description to Parliament.\n2. The Majlis shall vote on the bill. Adoption requires a majority of members present, provided a quorum exists.\n3. An adopted bill shall be transmitted to the Senate for review.\n4. The Senate may, within thirty days:\n   1. approve the bill, which transmits it to the Crown;\n   2. propose amendments, which returns it to the Majlis;\n   3. object to the bill, which returns it to the Majlis.\n5. Where the Senate objects, the Majlis may re-adopt the bill by an absolute majority of all members, overriding the Senate objection.\n6. Where the Senate fails to act within thirty days, the bill is deemed approved and transmitted to the Crown.\n7. Upon transmission to the Crown, the bill enters the Crown action phase (Article II.5).\n\n> **Implementation:** On-chain (automated + human-triggered). Parliament.sol implements an eleven-state bill machine: `Introduced → MajlisVoting → [SenateReview | Rejected] → [SenateObjected → MajlisOverride] → CrownAction → [Enacted | Returned | Referred → Vetoed]`. Senate approval transitions directly from SenateReview to CrownAction. Senate timeout (30 days) auto-approves. Crown timeout (14 days) auto-enacts. Quorum and minimum voting period enforced."
+    },
+    "fa": {
+      "id": "III.6",
+      "title": "فرایند قانون‌گذاری",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. هر عضو مجلس شورای ملی می‌تواند لایحه‌ای را با ارائه هش و شرح آن به پارلمان معرفی نماید.\n2. مجلس شورای ملی در مورد لایحه رأی‌گیری خواهد کرد. تصویب مستلزم اکثریت اعضای حاضر است، مشروط بر وجود حد نصاب.\n3. لایحه مصوب جهت بازنگری به سنا ارسال خواهد شد.\n4. سنا می‌تواند ظرف سی روز:\n   1. لایحه را تأیید نماید، که آن را به تاج ارسال می‌کند؛\n   2. اصلاحاتی پیشنهاد دهد، که آن را به مجلس بازمی‌گرداند؛\n   3. به لایحه اعتراض نماید، که آن را به مجلس بازمی‌گرداند.\n5. در صورت اعتراض سنا، مجلس شورای ملی می‌تواند لایحه را با اکثریت مطلق تمامی اعضا مجدداً تصویب کرده و اعتراض سنا را رد نماید.\n6. در صورتی که سنا ظرف سی روز اقدامی ننماید، لایحه تأیید‌شده تلقی و به تاج ارسال خواهد شد.\n7. پس از ارسال به تاج، لایحه وارد مرحله اقدام تاج (اصل II.5) می‌شود.\n\n> **اجرا:** بر روی زنجیره (خودکار + فعال‌شونده توسط انسان). Parliament.sol یک ماشین حالت یازده‌مرحله‌ای لایحه را اجرا می‌کند: `Introduced → MajlisVoting → [SenateReview | Rejected] → [SenateObjected → MajlisOverride] → CrownAction → [Enacted | Returned | Referred → Vetoed]`. تأیید سنا مستقیماً از SenateReview به CrownAction منتقل می‌شود. مهلت سنا (۳۰ روز) تأیید خودکار ایجاد می‌کند. مهلت تاج (۱۴ روز) لازم‌الاجرا شدن خودکار را فعال می‌سازد. حد نصاب و حداقل دوره رأی‌گیری اجرا می‌شوند."
+    }
+  },
+  {
+    "id": "III.7",
+    "en": {
+      "id": "III.7",
+      "title": "Budgetary Continuity",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. Where the budget is not enacted by the beginning of the fiscal year, the prior year's budget shall continue on a provisional basis.\n2. Budgetary authority shall not lapse due to dissolution of the Majlis.\n\n> **Implementation:** On-chain (human-triggered). Budget.sol.continuePriorBudget() can be called by any authorized contract when no new budget is enacted. See Art. IX.3."
+    },
+    "fa": {
+      "id": "III.7",
+      "title": "استمرار بودجه",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. در صورتی که بودجه تا آغاز سال مالی تصویب نشده باشد، بودجه سال قبل به‌صورت موقت ادامه خواهد یافت.\n2. اقتدار بودجه‌ای به دلیل انحلال مجلس ساقط نخواهد شد.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Budget.sol.continuePriorBudget()` توسط هر قرارداد مجاز هنگامی که بودجه جدیدی تصویب نشده قابل فراخوانی است. نگاه کنید به اصل IX.3."
+    }
+  },
+  {
+    "id": "III.8",
+    "en": {
+      "id": "III.8",
+      "title": "Parliamentary Privilege",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. Members of Parliament shall enjoy immunity for votes and statements made in the exercise of their functions.\n2. Parliamentary privilege shall not extend to acts outside constitutional authority.\n\n> **Implementation:** Off-chain (referenced). Voting is recorded on-chain, but parliamentary privilege is a legal concept enforced by courts, not code."
+    },
+    "fa": {
+      "id": "III.8",
+      "title": "مصونیت پارلمانی",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. اعضای پارلمان از مصونیت در قبال آرا و اظهارات در اجرای وظایف خود برخوردار خواهند بود.\n2. مصونیت پارلمانی به اقدامات خارج از اقتدار قانون اساسی تسری نخواهد یافت.\n\n> **اجرا:** خارج از زنجیره (ارجاعی). رأی‌گیری بر روی زنجیره ثبت می‌شود، اما مصونیت پارلمانی مفهومی حقوقی است که توسط دادگاه‌ها اجرا می‌شود، نه کد."
+    }
+  },
+  {
+    "id": "III.9",
+    "en": {
+      "id": "III.9",
+      "title": "Vacancy Declaration",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. When a member is dead, permanently disappeared, or has irretrievably lost their cryptographic key, the relevant chamber may declare the seat vacant by simple majority vote.\n2. The target member shall be excluded from voting and from the denominator.\n3. The Supreme Court may certify a member's incapacity as a fact. Upon Parliament's acknowledgment, the member is immediately excluded from quorum calculations and cannot act, while still formally holding the seat.\n4. A vacancy declaration vote shall last fourteen days (`PARAM_VACANCY_VOTE_PERIOD`).\n5. Upon passage, the seat is formally vacated and a by-election is triggered per Art. VIII.8.\n\n> **Implementation:** On-chain (automated). Parliament.sol implements a three-step separation of powers: (1) Court certifies incapacity via `voteOnFact()` with fact hash `keccak256(\"MEMBER_INCAPACITATED\", address)`, (2) anyone calls `acknowledgeIncapacity()` to immediately exclude the member from `effectiveMajlisMemberCount()`/`effectiveSenateMemberCount()` and `isActiveMajlisMember()`/`isActiveSenateMember()`, (3) chamber members call `proposeVacancy()`, `voteOnVacancy()`, `finalizeVacancy()` for formal removal. Both Parliament.sol (bill quorum and override thresholds) and Executive.sol (confidence and no-confidence thresholds) use effective member counts, preventing incapacitated members from inflating denominators."
+    },
+    "fa": {
+      "id": "III.9",
+      "title": "اعلام خلأ کرسی",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. هنگامی که عضوی فوت کرده، به‌صورت دائم ناپدید شده یا کلید رمزنگاری خود را غیرقابل‌بازیابی از دست داده باشد، مجلس مربوطه می‌تواند با اکثریت ساده، کرسی را خالی اعلام نماید.\n2. عضو هدف از رأی‌گیری و از مخرج کسر حذف خواهد شد.\n3. دیوان عالی می‌تواند عدم صلاحیت عضو را به‌عنوان یک واقعیت گواهی نماید. پس از تأیید پارلمان، عضو فوراً از محاسبات حد نصاب حذف شده و قادر به اقدام نخواهد بود، در حالی که هنوز رسماً دارای کرسی است.\n4. رأی‌گیری اعلام خلأ چهارده روز (`PARAM_VACANCY_VOTE_PERIOD`) ادامه خواهد یافت.\n5. پس از تصویب، کرسی رسماً خالی شده و انتخابات میان‌دوره‌ای مطابق اصل VIII.8 آغاز می‌گردد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Parliament.sol تفکیک قوای سه‌مرحله‌ای را اجرا می‌کند: (۱) دیوان عالی عدم صلاحیت را از طریق `voteOnFact()` با هش واقعیت `keccak256(\"MEMBER_INCAPACITATED\", address)` گواهی می‌کند، (۲) هر شخصی `acknowledgeIncapacity()` را فراخوانی می‌کند تا عضو فوراً از `effectiveMajlisMemberCount()`/`effectiveSenateMemberCount()` و `isActiveMajlisMember()`/`isActiveSenateMember()` حذف شود، (۳) اعضای مجلس `proposeVacancy()`، `voteOnVacancy()`، `finalizeVacancy()` را برای عزل رسمی فراخوانی می‌کنند. هم Parliament.sol (حد نصاب لایحه و آستانه‌های رد اعتراض) و هم Executive.sol (آستانه‌های اعتماد و سلب اعتماد) از شمار اعضای مؤثر استفاده کرده و از تورم مخرج توسط اعضای ناتوان جلوگیری می‌نمایند."
+    }
+  },
+  {
+    "id": "III.10",
+    "en": {
+      "id": "III.10",
+      "title": "Provincial Councils",
+      "partId": "III",
+      "partTitle": "PARLIAMENT",
+      "body": "1. Each of Iran's thirty-one provinces shall have a Provincial Council, elected by universal citizen suffrage within the province.\n2. Provincial Councils shall consist of fifteen members serving four-year terms (`PARAM_COUNCIL_TERM`).\n3. The sole constitutional function of Provincial Councils is the election of Senators. Provincial Councils have no local legislative, budgetary, or regulatory authority under this Constitution.\n4. Senate selection by Provincial Councils shall follow a defined pipeline: candidate registration by any citizen of the province, followed by a vote restricted to active council members.\n5. Provinces shall be grouped into three stagger cohorts (A, B, C) of approximately ten provinces each, controlling Senate renewal by thirds.\n6. The Crown shall initialize provinces by specifying each province's council size, Senate seat allocation, and stagger cohort assignment.\n\n> **Implementation:** On-chain (automated). ProvincialCouncil.sol manages province initialization, council membership with self-enforcing 4-year terms, and the senate selection pipeline. Election.sol supports ProvincialCouncil elections via `startProvincialElection()` with province-scoped candidate registration and voting using CitizenRegistry province assignments. The selection pipeline uses `PARAM_SENATE_SELECTION_REG_PERIOD` (14 days) and `PARAM_SENATE_SELECTION_VOTE_PERIOD` (7 days). `seatSelectedSenators()` calls Parliament.seatSenatorWithProvince() to track the senator's province of origin. This design continues the 1906 Constitution's vision of provincial anjumans (Arts. 90-93) with a narrow mandate: Senate election mechanism only.\n\n---"
+    },
+    "fa": {
+      "id": "III.10",
+      "title": "انجمن‌های ایالتی",
+      "partId": "سوم",
+      "partTitle": "پارلمان",
+      "body": "1. هر یک از سی‌ویک استان ایران دارای انجمن ایالتی خواهد بود که با حق رأی همگانی شهروندان در استان انتخاب می‌شود.\n2. انجمن‌های ایالتی متشکل از پانزده عضو با دوره‌های چهارساله (`PARAM_COUNCIL_TERM`) خواهند بود.\n3. تنها وظیفه قانون اساسی انجمن‌های ایالتی انتخاب سناتورها است. انجمن‌های ایالتی هیچ اقتدار قانون‌گذاری، بودجه‌ای یا مقرراتی محلی تحت این قانون اساسی ندارند.\n4. انتخاب سناتورها توسط انجمن‌های ایالتی از مسیر مشخصی پیروی خواهد کرد: ثبت‌نام نامزدی توسط هر شهروند استان، و سپس رأی‌گیری محدود به اعضای فعال انجمن.\n5. استان‌ها در سه دسته تناوبی (الف، ب، ج) هر یک متشکل از تقریباً ده استان گروه‌بندی شده و تجدید یک‌سومی سنا را کنترل خواهند نمود.\n6. تاج استان‌ها را با تعیین اندازه انجمن هر استان، تخصیص کرسی سنا و تعیین دسته تناوبی راه‌اندازی خواهد کرد.\n\n> **اجرا:** بر روی زنجیره (خودکار). ProvincialCouncil.sol راه‌اندازی استان‌ها، عضویت انجمن با دوره‌های خوداجرا ۴ ساله و مسیر انتخاب سنا را مدیریت می‌کند. Election.sol از انتخابات انجمن ایالتی از طریق `startProvincialElection()` با ثبت‌نام نامزد و رأی‌گیری با محدوده استانی با استفاده از تخصیص‌های استانی CitizenRegistry پشتیبانی می‌نماید. مسیر انتخاب از `PARAM_SENATE_SELECTION_REG_PERIOD` (۱۴ روز) و `PARAM_SENATE_SELECTION_VOTE_PERIOD` (۷ روز) استفاده می‌کند. `seatSelectedSenators()` تابع `Parliament.seatSenatorWithProvince()` را برای ردیابی استان مبدأ سناتور فراخوانی می‌نماید. این طراحی ادامه‌دهنده رؤیای قانون اساسی ۱۹۰۶ از انجمن‌های ایالتی (اصول ۹۰ تا ۹۳) با مأموریت محدود است: فقط سازوکار انتخاب سنا.\n\n---"
+    }
+  },
+  {
+    "id": "IV.1",
+    "en": {
+      "id": "IV.1",
+      "title": "The Executive",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. Executive authority shall be exercised by a Prime Minister and a Cabinet.\n2. The Prime Minister shall direct the executive and be responsible for the conduct of government.\n3. The executive shall be collectively responsible to the Majlis.\n\n> **Reza Pahlavi comments:** \"The head of government is clearly the elected prime minister, not the monarch... The Prime Minister is in charge of policies and decision making.\"\n\n> **Implementation:** On-chain (automated). Executive.sol tracks the PM role and the confidence relationship with the Majlis."
+    },
+    "fa": {
+      "id": "IV.1",
+      "title": "قوه مجریه",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. اقتدار اجرایی توسط نخست‌وزیر و هیئت وزیران اعمال خواهد شد.\n2. نخست‌وزیر قوه مجریه را هدایت نموده و مسئول اداره حکومت خواهد بود.\n3. قوه مجریه به‌صورت جمعی در برابر مجلس شورای ملی مسئول است.\n\n> **نظر رضا پهلوی:** «رئیس حکومت به‌وضوح نخست‌وزیر منتخب است، نه پادشاه... نخست‌وزیر مسئول سیاست‌ها و تصمیم‌گیری‌ها است.»\n\n> **اجرا:** بر روی زنجیره (خودکار). Executive.sol نقش نخست‌وزیر و رابطه اعتماد با مجلس شورای ملی را ردیابی می‌کند."
+    }
+  },
+  {
+    "id": "IV.2",
+    "en": {
+      "id": "IV.2",
+      "title": "Scope of Executive Authority",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. Executive authority comprises the direction of public administration, implementation of laws, conduct of foreign relations, and management of public services.\n2. Executive authority shall be subject to the confidence of the Majlis and to constitutional review by the Supreme Court.\n\n> **Implementation:** Off-chain (referenced). The scope of executive authority is enforced by political accountability, not code. The on-chain component is the confidence relationship."
+    },
+    "fa": {
+      "id": "IV.2",
+      "title": "حدود اقتدار اجرایی",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. اقتدار اجرایی شامل هدایت اداره عمومی، اجرای قوانین، انجام روابط خارجی و مدیریت خدمات عمومی می‌شود.\n2. اقتدار اجرایی تابع اعتماد مجلس شورای ملی و بازنگری قانون اساسی توسط دیوان عالی خواهد بود.\n\n> **اجرا:** خارج از زنجیره (ارجاعی). حدود اقتدار اجرایی توسط پاسخگویی سیاسی اجرا می‌شود، نه کد. مؤلفه بر روی زنجیره همان رابطه اعتماد است."
+    }
+  },
+  {
+    "id": "IV.3",
+    "en": {
+      "id": "IV.3",
+      "title": "Appointment of the Prime Minister",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. The Prime Minister shall be appointed following nomination by the Crown and a vote of confidence by the Majlis.\n2. No person shall exercise full executive authority as Prime Minister without obtaining the confidence of the Majlis.\n\n> **Implementation:** On-chain (automated). The PM role in Constitution.sol is set only after Executive.sol records a successful confidence vote. No PM functions are callable without this."
+    },
+    "fa": {
+      "id": "IV.3",
+      "title": "انتصاب نخست‌وزیر",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. نخست‌وزیر پس از نامزدی توسط تاج و رأی اعتماد مجلس شورای ملی منصوب خواهد شد.\n2. هیچ شخصی بدون کسب اعتماد مجلس شورای ملی اقتدار اجرایی کامل نخست‌وزیری را اعمال نخواهد کرد.\n\n> **اجرا:** بر روی زنجیره (خودکار). نقش نخست‌وزیر در Constitution.sol فقط پس از ثبت رأی اعتماد موفق توسط Executive.sol تعیین می‌شود. بدون این، هیچ تابع نخست‌وزیری قابل فراخوانی نیست."
+    }
+  },
+  {
+    "id": "IV.4",
+    "en": {
+      "id": "IV.4",
+      "title": "Vote of Confidence",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. A candidate for Prime Minister shall present a proposed government program to the Majlis.\n2. Confidence shall be granted by an absolute majority of the members of the Majlis.\n3. Upon the granting of confidence, the Prime Minister shall exercise full executive authority.\n\n> **Implementation:** On-chain (human-triggered + automated). The PM candidate calls `presentGovernment()`. Majlis members call `voteConfidence()`. Executive.sol tallies and, upon reaching absolute majority, activates the PM role."
+    },
+    "fa": {
+      "id": "IV.4",
+      "title": "رأی اعتماد",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. نامزد نخست‌وزیری برنامه حکومتی پیشنهادی را به مجلس شورای ملی ارائه خواهد کرد.\n2. اعتماد با اکثریت مطلق اعضای مجلس شورای ملی اعطا خواهد شد.\n3. پس از اعطای اعتماد، نخست‌وزیر اقتدار اجرایی کامل را اعمال خواهد نمود.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خودکار). نامزد نخست‌وزیری `presentGovernment()` را فراخوانی می‌کند. اعضای مجلس `voteConfidence()` را فراخوانی می‌نمایند. Executive.sol شمارش کرده و پس از رسیدن به اکثریت مطلق، نقش نخست‌وزیر را فعال می‌سازد."
+    }
+  },
+  {
+    "id": "IV.5",
+    "en": {
+      "id": "IV.5",
+      "title": "Withdrawal of Confidence",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. The Majlis may withdraw confidence from the Prime Minister by vote.\n2. Within the first ninety days following a confidence vote, a motion of no confidence requires two-thirds of the members of the Majlis.\n3. After ninety days, a simple majority of the members of the Majlis suffices.\n\n> **Implementation:** On-chain (automated). Executive.sol tracks the confidence timestamp and applies the correct threshold (2/3 within 90 days, 1/2 after). The 90-day period is a constitutional parameter."
+    },
+    "fa": {
+      "id": "IV.5",
+      "title": "سلب اعتماد",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. مجلس شورای ملی می‌تواند اعتماد خود را از نخست‌وزیر با رأی‌گیری سلب نماید.\n2. در نود روز اول پس از رأی اعتماد، طرح سلب اعتماد مستلزم دوسوم اعضای مجلس شورای ملی است.\n3. پس از نود روز، اکثریت ساده اعضای مجلس شورای ملی کفایت می‌کند.\n\n> **اجرا:** بر روی زنجیره (خودکار). Executive.sol مُهر زمانی اعتماد را ردیابی کرده و آستانه صحیح را اعمال می‌نماید (دوسوم در ۹۰ روز اول، یک‌دوم پس از آن). دوره ۹۰ روزه یک پارامتر قانون اساسی است."
+    }
+  },
+  {
+    "id": "IV.6",
+    "en": {
+      "id": "IV.6",
+      "title": "Caretaker Government",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. Where the office of Prime Minister is vacant, the Cabinet shall continue as a caretaker government.\n2. A caretaker government shall not initiate major policy changes, submit new legislation, or appoint judges.\n3. Caretaker status is activated automatically upon vacancy and deactivated upon a new PM obtaining confidence.\n\n> **Implementation:** On-chain (automated). Executive.sol enters caretaker mode when the PM role is vacated. Other contracts check `isCaretaker()` and restrict caretaker actions accordingly."
+    },
+    "fa": {
+      "id": "IV.6",
+      "title": "دولت سرپرست",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. در صورت خالی بودن پست نخست‌وزیری، هیئت وزیران به‌عنوان دولت سرپرست ادامه خواهد داد.\n2. دولت سرپرست حق ابتکار تغییرات عمده خط‌مشی، ارائه قانون جدید یا انتصاب قاضی را ندارد.\n3. حالت سرپرستی به‌صورت خودکار با خالی شدن پست فعال و با کسب اعتماد نخست‌وزیر جدید غیرفعال می‌شود.\n\n> **اجرا:** بر روی زنجیره (خودکار). Executive.sol هنگام خالی شدن نقش نخست‌وزیر وارد حالت سرپرست می‌شود. سایر قراردادها `isCaretaker()` را بررسی کرده و اقدامات سرپرست را محدود می‌سازند."
+    }
+  },
+  {
+    "id": "IV.7",
+    "en": {
+      "id": "IV.7",
+      "title": "Executive Formation Cycle",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. Upon commencement of an executive formation cycle, the Crown shall nominate a candidate for Prime Minister.\n2. The Crown may make no more than two nominations during a single formation cycle.\n3. Where both Crown nominations fail to obtain confidence:\n   1. The Majlis shall propose a ranked list of three candidates within fourteen days.\n   2. The Crown shall appoint from this list within seven days.\n   3. Where the Crown fails to appoint within seven days, the first-ranked candidate shall be deemed appointed.\n4. Where the Majlis fails to propose a list within fourteen days, the Majlis shall be dissolved and new elections called.\n\n> **Implementation:** On-chain (automated). Executive.sol implements the formation state machine: `CrownNomination1 → CrownNomination2 → MajlisList → Dissolution`. Each stage has deadlines. Automatic transitions enforce the cascade. During Crown suspension, the cycle still begins at CrownNom1, but the Senate takes the Crown's nomination role via Parliament governance action (Art. VI.5.2). Executive.sol verifies the `executingSenateAction` flag on Parliament to ensure only Senate governance actions can call `nominatePM()` and `appointFromList()` during suspension. Crown nomination timeout (`claimCrownNominationTimeout()`, PARAM_NOMINATION_DEADLINE = 14d) skips directly to MajlisList (inaction forfeits both chances, whether Crown or Senate)."
+    },
+    "fa": {
+      "id": "IV.7",
+      "title": "چرخه تشکیل قوه مجریه",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. با آغاز چرخه تشکیل قوه مجریه، تاج نامزدی برای نخست‌وزیری معرفی خواهد کرد.\n2. تاج در یک چرخه تشکیل، حداکثر دو نامزد معرفی خواهد نمود.\n3. در صورتی که هر دو نامزد تاج موفق به کسب اعتماد نشوند:\n   1. مجلس شورای ملی ظرف چهارده روز فهرست رتبه‌بندی‌شده سه نامزد پیشنهاد خواهد داد.\n   2. تاج ظرف هفت روز از این فهرست انتصاب خواهد نمود.\n   3. در صورت عدم انتصاب توسط تاج ظرف هفت روز، نامزد اول فهرست منصوب‌شده تلقی خواهد گشت.\n4. در صورتی که مجلس شورای ملی ظرف چهارده روز فهرستی پیشنهاد ننماید، مجلس منحل شده و انتخابات جدید برگزار خواهد شد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Executive.sol ماشین حالت تشکیل را اجرا می‌کند: `CrownNomination1 → CrownNomination2 → MajlisList → Dissolution`. هر مرحله دارای مهلت است. انتقال‌های خودکار آبشار را اجرا می‌نمایند. در طول تعلیق تاج، چرخه همچنان از CrownNom1 آغاز می‌شود، اما سنا نقش نامزدی تاج را از طریق اقدام حکمرانی پارلمان (اصل VI.5.2) بر عهده می‌گیرد. Executive.sol پرچم `executingSenateAction` در Parliament را بررسی می‌کند تا اطمینان حاصل نماید فقط اقدامات حکمرانی سنا می‌توانند در طول تعلیق `nominatePM()` و `appointFromList()` را فراخوانی کنند. مهلت نامزدی تاج (`claimCrownNominationTimeout()`، `PARAM_NOMINATION_DEADLINE` = ۱۴ روز) مستقیماً به MajlisList می‌رود (عدم اقدام هر دو فرصت را سلب می‌کند، چه تاج و چه سنا)."
+    }
+  },
+  {
+    "id": "IV.8",
+    "en": {
+      "id": "IV.8",
+      "title": "Incapacity",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. Where the Prime Minister is unable to discharge duties due to incapacity, the Supreme Court shall certify the vacancy.\n2. Upon certification, caretaker provisions shall apply and a new formation cycle shall commence.\n\n> **Implementation:** On-chain (human-triggered). Justices vote via SupremeCourt.voteOnFact(), then anyone calls finalizeFactCertification() after 14 days. Once PM incapacity is certified, Executive.startFormation() enters caretaker mode and begins a new formation cycle."
+    },
+    "fa": {
+      "id": "IV.8",
+      "title": "عدم صلاحیت",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. در صورتی که نخست‌وزیر به دلیل عدم صلاحیت قادر به انجام وظایف نباشد، دیوان عالی خلأ را گواهی خواهد کرد.\n2. پس از گواهی، مقررات سرپرستی اعمال شده و چرخه تشکیل جدید آغاز خواهد گشت.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). قضات از طریق `SupremeCourt.voteOnFact()` رأی داده و سپس هر شخصی `finalizeFactCertification()` را پس از ۱۴ روز فراخوانی می‌نماید. پس از گواهی عدم صلاحیت نخست‌وزیر، `Executive.startFormation()` وارد حالت سرپرست شده و چرخه تشکیل جدید آغاز می‌گردد."
+    }
+  },
+  {
+    "id": "IV.9",
+    "en": {
+      "id": "IV.9",
+      "title": "Executive Succession",
+      "partId": "IV",
+      "partTitle": "EXECUTIVE AUTHORITY",
+      "body": "1. The Prime Minister shall designate a Deputy Prime Minister within fourteen days of receiving confidence. The designation may not be revoked without simultaneously naming a replacement.\n2. Where the Prime Minister fails to designate a Deputy within the deadline, the Prime Minister may not submit new legislation or make judicial nominations until a Deputy is designated.\n3. Where the Supreme Court certifies the Prime Minister's death or incapacity, the Deputy Prime Minister shall assume the office as Acting Prime Minister with caretaker powers. A formation cycle shall begin for a permanent replacement.\n4. Where both the Prime Minister and Deputy Prime Minister are dead or incapacitated, the Crown shall designate an Acting Prime Minister from among the sitting government.\n5. During Crown suspension, the Senate shall initiate the formation cycle per Art. VI.5.2.\n6. The Acting Prime Minister exercises caretaker powers only: no new legislation, no budget proposals, no judicial appointments.\n\n> **Implementation:** On-chain (automated). Executive.sol stores `deputyPM` (designated by PM via `designateDeputyPM()`). Deputy designation is mandatory: `deputyDesignationDeadline` is set when the PM receives confidence, and `isDeputyOverdue()` returns true if the deadline passes without designation. Art. IV.9.2 is enforced: Budget.proposeBudget() reverts with `DeputyDesignationOverdue` when overdue, and Executive.sol blocks all three justice nomination functions during Crown suspension (`nominateJusticeDuringSuspension`, `nominateJusticeSecondDuringSuspension`, `appointJusticeFromListDuringSuspension`). `designateDeputyPM()` requires a non-zero address; designating address(0) is not permitted. Permissionless `claimPMVacancy()` checks Court certification of fact `\"PM_VACANCY\" + currentPM` (instance-specific hash prevents reuse across PMs), installs Deputy as Acting PM with caretaker mode, and starts formation. Crown fallback via `designateActingPM()` (Crown.sol wrapper). Senate fallback already handled by Parliament.initiateFormationDuringSuspension().\n\n---"
+    },
+    "fa": {
+      "id": "IV.9",
+      "title": "جانشینی قوه مجریه",
+      "partId": "چهارم",
+      "partTitle": "قوه مجریه",
+      "body": "1. نخست‌وزیر ظرف چهارده روز پس از کسب اعتماد، معاون نخست‌وزیر تعیین خواهد کرد. تعیین بدون نام‌گذاری همزمان جانشین قابل لغو نیست.\n2. در صورت عدم تعیین معاون در مهلت مقرر، نخست‌وزیر حق ارائه لایحه جدید یا نامزدی قضایی را نخواهد داشت.\n3. در صورتی که دیوان عالی فوت یا عدم صلاحیت نخست‌وزیر را گواهی نماید، معاون نخست‌وزیر با اختیارات سرپرستی مقام را تقبل خواهد کرد. چرخه تشکیل برای جانشین دائم آغاز خواهد شد.\n4. در صورتی که هم نخست‌وزیر و هم معاون نخست‌وزیر فوت کرده یا دچار عدم صلاحیت شده باشند، تاج یک نخست‌وزیر سرپرست از میان هیئت دولت مستقر تعیین خواهد کرد.\n5. در طول تعلیق تاج، سنا چرخه تشکیل را مطابق اصل VI.5.2 آغاز خواهد نمود.\n6. نخست‌وزیر سرپرست فقط اختیارات سرپرستی را اعمال می‌نماید: بدون قانون جدید، بدون پیشنهاد بودجه، بدون انتصابات قضایی.\n\n> **اجرا:** بر روی زنجیره (خودکار). Executive.sol مقام `deputyPM` را ذخیره می‌کند (توسط نخست‌وزیر از طریق `designateDeputyPM()` تعیین می‌شود). تعیین معاون الزامی است: `deputyDesignationDeadline` هنگام کسب اعتماد نخست‌وزیر تنظیم شده و `isDeputyOverdue()` در صورت گذشت مهلت بدون تعیین، صحیح بازمی‌گرداند. اصل IV.9.2 اجرا می‌شود: `Budget.proposeBudget()` هنگام سررسید شدن با `DeputyDesignationOverdue` برگشت می‌خورد و Executive.sol در طول تعلیق تاج هر سه تابع نامزدی قاضی را مسدود می‌نماید (`nominateJusticeDuringSuspension`، `nominateJusticeSecondDuringSuspension`، `appointJusticeFromListDuringSuspension`). `designateDeputyPM()` آدرس غیرصفر الزامی می‌کند؛ تعیین `address(0)` مجاز نیست. `claimPMVacancy()` بدون نیاز به مجوز خاص، گواهی دیوان برای واقعیت `\"PM_VACANCY\" + currentPM` (هش مختص نمونه برای جلوگیری از استفاده مجدد) را بررسی کرده، معاون را به‌عنوان نخست‌وزیر سرپرست با حالت سرپرست نصب نموده و تشکیل را آغاز می‌نماید. جایگزین تاج از طریق `designateActingPM()` (پوشه Crown.sol). جایگزین سنا قبلاً از طریق `Parliament.initiateFormationDuringSuspension()` مدیریت شده است.\n\n---"
+    }
+  },
+  {
+    "id": "V.1",
+    "en": {
+      "id": "V.1",
+      "title": "Establishment",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. A Supreme Court is established as the highest judicial authority of the State.\n2. The Supreme Court shall:\n   1. interpret this Constitution;\n   2. review the constitutionality of laws;\n   3. resolve disputes between State organs;\n   4. certify constitutional facts (vacancies, incapacity, succession).\n\n> **Implementation:** On-chain (automated). SupremeCourt.sol provides functions for each jurisdiction: constitutional review, dispute resolution, and fact certification. Decisions are recorded immutably."
+    },
+    "fa": {
+      "id": "V.1",
+      "title": "تأسیس",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. دیوان عالی به‌عنوان عالی‌ترین مرجع قضایی دولت تأسیس می‌شود.\n2. دیوان عالی عهده‌دار موارد زیر خواهد بود:\n   1. تفسیر این قانون اساسی؛\n   2. بازنگری قانون اساسی بودن قوانین؛\n   3. حل اختلاف میان ارکان دولت؛\n   4. گواهی وقایع قانون اساسی (خلأها، عدم صلاحیت، جانشینی).\n\n> **اجرا:** بر روی زنجیره (خودکار). SupremeCourt.sol برای هر حوزه صلاحیت توابعی فراهم می‌آورد: بازنگری قانون اساسی، حل اختلاف و گواهی واقعیت. تصمیمات به‌صورت تغییرناپذیر ثبت می‌شوند."
+    }
+  },
+  {
+    "id": "V.2",
+    "en": {
+      "id": "V.2",
+      "title": "Composition",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. The Supreme Court shall consist of twelve Justices serving non-renewable nine-year terms.\n2. Terms shall be staggered so that one-third of the Court is renewed every three years.\n3. Justices shall be jurists of recognized competence with at least fifteen years of legal experience.\n\n> **Implementation:** On-chain (automated). SupremeCourt.sol tracks justice seats, term start/end dates, and enforces non-renewability. Composition parameters (12 justices, 9-year terms) are constitutional parameters. Note: PARAM_JUSTICE_COUNT is defined and protected in Constitution.sol but SupremeCourt.sol uses a fixed-size array of 12 seats; changing this parameter via referendum would not affect court behavior without redeploying SupremeCourt.sol."
+    },
+    "fa": {
+      "id": "V.2",
+      "title": "ترکیب",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. دیوان عالی متشکل از دوازده قاضی با دوره‌های غیرقابل‌تمدید نُه‌ساله خواهد بود.\n2. دوره‌ها به‌گونه‌ای تنظیم خواهند شد که هر سه سال یک‌سوم دیوان تجدید گردد.\n3. قضات باید حقوقدانان صاحب صلاحیت شناخته‌شده با حداقل پانزده سال تجربه حقوقی باشند.\n\n> **اجرا:** بر روی زنجیره (خودکار). SupremeCourt.sol کرسی‌های قضایی، تاریخ آغاز/پایان دوره و غیرقابل‌تمدید بودن را ردیابی و اجرا می‌نماید. پارامترهای ترکیب (۱۲ قاضی، دوره ۹ ساله) پارامترهای قانون اساسی هستند. توجه: `PARAM_JUSTICE_COUNT` در Constitution.sol تعریف و محافظت شده اما SupremeCourt.sol از آرایه ثابت ۱۲ کرسی استفاده می‌کند؛ تغییر این پارامتر از طریق همه‌پرسی بدون استقرار مجدد SupremeCourt.sol بر رفتار دیوان تأثیری نخواهد داشت."
+    }
+  },
+  {
+    "id": "V.3",
+    "en": {
+      "id": "V.3",
+      "title": "Appointments",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. The Crown shall nominate candidates for Justice; the Senate shall confirm or reject within thirty days.\n2. Failure by the Senate to act within thirty days shall be deemed confirmation.\n3. If the Senate rejects, the Crown may nominate one additional, distinct candidate.\n4. If the Senate rejects both nominations, the Senate shall propose a ranked list of three candidates within thirty days.\n5. The Crown shall appoint from this list within fourteen days, or the first-ranked candidate shall be deemed appointed.\n6. If the Senate fails to propose a ranked list, the Crown may appoint one of its previously nominated candidates.\n\n> **Implementation:** On-chain (automated). SupremeCourt.sol implements the appointment state machine: `CrownNomination1 → SenateVote → [Confirmed | Rejected → CrownNomination2 → SenateVote → [Confirmed | Rejected → SenateList → CrownAppointment]]`. Deadlines trigger automatic outcomes at each stage. During Crown suspension, the Prime Minister exercises Crown nomination powers via Executive.sol wrapper functions (`nominateJusticeDuringSuspension`, `nominateJusticeSecondDuringSuspension`, `appointJusticeFromListDuringSuspension`). The caretaker mode check in SupremeCourt.nominateJustice is bypassed during Crown suspension to enable emergency court recovery."
+    },
+    "fa": {
+      "id": "V.3",
+      "title": "انتصابات",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. تاج نامزدهای قضاوت را معرفی خواهد کرد؛ سنا ظرف سی روز تأیید یا رد خواهد نمود.\n2. عدم اقدام سنا ظرف سی روز به‌منزله تأیید تلقی خواهد شد.\n3. در صورت رد سنا، تاج می‌تواند یک نامزد متفاوت دیگر معرفی نماید.\n4. در صورت رد هر دو نامزد توسط سنا، سنا ظرف سی روز فهرست رتبه‌بندی‌شده سه نامزد پیشنهاد خواهد داد.\n5. تاج ظرف چهارده روز از این فهرست انتصاب خواهد نمود، وگرنه نامزد اول فهرست منصوب‌شده تلقی خواهد گشت.\n6. در صورت عدم پیشنهاد فهرست رتبه‌بندی‌شده توسط سنا، تاج می‌تواند یکی از نامزدهای قبلی خود را منصوب نماید.\n\n> **اجرا:** بر روی زنجیره (خودکار). SupremeCourt.sol ماشین حالت انتصاب را اجرا می‌کند: `CrownNomination1 → SenateVote → [Confirmed | Rejected → CrownNomination2 → SenateVote → [Confirmed | Rejected → SenateList → CrownAppointment]]`. مهلت‌ها نتایج خودکار را در هر مرحله فعال می‌سازند. در طول تعلیق تاج، نخست‌وزیر اختیارات نامزدی تاج را از طریق توابع پوشه‌ای Executive.sol اعمال می‌نماید (`nominateJusticeDuringSuspension`، `nominateJusticeSecondDuringSuspension`، `appointJusticeFromListDuringSuspension`). بررسی حالت سرپرست در `SupremeCourt.nominateJustice` در طول تعلیق تاج برای امکان بازیابی اضطراری دیوان نادیده گرفته می‌شود."
+    }
+  },
+  {
+    "id": "V.4",
+    "en": {
+      "id": "V.4",
+      "title": "Jurisdiction",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. The Supreme Court shall have exclusive jurisdiction over the constitutionality of laws, regulations, and executive acts.\n2. The Supreme Court shall resolve disputes between constitutional organs (Crown, Parliament, Executive).\n3. Decisions of the Supreme Court shall be final and binding on all organs of the State.\n\n> **Implementation:** On-chain (human-triggered + automated). Petitions are filed on-chain. Justices vote on-chain. Rulings are recorded immutably. Other contracts check Court decisions before proceeding (e.g., a law declared unconstitutional cannot be enacted)."
+    },
+    "fa": {
+      "id": "V.4",
+      "title": "صلاحیت",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. دیوان عالی صلاحیت انحصاری بر قانون اساسی بودن قوانین، مقررات و اقدامات اجرایی خواهد داشت.\n2. دیوان عالی اختلافات میان ارکان قانون اساسی (تاج، پارلمان، قوه مجریه) را حل خواهد نمود.\n3. تصمیمات دیوان عالی قطعی و لازم‌الاتباع برای تمامی ارکان دولت خواهد بود.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خودکار). دادخواست‌ها بر روی زنجیره ثبت می‌شوند. قضات بر روی زنجیره رأی می‌دهند. احکام به‌صورت تغییرناپذیر ثبت می‌گردند. سایر قراردادها تصمیمات دیوان را قبل از ادامه بررسی می‌نمایند (مثلاً قانونی که خلاف قانون اساسی اعلام شده قابل لازم‌الاجرا شدن نیست)."
+    }
+  },
+  {
+    "id": "V.5",
+    "en": {
+      "id": "V.5",
+      "title": "Standing",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. The Crown, Prime Minister, one-tenth of the Majlis, and one-tenth of the Senate may petition the Supreme Court on constitutional matters.\n2. Petitions shall state the constitutional question and the relief sought.\n\n> **Implementation:** On-chain (human-triggered). SupremeCourt.sol.fileConstitutionalReview() validates that the petitioner has standing (checks role or member count threshold)."
+    },
+    "fa": {
+      "id": "V.5",
+      "title": "حق اقامه دعوا",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. تاج، نخست‌وزیر، یک‌دهم مجلس شورای ملی و یک‌دهم سنا می‌توانند در موضوعات قانون اساسی به دیوان عالی دادخواست تقدیم نمایند.\n2. دادخواست‌ها باید پرسش قانون اساسی و جبران مطلوب را بیان کنند.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `SupremeCourt.sol.fileConstitutionalReview()` اعتبارسنجی می‌کند که دادخواست‌دهنده دارای حق اقامه دعوا است (بررسی نقش یا آستانه شمار اعضا)."
+    }
+  },
+  {
+    "id": "V.6",
+    "en": {
+      "id": "V.6",
+      "title": "Judicial Independence",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. Justices are independent and subject only to this Constitution and the law.\n2. Justices may be removed only for incapacity or serious misconduct, by vote of a majority of the remaining justices.\n3. No organ of State shall instruct justices in judicial matters.\n4. Judicial compensation shall not be reduced during tenure.\n\n> **Implementation:** On-chain (automated). SupremeCourt.sol enforces that only justices can vote on Court matters. Removal requires a majority vote of remaining justices via fact certification. No external contract can modify a justice's vote or remove a justice unilaterally."
+    },
+    "fa": {
+      "id": "V.6",
+      "title": "استقلال قضایی",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. قضات مستقل بوده و فقط تابع این قانون اساسی و قانون هستند.\n2. قضات فقط به دلیل عدم صلاحیت یا سوءرفتار جدی، با رأی اکثریت قضات باقی‌مانده قابل عزل هستند.\n3. هیچ رکن دولتی قضات را در امور قضایی دستور نخواهد داد.\n4. حقوق قضایی در طول دوره خدمت کاهش نخواهد یافت.\n\n> **اجرا:** بر روی زنجیره (خودکار). SupremeCourt.sol اجرا می‌کند که فقط قضات بر موضوعات دیوان رأی دهند. عزل مستلزم رأی اکثریت قضات باقی‌مانده از طریق گواهی واقعیت است. هیچ قرارداد خارجی نمی‌تواند رأی قاضی را تغییر دهد یا قاضی را به‌صورت یک‌جانبه عزل نماید."
+    }
+  },
+  {
+    "id": "V.7",
+    "en": {
+      "id": "V.7",
+      "title": "Continuity",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. The Supreme Court shall remain constituted during dissolution of the Majlis.\n2. Vacancies shall be filled without interruption to the functioning of the Court.\n3. The Court may act with a quorum of seven justices.\n\n> **Implementation:** On-chain (automated). SupremeCourt.sol operates independently of Parliament.sol's dissolution state. Effective quorum is min(PARAM_COURT_QUORUM, activeJusticeCount), enforced on reviews and disputes. Reverts if no active justices exist."
+    },
+    "fa": {
+      "id": "V.7",
+      "title": "استمرار",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. دیوان عالی در طول انحلال مجلس شورای ملی تشکیل‌یافته باقی خواهد ماند.\n2. خلأها بدون وقفه در عملکرد دیوان پر خواهند شد.\n3. دیوان با حد نصاب هفت قاضی قادر به عمل خواهد بود.\n\n> **اجرا:** بر روی زنجیره (خودکار). SupremeCourt.sol مستقل از حالت انحلال Parliament.sol عمل می‌نماید. حد نصاب مؤثر `min(PARAM_COURT_QUORUM, activeJusticeCount)` بوده و بر بازنگری‌ها و اختلافات اجرا می‌شود. در صورت نبود هیچ قاضی فعال، برگشت می‌خورد."
+    }
+  },
+  {
+    "id": "V.8",
+    "en": {
+      "id": "V.8",
+      "title": "Court Emergency Recovery",
+      "partId": "V",
+      "partTitle": "THE SUPREME COURT",
+      "body": "1. Where the Crown, the Prime Minister, or ten per cent of the active members of either chamber of Parliament consider the Court unresponsive, they may initiate a liveness challenge. The Court shall have seven days to demonstrate activity.\n2. Where the Court records no activity for fourteen consecutive days, any person may initiate emergency vacancy proceedings without prior challenge.\n3. If a liveness challenge expires without any justice action, or if the fourteen-day inactivity threshold is met, any person may vacate individual justice seats.\n4. Vacated seats shall be filled through the normal appointment process (Art. V.3).\n5. Any action by an active justice (voting on a review, dispute, or fact certification) resets the liveness challenge and the inactivity timer.\n\n> **Implementation:** On-chain (automated). SupremeCourt.sol tracks `lastCourtActivity` (updated on every justice vote via `_recordActivity()`). Two-tier recovery:\n> - **Fast path (7 days):** `challengeCourtLiveness()` callable by monarch, PM, or authorized contracts. `petitionCourtLiveness()` callable by active Parliament members; auto-activates when 10% of either chamber's effective members have petitioned (ceiling division). Sets `livenessDeadline`.\n> - **Slow path (14 days):** Permissionless `emergencyVacateSeat(seat)` callable when either the liveness challenge has expired (`livenessDeadline != 0 && block.timestamp >= livenessDeadline`) or inactivity timeout has passed (`block.timestamp >= lastCourtActivity + PARAM_COURT_INACTIVITY_PERIOD`).\n> - Any justice vote resets `livenessDeadline` to 0 and clears petition counts (via `livenessChallengeRound` increment). `lastCourtActivity` is initialized when the first justice is seated, ensuring the inactivity timer does not trigger on a freshly deployed court with no justices.\n> - Parameters: `PARAM_COURT_LIVENESS_PERIOD` (7 days), `PARAM_COURT_INACTIVITY_PERIOD` (14 days).\n\n---"
+    },
+    "fa": {
+      "id": "V.8",
+      "title": "بازیابی اضطراری دیوان",
+      "partId": "پنجم",
+      "partTitle": "دیوان عالی",
+      "body": "1. در مواردی که تاج، نخست‌وزیر یا ده درصد اعضای فعال هر یک از مجلسین پارلمان دیوان را بی‌پاسخ تشخیص دهند، می‌توانند چالش فعال بودن آغاز نمایند. دیوان هفت روز برای اثبات فعالیت فرصت خواهد داشت.\n2. در صورتی که دیوان به مدت چهارده روز متوالی هیچ فعالیتی ثبت ننماید، هر شخصی می‌تواند بدون چالش قبلی، تشریفات خلأ اضطراری آغاز نماید.\n3. اگر چالش فعال بودن بدون هیچ اقدام قضایی منقضی شود، یا اگر آستانه عدم فعالیت چهارده‌روزه محقق گردد، هر شخصی می‌تواند کرسی‌های قضایی فردی را خالی نماید.\n4. کرسی‌های خالی‌شده از طریق فرایند عادی انتصاب (اصل V.3) پر خواهند شد.\n5. هر اقدامی توسط قاضی فعال (رأی بر بازنگری، اختلاف یا گواهی واقعیت) چالش فعال بودن و شمارنده عدم فعالیت را بازنشانی می‌نماید.\n\n> **اجرا:** بر روی زنجیره (خودکار). SupremeCourt.sol متغیر `lastCourtActivity` را ردیابی می‌کند (در هر رأی قضایی از طریق `_recordActivity()` به‌روزرسانی می‌شود). بازیابی دو سطحی:\n> - **مسیر سریع (۷ روز):** `challengeCourtLiveness()` توسط پادشاه، نخست‌وزیر یا قراردادهای مجاز قابل فراخوانی است. `petitionCourtLiveness()` توسط اعضای فعال پارلمان قابل فراخوانی بوده و هنگامی که ۱۰ درصد شمار مؤثر اعضای هر مجلس دادخواست داده باشند (تقسیم سقفی) خودکار فعال می‌شود. `livenessDeadline` را تنظیم می‌نماید.\n> - **مسیر کُند (۱۴ روز):** `emergencyVacateSeat(seat)` بدون نیاز به مجوز هنگامی قابل فراخوانی است که یا چالش فعال بودن منقضی شده باشد (`livenessDeadline != 0 && block.timestamp >= livenessDeadline`) یا مهلت عدم فعالیت سپری شده باشد (`block.timestamp >= lastCourtActivity + PARAM_COURT_INACTIVITY_PERIOD`).\n> - هر رأی قضایی `livenessDeadline` را به ۰ بازنشانی کرده و شمار دادخواست‌ها را پاک می‌نماید (از طریق افزایش `livenessChallengeRound`). `lastCourtActivity` هنگام نشستن اولین قاضی مقداردهی اولیه می‌شود و اطمینان حاصل می‌نماید که شمارنده عدم فعالیت بر دیوان تازه‌مستقر بدون قاضی فعال نشود.\n> - پارامترها: `PARAM_COURT_LIVENESS_PERIOD` (۷ روز)، `PARAM_COURT_INACTIVITY_PERIOD` (۱۴ روز).\n\n---"
+    }
+  },
+  {
+    "id": "VI.1",
+    "en": {
+      "id": "VI.1",
+      "title": "Hereditary Succession",
+      "partId": "VI",
+      "partTitle": "SUCCESSION, REGENCY, AND SUSPENSION OF THE CROWN",
+      "body": "1. The Crown shall pass by hereditary succession.\n2. The successor shall be determined by order of succession as maintained by the Crown contract.\n3. The succession list shall be updatable by the reigning Monarch with confirmation by the Supreme Court.\n\n> **Implementation:** On-chain (human-triggered). Crown.sol maintains an ordered succession list. The Monarch can propose changes; the Supreme Court must certify. Two-step succession: (1) Court certifies MONARCH_VACANCY + confirms the specific heir via HEIR_CONFIRMED fact; (2) anyone calls `claimSuccession(confirmedHeir)`. The code verifies succession order: every candidate ahead of the confirmed heir must be either on-chain ineligible (not a citizen) or Court-certified SUCCESSION_INELIGIBLE. This eliminates race conditions — no claim can proceed until the Court positively confirms the heir. Instance-specific hashes (including current monarch) prevent reuse across reigns."
+    },
+    "fa": {
+      "id": "VI.1",
+      "title": "جانشینی موروثی",
+      "partId": "ششم",
+      "partTitle": "جانشینی، نیابت سلطنت و تعلیق تاج",
+      "body": "1. تاج به‌صورت موروثی انتقال خواهد یافت.\n2. جانشین بر اساس ترتیب جانشینی که در قرارداد تاج نگهداری می‌شود تعیین خواهد شد.\n3. فهرست جانشینی توسط پادشاه حاکم با تأیید دیوان عالی قابل به‌روزرسانی است.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). Crown.sol فهرست جانشینی مرتب را نگهداری می‌کند. پادشاه می‌تواند تغییرات پیشنهاد دهد؛ دیوان عالی باید گواهی نماید. جانشینی دو مرحله‌ای: (۱) دیوان `MONARCH_VACANCY` را گواهی کرده و وارث خاص را از طریق واقعیت `HEIR_CONFIRMED` تأیید می‌نماید؛ (۲) هر شخصی `claimSuccession(confirmedHeir)` را فراخوانی می‌کند. کد ترتیب جانشینی را تأیید می‌نماید: هر نامزد مقدم بر وارث تأیید‌شده باید یا بر روی زنجیره واجد صلاحیت نباشد (شهروند نباشد) یا توسط دیوان `SUCCESSION_INELIGIBLE` گواهی شده باشد. این مسابقه شرایط را حذف می‌نماید — هیچ ادعایی نمی‌تواند پیش از تأیید صریح وارث توسط دیوان پیش رود. هش‌های مختص نمونه (شامل پادشاه فعلی) از استفاده مجدد در دوره‌های حکومت مختلف جلوگیری می‌نمایند."
+    }
+  },
+  {
+    "id": "VI.2",
+    "en": {
+      "id": "VI.2",
+      "title": "Eligibility",
+      "partId": "VI",
+      "partTitle": "SUCCESSION, REGENCY, AND SUSPENSION OF THE CROWN",
+      "body": "1. No person shall succeed to the Crown unless that person is a citizen of Iran and has attained age eighteen.\n2. Disqualification occurs where the Supreme Court certifies incapacity or formal renunciation.\n\n> **Implementation:** On-chain (partial). Crown.sol re-verifies citizenship when succession triggers via CitizenRegistry. Age verification is enforced by the ZK circuit for ballot casting (voters must be >= 18). Succession age eligibility is not enforced on-chain (would require Court fact certification in production)."
+    },
+    "fa": {
+      "id": "VI.2",
+      "title": "صلاحیت",
+      "partId": "ششم",
+      "partTitle": "جانشینی، نیابت سلطنت و تعلیق تاج",
+      "body": "1. هیچ شخصی به تاج جانشین نخواهد شد مگر آنکه شهروند ایران بوده و به سن هجده‌سالگی رسیده باشد.\n2. سلب صلاحیت در مواردی رخ می‌دهد که دیوان عالی عدم صلاحیت یا انصراف رسمی را گواهی نماید.\n\n> **اجرا:** بر روی زنجیره (جزئی). Crown.sol تابعیت را هنگام فعال شدن جانشینی از طریق CitizenRegistry مجدداً تأیید می‌نماید. تأیید سن توسط مدار ZK برای رأی‌دادن اجرا می‌شود (رأی‌دهندگان باید ≥ ۱۸ سال باشند). صلاحیت سنی جانشینی بر روی زنجیره اجرا نمی‌شود (در محیط تولید نیاز به گواهی واقعیت دیوان دارد)."
+    }
+  },
+  {
+    "id": "VI.3",
+    "en": {
+      "id": "VI.3",
+      "title": "Regency",
+      "partId": "VI",
+      "partTitle": "SUCCESSION, REGENCY, AND SUSPENSION OF THE CROWN",
+      "body": "1. A Regency shall commence where the Monarch is a minor or incapacitated.\n2. The Regent shall be the first eligible person in the order of succession who has attained age eighteen.\n3. The Regent shall exercise the powers of the Crown temporarily.\n\n> **Implementation:** On-chain (automated). Crown.sol supports a regent role that exercises Crown functions when the monarch cannot. Two-step regency: (1) Court certifies MONARCH_INCAPACITY + confirms the specific regent via REGENT_CONFIRMED fact; (2) anyone calls `claimRegency(confirmedRegent)`. The code verifies succession order: the regent must be the first eligible person in the succession list (with SUCCESSION_INELIGIBLE for anyone ahead who is unfit). The regent is NOT removed from the succession list (temporary role). Reverts if regent already set. `claimRegencyEnd()` — anyone can call after Court certifies \"MONARCH_RECOVERY\" fact."
+    },
+    "fa": {
+      "id": "VI.3",
+      "title": "نیابت سلطنت",
+      "partId": "ششم",
+      "partTitle": "جانشینی، نیابت سلطنت و تعلیق تاج",
+      "body": "1. نیابت سلطنت هنگامی آغاز خواهد شد که پادشاه صغیر یا دچار عدم صلاحیت باشد.\n2. نائب‌السلطنه اولین شخص واجد صلاحیت در ترتیب جانشینی خواهد بود که به سن هجده‌سالگی رسیده باشد.\n3. نائب‌السلطنه اختیارات تاج را به‌صورت موقت اعمال خواهد نمود.\n\n> **اجرا:** بر روی زنجیره (خودکار). Crown.sol از نقش نائب‌السلطنه پشتیبانی می‌کند که هنگام ناتوانی پادشاه، وظایف تاج را اعمال نماید. نیابت دو مرحله‌ای: (۱) دیوان `MONARCH_INCAPACITY` را گواهی کرده و نائب‌السلطنه خاص را از طریق واقعیت `REGENT_CONFIRMED` تأیید می‌نماید؛ (۲) هر شخصی `claimRegency(confirmedRegent)` را فراخوانی می‌کند. کد ترتیب جانشینی را تأیید می‌نماید: نائب‌السلطنه باید اولین شخص واجد صلاحیت در فهرست جانشینی باشد (با `SUCCESSION_INELIGIBLE` برای هر شخص مقدم که نامناسب است). نائب‌السلطنه از فهرست جانشینی حذف نمی‌شود (نقش موقتی). در صورت تعیین قبلی نائب‌السلطنه برگشت می‌خورد. `claimRegencyEnd()` — هر شخصی پس از گواهی واقعیت `\"MONARCH_RECOVERY\"` توسط دیوان قابل فراخوانی است."
+    }
+  },
+  {
+    "id": "VI.4",
+    "en": {
+      "id": "VI.4",
+      "title": "Abdication and Renunciation",
+      "partId": "VI",
+      "partTitle": "SUCCESSION, REGENCY, AND SUSPENSION OF THE CROWN",
+      "body": "1. The Monarch may abdicate by calling the abdication function, which the Supreme Court must certify.\n2. Any person in the order of succession may renounce their position.\n3. Abdication or renunciation takes effect upon certification by the Supreme Court.\n\n> **Implementation:** On-chain (human-triggered). Crown.sol.abdicate(confirmedHeir) — requires both ABDICATION_CERTIFIED and HEIR_CONFIRMED Court certifications before abdication can proceed. Atomic: abdicates and crowns the confirmed heir in one step. The Court must confirm the heir before the monarch can abdicate, preventing abdication into a vacuum. Renouncement is not currently implemented (succession list can be updated instead). `claimSuccessionExhausted()` handles the case where the entire line is exhausted — anyone can call after MONARCH_VACANCY to suspend the Crown when every candidate is either on-chain ineligible or Court-certified SUCCESSION_INELIGIBLE."
+    },
+    "fa": {
+      "id": "VI.4",
+      "title": "کناره‌گیری و انصراف",
+      "partId": "ششم",
+      "partTitle": "جانشینی، نیابت سلطنت و تعلیق تاج",
+      "body": "1. پادشاه می‌تواند با فراخوانی تابع کناره‌گیری استعفا دهد، که دیوان عالی باید آن را گواهی نماید.\n2. هر شخصی در ترتیب جانشینی می‌تواند از جایگاه خود انصراف دهد.\n3. کناره‌گیری یا انصراف پس از گواهی توسط دیوان عالی نافذ خواهد شد.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Crown.sol.abdicate(confirmedHeir)` — هم گواهی `ABDICATION_CERTIFIED` و هم `HEIR_CONFIRMED` دیوان را قبل از کناره‌گیری الزامی می‌نماید. اتمی: کناره‌گیری و تاج‌گذاری وارث تأیید‌شده در یک مرحله. دیوان باید وارث را قبل از کناره‌گیری پادشاه تأیید نماید و از کناره‌گیری بدون جانشین جلوگیری کند. انصراف در حال حاضر اجرا نشده است (فهرست جانشینی به‌جای آن قابل به‌روزرسانی است). `claimSuccessionExhausted()` حالتی را مدیریت می‌کند که کل خط جانشینی تمام شده باشد — هر شخصی پس از `MONARCH_VACANCY` می‌تواند هنگامی که هر نامزد یا بر روی زنجیره فاقد صلاحیت است یا توسط دیوان `SUCCESSION_INELIGIBLE` گواهی شده، تاج را معلق نماید."
+    }
+  },
+  {
+    "id": "VI.5",
+    "en": {
+      "id": "VI.5",
+      "title": "Temporary Suspension",
+      "partId": "VI",
+      "partTitle": "SUCCESSION, REGENCY, AND SUSPENSION OF THE CROWN",
+      "body": "1. Where no eligible Monarch or Regent exists, the Crown shall be temporarily suspended.\n2. During suspension, the Prime Minister shall exercise the Crown's legislative return power, and the Senate shall initiate executive formation.\n3. All Crown powers revert upon certification that a Monarch or Regent exists.\n\n> **Implementation:** On-chain (automated). Crown.sol enters suspended state. Other contracts detect suspension and reroute Crown functions: the PM exercises legislative return powers and justice nomination powers (Art. V.3); the Senate takes the Crown's nomination role in executive formation (nominating PM candidates for Majlis confidence vote, and appointing from the Majlis list) via Parliament governance action. Executive.sol enforces Senate-only access by checking Parliament's `executingSenateAction` flag. Formation initiation during suspension is restricted to Senate members via Parliament.initiateFormationDuringSuspension(). Permissionless `claimCrownResumption()` — anyone can call when Crown is suspended but a monarch exists in the role (no Court certification needed because succession already validated the new monarch)."
+    },
+    "fa": {
+      "id": "VI.5",
+      "title": "تعلیق موقت",
+      "partId": "ششم",
+      "partTitle": "جانشینی، نیابت سلطنت و تعلیق تاج",
+      "body": "1. در مواردی که هیچ پادشاه یا نائب‌السلطنه واجد صلاحیتی وجود نداشته باشد، تاج به‌صورت موقت معلق خواهد شد.\n2. در طول تعلیق، نخست‌وزیر اختیار عودت قانون تاج را اعمال کرده و سنا تشکیل قوه مجریه را آغاز خواهد نمود.\n3. تمامی اختیارات تاج با گواهی وجود پادشاه یا نائب‌السلطنه بازخواهند گشت.\n\n> **اجرا:** بر روی زنجیره (خودکار). Crown.sol وارد حالت تعلیق می‌شود. سایر قراردادها تعلیق را تشخیص داده و وظایف تاج را تغییر مسیر می‌دهند: نخست‌وزیر اختیارات عودت قانون و نامزدی قاضی (اصل V.3) را اعمال می‌نماید؛ سنا نقش نامزدی تاج در تشکیل قوه مجریه را (نامزدی نخست‌وزیر برای رأی اعتماد مجلس، و انتصاب از فهرست مجلس) از طریق اقدام حکمرانی پارلمان بر عهده می‌گیرد. Executive.sol با بررسی پرچم `executingSenateAction` پارلمان، دسترسی انحصاری سنا را اجرا می‌نماید. آغاز تشکیل در طول تعلیق به اعضای سنا از طریق `Parliament.initiateFormationDuringSuspension()` محدود شده است. `claimCrownResumption()` بدون نیاز به مجوز — هر شخصی هنگامی که تاج معلق بوده اما پادشاه در نقش موجود باشد قابل فراخوانی است (نیازی به گواهی دیوان نیست زیرا جانشینی قبلاً پادشاه جدید را اعتبارسنجی کرده است)."
+    }
+  },
+  {
+    "id": "VI.6",
+    "en": {
+      "id": "VI.6",
+      "title": "Exhaustion of the Line",
+      "partId": "VI",
+      "partTitle": "SUCCESSION, REGENCY, AND SUSPENSION OF THE CROWN",
+      "body": "1. Where the Supreme Court certifies that the hereditary line is exhausted, a national referendum on the form of government shall be conducted within one year.\n2. Until the referendum produces an outcome, constitutional functions shall continue under suspension rules.\n\n> **Implementation:** On-chain (human-triggered + automated). SupremeCourt certifies exhaustion via fact certification. Crown.sol tracks `successionExhaustedAt` timestamp when succession exhausts the list. After PARAM_SUCCESSION_REFERENDUM_DEADLINE (365 days), anyone can call `claimSuccessionReferendumDeadline()` which emits `SuccessionReferendumDue` as an on-chain record that the constitutional mandate has been triggered. A structural amendment (contract or role amendment) through the existing Referendum.sol process would be used to change the form of government. Constitutional functions continue under Article VI.5 rules until resolved.\n\n---"
+    },
+    "fa": {
+      "id": "VI.6",
+      "title": "انقراض خط جانشینی",
+      "partId": "ششم",
+      "partTitle": "جانشینی، نیابت سلطنت و تعلیق تاج",
+      "body": "1. در مواردی که دیوان عالی گواهی نماید خط موروثی منقرض شده، همه‌پرسی ملی درباره شکل حکومت ظرف یک سال برگزار خواهد شد.\n2. تا زمان اعلام نتیجه همه‌پرسی، وظایف قانون اساسی تحت قواعد تعلیق ادامه خواهند یافت.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خودکار). دیوان عالی انقراض را از طریق گواهی واقعیت تأیید می‌نماید. Crown.sol مُهر زمانی `successionExhaustedAt` را هنگام انقراض فهرست جانشینی ثبت می‌کند. پس از `PARAM_SUCCESSION_REFERENDUM_DEADLINE` (۳۶۵ روز)، هر شخصی `claimSuccessionReferendumDeadline()` را فراخوانی نموده که رویداد `SuccessionReferendumDue` را به‌عنوان ثبت بر روی زنجیره مبنی بر فعال شدن الزام قانون اساسی منتشر می‌نماید. اصلاحیه ساختاری (تغییر قرارداد یا نقش) از طریق فرایند موجود Referendum.sol برای تغییر شکل حکومت استفاده خواهد شد. وظایف قانون اساسی تحت قواعد اصل VI.5 تا حل‌وفصل ادامه می‌یابند.\n\n---"
+    }
+  },
+  {
+    "id": "VII.1",
+    "en": {
+      "id": "VII.1",
+      "title": "Amendment Authority",
+      "partId": "VII",
+      "partTitle": "AMENDMENT OF THE CONSTITUTION",
+      "body": "1. This Constitution may be amended only in accordance with this Part.\n2. All amendments shall respect the continuity of the State.\n\n> **Implementation:** On-chain (automated). Referendum.sol supports three amendment types: parameter changes (Constitution.sol.amendParameter), role changes (Constitution.sol.setRole), and structural changes (Constitution.sol.amendContract). All require a successful referendum. Structural amendments can replace any governance contract — including the Crown — enabling constitutional evolution through democratic process."
+    },
+    "fa": {
+      "id": "VII.1",
+      "title": "اقتدار اصلاح",
+      "partId": "هفتم",
+      "partTitle": "اصلاح قانون اساسی",
+      "body": "1. این قانون اساسی فقط مطابق این بخش قابل اصلاح است.\n2. تمامی اصلاحیه‌ها باید استمرار دولت را رعایت نمایند.\n\n> **اجرا:** بر روی زنجیره (خودکار). Referendum.sol از سه نوع اصلاحیه پشتیبانی می‌کند: تغییر پارامتر (`Constitution.sol.amendParameter`)، تغییر نقش (`Constitution.sol.setRole`) و تغییر ساختاری (`Constitution.sol.amendContract`). همه مستلزم همه‌پرسی موفق هستند. اصلاحیه‌های ساختاری می‌توانند هر قرارداد حکمرانی — از جمله تاج — را جایگزین نمایند و تحول قانون اساسی را از طریق فرایند دموکراتیک امکان‌پذیر سازند."
+    }
+  },
+  {
+    "id": "VII.2",
+    "en": {
+      "id": "VII.2",
+      "title": "Initiative",
+      "partId": "VII",
+      "partTitle": "AMENDMENT OF THE CONSTITUTION",
+      "body": "1. Amendments may be initiated by the Majlis, the Senate, or the Prime Minister.\n2. Initiative requires a simple majority in the initiating chamber, or a formal proposal by the Prime Minister.\n\n> **Implementation:** On-chain (human-triggered). Referendum.sol.proposeAmendment() validates that the caller has the required standing and that parliamentary approval has been obtained."
+    },
+    "fa": {
+      "id": "VII.2",
+      "title": "ابتکار",
+      "partId": "هفتم",
+      "partTitle": "اصلاح قانون اساسی",
+      "body": "1. اصلاحیه‌ها ممکن است توسط مجلس شورای ملی، سنا یا نخست‌وزیر ابتکار شوند.\n2. ابتکار مستلزم اکثریت ساده در مجلس ابتکارکننده، یا پیشنهاد رسمی نخست‌وزیر است.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Referendum.sol.proposeAmendment()` اعتبارسنجی می‌کند که فراخوانی‌کننده دارای حق ابتکار لازم بوده و تصویب پارلمانی کسب شده است."
+    }
+  },
+  {
+    "id": "VII.3",
+    "en": {
+      "id": "VII.3",
+      "title": "Parliamentary Adoption",
+      "partId": "VII",
+      "partTitle": "AMENDMENT OF THE CONSTITUTION",
+      "body": "1. An amendment requires approval by two-thirds of the Majlis and two-thirds of the Senate.\n\n> **Implementation:** On-chain (human-triggered). Parliamentary adoption of amendments (2/3 threshold) occurs off-chain. Upon adoption, an authorized contract calls Referendum.proposeAmendment() to register the amendment on-chain."
+    },
+    "fa": {
+      "id": "VII.3",
+      "title": "تصویب پارلمانی",
+      "partId": "هفتم",
+      "partTitle": "اصلاح قانون اساسی",
+      "body": "1. اصلاحیه مستلزم تصویب دوسوم مجلس شورای ملی و دوسوم سنا است.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). تصویب پارلمانی اصلاحیه‌ها (آستانه دوسوم) خارج از زنجیره صورت می‌پذیرد. پس از تصویب، قرارداد مجاز `Referendum.proposeAmendment()` را برای ثبت اصلاحیه بر روی زنجیره فراخوانی می‌نماید."
+    }
+  },
+  {
+    "id": "VII.4",
+    "en": {
+      "id": "VII.4",
+      "title": "Referendum",
+      "partId": "VII",
+      "partTitle": "AMENDMENT OF THE CONSTITUTION",
+      "body": "1. Upon parliamentary adoption, a constitutional amendment shall be submitted to national referendum.\n2. An amendment is approved by a simple majority of valid votes cast.\n\n> **Implementation:** On-chain (automated). Referendum.sol conducts the vote using CitizenRegistry for voter eligibility. Upon approval, Referendum.sol enacts the change via the appropriate Constitution.sol function: amendParameter() for parameter changes, setRole() for role changes, or amendContract() for structural changes (replacing governance contracts)."
+    },
+    "fa": {
+      "id": "VII.4",
+      "title": "همه‌پرسی",
+      "partId": "هفتم",
+      "partTitle": "اصلاح قانون اساسی",
+      "body": "1. پس از تصویب پارلمانی، اصلاحیه قانون اساسی به همه‌پرسی ملی گذاشته خواهد شد.\n2. اصلاحیه با اکثریت ساده آرای معتبر ریخته‌شده تصویب می‌گردد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Referendum.sol رأی‌گیری را با استفاده از CitizenRegistry برای صلاحیت رأی‌دهنده برگزار می‌نماید. پس از تصویب، Referendum.sol تغییر را از طریق تابع مناسب Constitution.sol اعمال می‌کند: `amendParameter()` برای تغییرات پارامتر، `setRole()` برای تغییرات نقش، یا `amendContract()` برای تغییرات ساختاری (جایگزینی قراردادهای حکمرانی)."
+    }
+  },
+  {
+    "id": "VII.5",
+    "en": {
+      "id": "VII.5",
+      "title": "Emergency Amendments",
+      "partId": "VII",
+      "partTitle": "AMENDMENT OF THE CONSTITUTION",
+      "body": "1. Where the Supreme Court certifies a grave threat to the constitutional order, Parliament may adopt a temporary amendment by three-quarters of each chamber. A temporary amendment shall be limited to changes of constitutional parameters.\n2. A temporary amendment expires after one year unless confirmed by referendum.\n3. No temporary amendment may alter protected provisions governing elections, judicial independence, or constitutional supremacy.\n4. Protected provisions include: justice terms, court quorum, justice count, amendment thresholds, election parameters (registration period, voting period, dissolution deadline, chamber terms), confidence vote period, emergency amendment duration, and provincial council term.\n\n> **Implementation:** On-chain (automated). Referendum.sol tracks emergency amendments with a stored `expiresAt` timestamp (computed at enactment from `PARAM_EMERGENCY_AMEND_DURATION`). The stored deadline is immutable, so later changes to the duration parameter do not retroactively affect active emergencies. Emergency amendments can be confirmed by referendum via `confirmEmergencyAmendment()`, which sets status to Confirmed and prevents expiry rollback. If a normal referendum on the same parameter is enacted while an emergency is active, the emergency is marked Superseded (preventing stale `oldValue` rollback). Protected provisions are hardcoded and cannot be modified even by emergency amendment.\n\n---"
+    },
+    "fa": {
+      "id": "VII.5",
+      "title": "اصلاحیه‌های اضطراری",
+      "partId": "هفتم",
+      "partTitle": "اصلاح قانون اساسی",
+      "body": "1. در مواردی که دیوان عالی تهدید جدی علیه نظام قانون اساسی را گواهی نماید، پارلمان می‌تواند اصلاحیه موقت را با سه‌چهارم هر مجلس تصویب نماید. اصلاحیه موقت به تغییر پارامترهای قانون اساسی محدود خواهد بود.\n2. اصلاحیه موقت پس از یک سال منقضی خواهد شد مگر آنکه توسط همه‌پرسی تأیید گردد.\n3. هیچ اصلاحیه موقتی نمی‌تواند مقررات حمایت‌شده حاکم بر انتخابات، استقلال قضایی یا برتری قانون اساسی را تغییر دهد.\n4. مقررات حمایت‌شده عبارتند از: دوره قضات، حد نصاب دیوان، شمار قضات، آستانه‌های اصلاحیه، پارامترهای انتخابات (دوره ثبت‌نام، دوره رأی‌گیری، مهلت انتخابات انحلال، دوره‌های مجلسین)، دوره رأی اعتماد، مدت اصلاحیه اضطراری و دوره انجمن ایالتی.\n\n> **اجرا:** بر روی زنجیره (خودکار). Referendum.sol اصلاحیه‌های اضطراری را با مُهر زمانی `expiresAt` ذخیره‌شده ردیابی می‌نماید (هنگام لازم‌الاجرا شدن از `PARAM_EMERGENCY_AMEND_DURATION` محاسبه می‌شود). مهلت ذخیره‌شده تغییرناپذیر است، بنابراین تغییرات بعدی پارامتر مدت بر اضطراری‌های فعال تأثیر عطف‌به‌ماسبق ندارد. اصلاحیه‌های اضطراری می‌توانند از طریق همه‌پرسی با `confirmEmergencyAmendment()` تأیید شوند، که وضعیت را به Confirmed تغییر داده و از بازگشت انقضا جلوگیری می‌نماید. اگر همه‌پرسی عادی بر همان پارامتر هنگام فعال بودن اضطراری تصویب شود، اضطراری به حالت Superseded علامت‌گذاری می‌شود (از بازگشت `oldValue` کهنه جلوگیری می‌نماید). مقررات حمایت‌شده در کد ثابت بوده و حتی توسط اصلاحیه اضطراری نیز غیرقابل تغییر هستند.\n\n---"
+    }
+  },
+  {
+    "id": "VIII.1",
+    "en": {
+      "id": "VIII.1",
+      "title": "Electoral Principles",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Elections shall be free, fair, and at regular intervals, by universal, equal, and secret suffrage.\n2. Members of the Majlis shall be elected by proportional representation within their province for four-year terms.\n3. Each citizen registered in the CitizenRegistry shall have one vote of equal value.\n4. Ballot secrecy shall be preserved through zero-knowledge proofs generated from biometric passport data.\n\n> **Implementation:** On-chain (automated). Election.sol enforces one-vote-per-citizen using ZK nullifiers (each citizen's passport data produces a unique per-election nullifier; duplicates are rejected). Proportional representation is computed on-chain. Voter anonymity is achieved through zero-knowledge proofs that verify citizenship without revealing identity."
+    },
+    "fa": {
+      "id": "VIII.1",
+      "title": "اصول انتخاباتی",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. انتخابات آزاد، عادلانه و در فواصل منظم، با حق رأی همگانی، برابر و مخفی برگزار خواهند شد.\n2. اعضای مجلس شورای ملی با نمایندگی تناسبی در استان خود برای دوره‌های چهارساله انتخاب خواهند شد.\n3. هر شهروند ثبت‌شده در CitizenRegistry یک رأی با ارزش برابر خواهد داشت.\n4. محرمانگی آرا از طریق اثبات‌های دانش صفر تولیدشده از داده‌های بیومتریک گذرنامه حفظ خواهد شد.\n\n> **اجرا:** بر روی زنجیره (خودکار). Election.sol یک‌رأی‌برای‌هر‌شهروند را از طریق خنثی‌سازهای ZK اجرا می‌نماید (داده‌های گذرنامه هر شهروند خنثی‌ساز منحصربه‌فرد به ازای هر انتخابات تولید می‌کند؛ تکراری‌ها رد می‌شوند). نمایندگی تناسبی بر روی زنجیره محاسبه می‌شود. ناشناسی رأی‌دهنده از طریق اثبات‌های دانش صفر که تابعیت را بدون افشای هویت تأیید می‌نمایند حاصل می‌شود."
+    }
+  },
+  {
+    "id": "VIII.2",
+    "en": {
+      "id": "VIII.2",
+      "title": "Election Cycles",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Majlis elections shall be held every four years, or upon dissolution, with one election per province conducted simultaneously across all provinces.\n2. Senate elections shall be staggered, with one-third renewed every two years.\n3. Provincial Council elections shall be held every four years per province.\n4. An election cycle comprises: candidate registration, voting period, tallying, and member seating.\n5. The Electoral Commission function is performed by the Election contract itself.\n\n> **Implementation:** On-chain (automated). Election.sol manages the election lifecycle as a state machine: `Registration → Voting → Tallied → Seated`. Each phase has defined durations as constitutional parameters (`PARAM_ELECTION_REG_PERIOD`, `PARAM_ELECTION_VOTE_PERIOD`). Election.sol supports three election types: Majlis, Senate (direct), and ProvincialCouncil. Majlis elections use `startMajlisElection(provinceId)` with province-scoped registration and voting via CitizenRegistry.citizenProvince(). Provincial Council elections use `startProvincialElection(provinceId)` similarly. **Senate staggering (Art. VIII.2.2):** Implemented via individual `senateTermEnd` timestamps in Parliament.sol rather than formal class assignments. A one-time `initializeSenateStagger()` creates three cohorts; thereafter, individual term expiry maintains rotation. Expired senators create vacancies enforced by the by-election timeout (Art. VIII.8)."
+    },
+    "fa": {
+      "id": "VIII.2",
+      "title": "دوره‌های انتخاباتی",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. انتخابات مجلس هر چهار سال یا پس از انحلال برگزار خواهد شد، با یک انتخابات در هر استان که به‌صورت هم‌زمان در تمامی استان‌ها اجرا می‌گردد.\n2. انتخابات سنا به‌صورت تناوبی بوده و هر دو سال یک‌سوم تجدید خواهد شد.\n3. انتخابات انجمن ایالتی هر چهار سال در هر استان برگزار خواهد شد.\n4. هر دوره انتخاباتی شامل مراحل: ثبت‌نام نامزد، دوره رأی‌گیری، شمارش آرا و نشاندن اعضا است.\n5. وظیفه کمیسیون انتخابات توسط خود قرارداد Election انجام می‌شود.\n\n> **اجرا:** بر روی زنجیره (خودکار). Election.sol چرخه عمر انتخابات را به‌عنوان ماشین حالت مدیریت می‌نماید: `Registration → Voting → Tallied → Seated`. هر مرحله مدت‌های تعریف‌شده به‌عنوان پارامتر قانون اساسی دارد (`PARAM_ELECTION_REG_PERIOD`، `PARAM_ELECTION_VOTE_PERIOD`). Election.sol از سه نوع انتخابات پشتیبانی می‌کند: مجلس، سنا (مستقیم) و انجمن ایالتی. انتخابات مجلس از `startMajlisElection(provinceId)` با ثبت‌نام و رأی‌گیری با محدوده استانی از طریق `CitizenRegistry.citizenProvince()` استفاده می‌نماید. انتخابات انجمن ایالتی به‌همین‌ترتیب از `startProvincialElection(provinceId)` استفاده می‌کند. **تناوب سنا (اصل VIII.2.2):** از طریق مُهرهای زمانی `senateTermEnd` فردی در Parliament.sol به‌جای تخصیص رسمی دسته اجرا می‌شود. `initializeSenateStagger()` یک‌بار سه دسته ایجاد می‌کند؛ از آن پس، انقضای فردی دوره تناوب را حفظ می‌نماید. سناتورهای منقضی‌شده خلأهایی ایجاد می‌کنند که توسط مهلت انتخابات میان‌دوره‌ای (اصل VIII.8) اجرا می‌شوند."
+    }
+  },
+  {
+    "id": "VIII.3",
+    "en": {
+      "id": "VIII.3",
+      "title": "Candidate Registration",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Any citizen may register as a candidate for the Majlis in their province of registration during the registration period.\n2. Candidates may associate with a registered political party or stand as independents.\n3. The registration period shall be no less than fourteen days.\n\n> **Implementation:** On-chain (human-triggered). Election.sol.registerCandidate() validates citizenship via CitizenRegistry, enforces province matching for Majlis and ProvincialCouncil elections (candidates must be registered in the election's province), and records the candidacy during the registration phase."
+    },
+    "fa": {
+      "id": "VIII.3",
+      "title": "ثبت‌نام نامزد",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. هر شهروندی می‌تواند در طول دوره ثبت‌نام، به‌عنوان نامزد مجلس در استان محل ثبت خود نام‌نویسی نماید.\n2. نامزدها ممکن است با حزب سیاسی ثبت‌شده‌ای وابسته بوده یا مستقل شرکت نمایند.\n3. دوره ثبت‌نام کمتر از چهارده روز نخواهد بود.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Election.sol.registerCandidate()` تابعیت را از طریق CitizenRegistry اعتبارسنجی کرده، تطابق استان را برای انتخابات مجلس و انجمن ایالتی اجرا نموده (نامزدها باید در استان انتخابات ثبت شده باشند) و نامزدی را در مرحله ثبت‌نام ثبت می‌نماید."
+    }
+  },
+  {
+    "id": "VIII.4",
+    "en": {
+      "id": "VIII.4",
+      "title": "Voting",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. During the voting period, each registered citizen may cast one ballot in their province's Majlis election.\n2. The ballot shall include the citizen's verified identity proof and their encrypted vote.\n3. No citizen may vote more than once in the same election.\n4. The voting period shall be no less than seven days.\n\n> **Implementation:** On-chain (human-triggered + automated). Election.sol.castBallot() verifies a Groth16 ZK proof (citizenship, age >= 18, CSCA key hash, per-election nullifier, province binding). Province matching for Majlis and ProvincialCouncil elections is verified from the proof's public signals. The contract checks for double-voting via nullifier and enforces the voting period."
+    },
+    "fa": {
+      "id": "VIII.4",
+      "title": "رأی‌گیری",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. در طول دوره رأی‌گیری، هر شهروند ثبت‌شده می‌تواند در انتخابات مجلس استان خود یک رأی بدهد.\n2. برگه رأی شامل اثبات هویت تأییدشده شهروند و رأی رمزنگاری‌شده وی خواهد بود.\n3. هیچ شهروندی در یک انتخابات بیش از یک بار رأی نخواهد داد.\n4. دوره رأی‌گیری کمتر از هفت روز نخواهد بود.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خودکار). `Election.sol.castBallot()` اثبات ZK Groth16 (تابعیت، سن ≥ ۱۸، هش کلید CSCA، خنثی‌ساز مختص انتخابات، اتصال استان) را تأیید می‌نماید. تطابق استان برای انتخابات مجلس و انجمن ایالتی از سیگنال‌های عمومی اثبات تأیید می‌شود. قرارداد رأی مضاعف را از طریق خنثی‌ساز بررسی کرده و دوره رأی‌گیری را اجرا می‌نماید."
+    }
+  },
+  {
+    "id": "VIII.5",
+    "en": {
+      "id": "VIII.5",
+      "title": "Tallying and Seating",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Upon the close of voting, votes shall be tallied and seats allocated by proportional representation within each province according to the province's allocated seat count.\n2. Elected members shall be seated in Parliament by the Election contract, with their province of election recorded.\n3. Tallying shall be transparent and verifiable by any citizen.\n\n> **Implementation:** On-chain (automated). Election.sol.tallyVotes() computes proportional seat allocation. Election.sol.seatMembers() calls Parliament.sol.seatMajlisMemberWithProvince() for Majlis elections (recording the province) or Parliament.sol.seatMember() for other election types."
+    },
+    "fa": {
+      "id": "VIII.5",
+      "title": "شمارش و نشاندن",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. پس از پایان رأی‌گیری، آرا شمارش شده و کرسی‌ها به نمایندگی تناسبی در هر استان مطابق تعداد کرسی‌های تخصیصی استان تقسیم خواهند شد.\n2. اعضای منتخب توسط قرارداد Election با ثبت استان انتخاب‌شان در پارلمان نشانده خواهند شد.\n3. شمارش آرا شفاف و توسط هر شهروندی قابل تأیید خواهد بود.\n\n> **اجرا:** بر روی زنجیره (خودکار). `Election.sol.tallyVotes()` تخصیص تناسبی کرسی‌ها را محاسبه می‌نماید. `Election.sol.seatMembers()` تابع `Parliament.sol.seatMajlisMemberWithProvince()` را برای انتخابات مجلس (با ثبت استان) یا `Parliament.sol.seatMember()` را برای سایر انواع انتخابات فراخوانی می‌کند."
+    }
+  },
+  {
+    "id": "VIII.6",
+    "en": {
+      "id": "VIII.6",
+      "title": "Referendums",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Constitutional referendums shall be conducted in accordance with Part VII.\n2. A referendum on the form of government shall be conducted in accordance with Article VI.6.\n3. Referendum voting follows the same identity verification and ballot-casting procedures as elections.\n4. A referendum is decided by a simple majority of valid votes cast.\n\n> **Implementation:** On-chain (automated). Referendum.sol manages referendum lifecycle. Uses the same CitizenRegistry identity system as Election.sol. Results are binding and trigger constitutional changes automatically."
+    },
+    "fa": {
+      "id": "VIII.6",
+      "title": "همه‌پرسی‌ها",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. همه‌پرسی‌های قانون اساسی مطابق بخش هفتم برگزار خواهند شد.\n2. همه‌پرسی درباره شکل حکومت مطابق اصل VI.6 برگزار خواهد شد.\n3. رأی‌گیری همه‌پرسی از همان تشریفات تأیید هویت و رأی‌دادن انتخابات پیروی می‌نماید.\n4. همه‌پرسی با اکثریت ساده آرای معتبر ریخته‌شده تصمیم‌گیری می‌شود.\n\n> **اجرا:** بر روی زنجیره (خودکار). Referendum.sol چرخه عمر همه‌پرسی را مدیریت می‌نماید. از همان سامانه هویت CitizenRegistry مشابه Election.sol استفاده می‌کند. نتایج الزام‌آور بوده و تغییرات قانون اساسی را به‌صورت خودکار فعال می‌سازند."
+    }
+  },
+  {
+    "id": "VIII.7",
+    "en": {
+      "id": "VIII.7",
+      "title": "Dissolution Elections",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Where the Majlis is dissolved, new elections shall be called within sixty days, with one election per province conducted simultaneously.\n2. Each provincial election shall follow the standard cycle (registration, voting, tallying, seating).\n3. The Majlis is restored only when all provincial elections have been seated.\n4. Until the new Majlis is seated, the Senate continues to function and the caretaker government remains in place.\n\n> **Implementation:** On-chain (human-triggered + auto-enforced). Executive.sol triggers dissolution via Parliament.dissolveMajlis(), which records the dissolution timestamp. Parliament.claimDissolutionElectionTimeout() enforces the 60-day deadline: after PARAM_DISSOLUTION_ELECTION_DEADLINE elapses, anyone can call this function to auto-start Majlis elections via Election.startMajlisElection(provinceId) for each province. A `pendingMajlisElections` counter tracks how many provincial elections remain; Parliament.majlisElectionSeated() decrements the counter as each province's election is seated, and restores the Majlis when the counter reaches zero."
+    },
+    "fa": {
+      "id": "VIII.7",
+      "title": "انتخابات انحلال",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. در صورت انحلال مجلس، انتخابات جدید ظرف شصت روز فراخوانده خواهد شد، با یک انتخابات در هر استان که به‌صورت هم‌زمان برگزار می‌گردد.\n2. هر انتخابات استانی از دوره استاندارد (ثبت‌نام، رأی‌گیری، شمارش، نشاندن) پیروی خواهد کرد.\n3. مجلس فقط هنگامی بازسازی می‌شود که تمامی انتخابات استانی نشانده شده باشند.\n4. تا نشستن مجلس جدید، سنا به فعالیت خود ادامه داده و دولت سرپرست مستقر باقی خواهد ماند.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خوداجرا). Executive.sol انحلال را از طریق `Parliament.dissolveMajlis()` فعال کرده که مُهر زمانی انحلال را ثبت می‌نماید. `Parliament.claimDissolutionElectionTimeout()` مهلت ۶۰ روزه را اجرا می‌کند: پس از گذشت `PARAM_DISSOLUTION_ELECTION_DEADLINE`، هر شخصی می‌تواند این تابع را برای آغاز خودکار انتخابات مجلس از طریق `Election.startMajlisElection(provinceId)` برای هر استان فراخوانی نماید. شمارنده `pendingMajlisElections` تعداد انتخابات استانی باقی‌مانده را ردیابی می‌کند؛ `Parliament.majlisElectionSeated()` با نشستن هر انتخابات استانی شمارنده را کاهش داده و هنگام رسیدن به صفر، مجلس را بازسازی می‌نماید."
+    }
+  },
+  {
+    "id": "VIII.8",
+    "en": {
+      "id": "VIII.8",
+      "title": "By-Elections",
+      "partId": "VIII",
+      "partTitle": "ELECTIONS AND REFERENDUMS",
+      "body": "1. Where a Majlis seat is vacated before the expiry of its term, a by-election shall be held within ninety days in the province that held the seat.\n2. Where a Senate seat is vacated before the expiry of its term, a by-election shall be held within ninety days.\n3. A by-election follows the standard election cycle (registration, voting, tallying, seating).\n4. The member elected in a by-election serves for the remainder of the original term.\n5. Where the remaining term is less than six months, no by-election is required.\n\n> **Implementation:** On-chain (human-triggered + auto-enforced). Parliament._removeMemberInternal() tracks vacancies per province for Majlis members (using `provinceMajlisVacancies[province]` and `lastVacancyAtForProvince[province]`) and per chamber for Senate. Vacancies are only tracked if the member's remaining term is at least six months (Art. VIII.8.5 — no by-election for near-expiry vacancies). Parliament.claimByElectionTimeout() enforces the 90-day deadline (`PARAM_BY_ELECTION_DEADLINE`): for Majlis vacancies, it starts province-scoped elections via Election.startMajlisElection(provinceId) only for provinces with vacancies; for Senate vacancies, it uses Election.startElection(). Parliament.seatMajlisMemberWithProvince() decrements per-province vacancy counts as seats are filled. Term enforcement is self-enforcing: Parliament.isActiveMajlisMember() and Parliament.isActiveSenateMember() check both membership and term expiry, so expired members cannot act even if expireMember() has not been called. Known simplification: by-election winners receive a fresh term (Art. VIII.8.4 remainder-of-term is not enforced due to pipeline complexity).\n\n---"
+    },
+    "fa": {
+      "id": "VIII.8",
+      "title": "انتخابات میان‌دوره‌ای",
+      "partId": "هشتم",
+      "partTitle": "انتخابات و همه‌پرسی‌ها",
+      "body": "1. در صورت خالی شدن کرسی مجلس قبل از انقضای دوره، انتخابات میان‌دوره‌ای ظرف نود روز در استانی که کرسی را در اختیار داشت برگزار خواهد شد.\n2. در صورت خالی شدن کرسی سنا قبل از انقضای دوره، انتخابات میان‌دوره‌ای ظرف نود روز برگزار خواهد شد.\n3. انتخابات میان‌دوره‌ای از دوره استاندارد انتخاباتی (ثبت‌نام، رأی‌گیری، شمارش، نشاندن) پیروی می‌نماید.\n4. عضو منتخب در انتخابات میان‌دوره‌ای برای بقیه دوره اصلی خدمت خواهد نمود.\n5. در صورتی که مدت باقی‌مانده دوره کمتر از شش ماه باشد، انتخابات میان‌دوره‌ای الزامی نیست.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خوداجرا). `Parliament._removeMemberInternal()` خلأها را به ازای هر استان برای اعضای مجلس (با استفاده از `provinceMajlisVacancies[province]` و `lastVacancyAtForProvince[province]`) و به ازای هر مجلس برای سنا ردیابی می‌نماید. خلأها فقط در صورتی ردیابی می‌شوند که مدت باقی‌مانده دوره عضو حداقل شش ماه باشد (اصل VIII.8.5 — بدون انتخابات میان‌دوره‌ای برای خلأهای نزدیک انقضا). `Parliament.claimByElectionTimeout()` مهلت ۹۰ روزه (`PARAM_BY_ELECTION_DEADLINE`) را اجرا می‌کند: برای خلأهای مجلس، انتخابات با محدوده استانی از طریق `Election.startMajlisElection(provinceId)` فقط برای استان‌های دارای خلأ آغاز می‌نماید؛ برای خلأهای سنا، از `Election.startElection()` استفاده می‌کند. `Parliament.seatMajlisMemberWithProvince()` شمار خلأهای هر استان را با نشستن کرسی‌ها کاهش می‌دهد. اجرای دوره خوداجرا است: `Parliament.isActiveMajlisMember()` و `Parliament.isActiveSenateMember()` هم عضویت و هم انقضای دوره را بررسی می‌نمایند، بنابراین اعضای منقضی‌شده حتی بدون فراخوانی `expireMember()` قادر به اقدام نیستند. ساده‌سازی شناخته‌شده: برندگان انتخابات میان‌دوره‌ای دوره تازه دریافت می‌کنند (بقیه‌دوره اصل VIII.8.4 به دلیل پیچیدگی مسیر اجرا نمی‌شود).\n\n---"
+    }
+  },
+  {
+    "id": "IX.1",
+    "en": {
+      "id": "IX.1",
+      "title": "Budget and Taxation",
+      "partId": "IX",
+      "partTitle": "PUBLIC FINANCE",
+      "body": "1. The Prime Minister shall propose the annual budget to the Majlis.\n2. No public funds shall be spent except as authorized by an enacted budget.\n3. No tax shall be levied except by law adopted through the legislative process.\n\n> **Implementation:** On-chain (human-triggered + automated). Budget.sol.proposeBudget() is callable by any authorized contract (typically the PM via Executive). Budget proposals are blocked during caretaker mode. Budget.sol.allocateFunds() validates that spending is within an approved budget. Unauthorized spending reverts."
+    },
+    "fa": {
+      "id": "IX.1",
+      "title": "بودجه و مالیات",
+      "partId": "نهم",
+      "partTitle": "مالیه عمومی",
+      "body": "1. نخست‌وزیر بودجه سالانه را به مجلس شورای ملی پیشنهاد خواهد داد.\n2. هیچ وجه عمومی جز به مجوز بودجه مصوب هزینه نخواهد شد.\n3. هیچ مالیاتی جز به‌موجب قانون مصوب از طریق فرایند قانون‌گذاری وضع نخواهد شد.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان + خودکار). `Budget.sol.proposeBudget()` توسط هر قرارداد مجاز (معمولاً نخست‌وزیر از طریق Executive) قابل فراخوانی است. پیشنهادات بودجه در طول حالت سرپرست مسدود می‌شوند. `Budget.sol.allocateFunds()` اعتبارسنجی می‌کند که هزینه در محدوده بودجه مصوب است. هزینه غیرمجاز برگشت می‌خورد."
+    }
+  },
+  {
+    "id": "IX.2",
+    "en": {
+      "id": "IX.2",
+      "title": "Budget Adoption",
+      "partId": "IX",
+      "partTitle": "PUBLIC FINANCE",
+      "body": "1. The budget shall follow the legislative process, with the Majlis having the exclusive right to originate budget legislation.\n2. The Senate may review and object to the budget, but the Majlis may override Senate objection by absolute majority.\n3. The budget must be enacted before the start of the fiscal year.\n\n> **Implementation:** On-chain (automated). Budget.sol tracks the budget lifecycle and integrates with Parliament.sol for the adoption process. Budget bills have a special flag in Parliament.sol."
+    },
+    "fa": {
+      "id": "IX.2",
+      "title": "تصویب بودجه",
+      "partId": "نهم",
+      "partTitle": "مالیه عمومی",
+      "body": "1. بودجه از فرایند قانون‌گذاری پیروی خواهد کرد، با حق انحصاری مجلس شورای ملی در ابتکار قانون بودجه.\n2. سنا می‌تواند بودجه را بازنگری نموده و اعتراض کند، اما مجلس می‌تواند اعتراض سنا را با اکثریت مطلق رد نماید.\n3. بودجه باید قبل از آغاز سال مالی تصویب شود.\n\n> **اجرا:** بر روی زنجیره (خودکار). Budget.sol چرخه عمر بودجه را ردیابی کرده و با Parliament.sol برای فرایند تصویب یکپارچه می‌شود. لوایح بودجه در Parliament.sol دارای پرچم ویژه هستند."
+    }
+  },
+  {
+    "id": "IX.3",
+    "en": {
+      "id": "IX.3",
+      "title": "Budgetary Continuity",
+      "partId": "IX",
+      "partTitle": "PUBLIC FINANCE",
+      "body": "1. Where the budget is not enacted by the beginning of the fiscal year, the prior year's budget shall continue on a provisional basis at the same allocation levels.\n2. Provisional budgetary authority shall not exceed the prior year's total.\n3. Budgetary authority shall not lapse due to dissolution of the Majlis.\n4. A provisional continuation budget shall be superseded upon activation of a properly adopted budget for the same fiscal year.\n\n> **Implementation:** On-chain (human-triggered). Budget.sol.continuePriorBudget() can be called by any authorized contract when the fiscal year begins without an enacted budget. The prior year's allocations become the ceiling. Continuation budgets are marked with `isContinuation = true` and have status `Superseded` when replaced by a properly adopted budget for the same year."
+    },
+    "fa": {
+      "id": "IX.3",
+      "title": "استمرار بودجه",
+      "partId": "نهم",
+      "partTitle": "مالیه عمومی",
+      "body": "1. در صورتی که بودجه تا آغاز سال مالی تصویب نشده باشد، بودجه سال قبل به‌صورت موقت در همان سطوح تخصیص ادامه خواهد یافت.\n2. اقتدار بودجه‌ای موقت از مجموع سال قبل تجاوز نخواهد کرد.\n3. اقتدار بودجه‌ای به دلیل انحلال مجلس ساقط نخواهد شد.\n4. بودجه استمراری موقت با فعال‌سازی بودجه مصوب صحیح برای همان سال مالی جایگزین خواهد شد.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Budget.sol.continuePriorBudget()` توسط هر قرارداد مجاز هنگامی که سال مالی بدون بودجه مصوب آغاز شود قابل فراخوانی است. تخصیص‌های سال قبل سقف می‌شوند. بودجه‌های استمراری با `isContinuation = true` علامت‌گذاری شده و هنگام جایگزینی توسط بودجه مصوب صحیح برای همان سال، وضعیت `Superseded` دریافت می‌کنند."
+    }
+  },
+  {
+    "id": "IX.5",
+    "en": {
+      "id": "IX.5",
+      "title": "Supplementary Budgets",
+      "partId": "IX",
+      "partTitle": "PUBLIC FINANCE",
+      "body": "1. Parliament may approve a supplementary budget to increase the spending ceiling of the active budget for the current fiscal year.\n2. Supplementary budgets follow the same legislative process as the annual budget.\n3. The spending ceiling of the active budget shall be increased by the supplementary amount upon activation.\n\n> **Implementation:** On-chain (human-triggered). Budget.sol.approveSupplementary() increases the active budget's `totalAmount`. Requires `onlyParliament`. The PM proposes the supplementary through the normal legislative process (off-chain deliberation, Parliament votes); Parliament calls `approveSupplementary()` to enact it."
+    },
+    "fa": {
+      "id": "IX.5",
+      "title": "بودجه‌های متمم",
+      "partId": "نهم",
+      "partTitle": "مالیه عمومی",
+      "body": "1. پارلمان ممکن است بودجه متمم برای افزایش سقف هزینه بودجه فعال سال مالی جاری تصویب نماید.\n2. بودجه‌های متمم از همان فرایند قانون‌گذاری بودجه سالانه پیروی می‌کنند.\n3. سقف هزینه بودجه فعال پس از فعال‌سازی به میزان مبلغ متمم افزایش خواهد یافت.\n\n> **اجرا:** بر روی زنجیره (فعال‌شونده توسط انسان). `Budget.sol.approveSupplementary()` مقدار `totalAmount` بودجه فعال را افزایش می‌دهد. `onlyParliament` الزامی است. نخست‌وزیر متمم را از طریق فرایند قانون‌گذاری عادی پیشنهاد می‌دهد (بررسی خارج از زنجیره، پارلمان رأی می‌دهد)؛ پارلمان `approveSupplementary()` را برای لازم‌الاجرا نمودن فراخوانی می‌نماید."
+    }
+  },
+  {
+    "id": "IX.4",
+    "en": {
+      "id": "IX.4",
+      "title": "National Audit",
+      "partId": "IX",
+      "partTitle": "PUBLIC FINANCE",
+      "body": "1. A National Audit Office, independent of the executive, shall audit public accounts and report to Parliament.\n2. The head of the Audit Office shall be appointed by the Majlis for a nine-year non-renewable term.\n3. The Audit Office shall submit annual audit reports covering all public expenditure.\n\n> **Implementation:** On-chain. Budget.sol manages the full Audit Head lifecycle:\n> - `appointAuditHead(nominee)`: Parliament appoints; records term start/end; marks non-renewable.\n> - `removeExpiredAuditHead()`: Permissionless after 9-year term expires.\n> - `vacateAuditHead()`: Requires Court-certified `AUDIT_HEAD_VACANCY` fact (death, incapacity, misconduct).\n> - Constitution.sol enforces role-specific access: only Budget.sol (or Referendum) can set ROLE_AUDIT_HEAD.\n> - `submitAuditReport()`: Audit Head submits annual report hashes, recorded immutably.\n\n---\n\n# SUMMARY\n\n| Part | Title | Articles | Primary Contract |\n|------|-------|----------|-----------------|\n| I | Foundational Provisions | 7 | Constitution.sol |\n| II | The Crown | 8 | Crown.sol |\n| III | Parliament | 10 | Parliament.sol, ProvincialCouncil.sol |\n| IV | Executive Authority | 9 | Executive.sol |\n| V | The Supreme Court | 8 | SupremeCourt.sol |\n| VI | Succession, Regency, Suspension | 6 | Crown.sol |\n| VII | Amendment | 5 | Referendum.sol |\n| VIII | Elections and Referendums | 8 | Election.sol, Referendum.sol |\n| IX | Public Finance | 5 | Budget.sol |\n| **TOTAL** | | **66** | **10 contracts** |\n\n### Implementation Breakdown\n\n| Category | Count |\n|----------|-------|\n| On-chain (automated) | 38 |\n| On-chain (human-triggered) | 15 |\n| Off-chain (referenced) | 3 |\n| Mixed (automated + human-triggered) | 8 |\n| On-chain (partial) | 1 |\n\n---\n\n*This focused draft covers the on-chain-implementable subset of the full Constitution (see `archive/Constitution_Unified_Draft_v1.md` for the complete 82-article, 13-Part draft including Secular State, Fundamental Rights, Regional Government, and Armed Forces provisions).*"
+    },
+    "fa": {
+      "id": "IX.4",
+      "title": "حسابرسی ملی",
+      "partId": "نهم",
+      "partTitle": "مالیه عمومی",
+      "body": "1. سازمان حسابرسی ملی، مستقل از قوه مجریه، حساب‌های عمومی را حسابرسی نموده و به پارلمان گزارش خواهد داد.\n2. رئیس سازمان حسابرسی توسط مجلس شورای ملی برای دوره غیرقابل‌تمدید نُه‌ساله منصوب خواهد شد.\n3. سازمان حسابرسی گزارش‌های حسابرسی سالانه شامل تمامی هزینه‌های عمومی تقدیم خواهد نمود.\n\n> **اجرا:** بر روی زنجیره. Budget.sol چرخه عمر کامل رئیس حسابرسی را مدیریت می‌نماید:\n> - `appointAuditHead(nominee)`: پارلمان منصوب می‌کند؛ آغاز/پایان دوره ثبت می‌شود؛ غیرقابل‌تمدید علامت‌گذاری می‌شود.\n> - `removeExpiredAuditHead()`: بدون نیاز به مجوز پس از انقضای دوره ۹ ساله.\n> - `vacateAuditHead()`: مستلزم واقعیت `AUDIT_HEAD_VACANCY` گواهی‌شده توسط دیوان (فوت، عدم صلاحیت، سوءرفتار).\n> - Constitution.sol دسترسی مختص نقش را اجرا می‌نماید: فقط Budget.sol (یا Referendum) می‌تواند `ROLE_AUDIT_HEAD` را تعیین کند.\n> - `submitAuditReport()`: رئیس حسابرسی هش‌های گزارش سالانه را ارائه می‌دهد، که به‌صورت تغییرناپذیر ثبت می‌شوند.\n\n---\n\n# خلاصه\n\n| بخش | عنوان | اصول | قرارداد اصلی |\n|------|-------|----------|-----------------|\n| I | مقررات بنیادین | ۷ | Constitution.sol |\n| II | تاج | ۸ | Crown.sol |\n| III | پارلمان | ۱۰ | Parliament.sol, ProvincialCouncil.sol |\n| IV | قوه مجریه | ۹ | Executive.sol |\n| V | دیوان عالی | ۸ | SupremeCourt.sol |\n| VI | جانشینی، نیابت سلطنت، تعلیق | ۶ | Crown.sol |\n| VII | اصلاحیه | ۵ | Referendum.sol |\n| VIII | انتخابات و همه‌پرسی‌ها | ۸ | Election.sol, Referendum.sol |\n| IX | مالیه عمومی | ۵ | Budget.sol |\n| **مجموع** | | **۶۶** | **۱۰ قرارداد** |\n\n### جزئیات اجرا\n\n| دسته | تعداد |\n|----------|-------|\n| بر روی زنجیره (خودکار) | ۳۸ |\n| بر روی زنجیره (فعال‌شونده توسط انسان) | ۱۵ |\n| خارج از زنجیره (ارجاعی) | ۳ |\n| ترکیبی (خودکار + فعال‌شونده توسط انسان) | ۸ |\n| بر روی زنجیره (جزئی) | ۱ |\n\n---\n\n*این پیش‌نویس متمرکز زیرمجموعه قابل‌اجرا بر روی زنجیره از قانون اساسی کامل را پوشش می‌دهد (برای پیش‌نویس کامل ۸۲ اصلی و ۱۳ بخشی شامل دولت لائیک، حقوق بنیادین، حکومت محلی و مقررات نیروهای مسلح، به `archive/Constitution_Unified_Draft_v1.md` مراجعه نمایید).*"
+    }
+  }
+]

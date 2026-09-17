@@ -4,11 +4,17 @@ import { createInitialState } from './initialState';
 import { applyAction, findNextEventDay } from './engine';
 import { getShahCommentary } from './shah/index';
 import type { ShahCommentaryResult } from './shah/index';
-import { generateHeadline } from '../dashboard/headlines';
+import i18n from '../i18n';
+import { generateLocalizedHeadline } from '../i18n/eventLocalization';
+import { activeLocale } from '../i18n/simulatorFormat';
+import { clearSimulation, consumeSimulationResetReason, loadSimulation, saveSimulation } from './persistence';
 
 export type PlaySpeed = 'paused' | 'step' | '0.25x' | '1x' | '10x' | '100x';
 
-function reducer(state: GovState, action: GovAction): GovState {
+type SimulationAction = GovAction | { type: '__RESET_LAB__' };
+
+function reducer(state: GovState, action: SimulationAction): GovState {
+  if (action.type === '__RESET_LAB__') return createInitialState();
   return applyAction(state, action);
 }
 
@@ -42,45 +48,55 @@ export interface SimulationControls {
   skip: () => void;
   commentary: string | null;
   commentaryTrigger: string | null;
+  commentaryResult: ShahCommentaryResult | null;
   clearCommentary: () => void;
   breakingHeadline: Headline | null;
   breakingAutoDismissMs: number;
   dismissBreaking: () => void;
+  resetLab: () => void;
+  migrationNotice: boolean;
+  dismissMigrationNotice: () => void;
 }
 
 export function useSimulation(): SimulationControls {
-  const [state, dispatch] = useReducer(reducer, null, createInitialState);
+  const [state, internalDispatch] = useReducer(reducer, null, loadSimulation);
   const [speed, setSpeedRaw] = useState<PlaySpeed>('paused');
   const [commentaryResult, setCommentaryResult] = useState<ShahCommentaryResult | null>(null);
   const [breakingHeadline, setBreakingHeadline] = useState<Headline | null>(null);
+  const [migrationNotice, setMigrationNotice] = useState(() => consumeSimulationResetReason() === 'bilingual-upgrade');
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const prevEventCountRef = useRef(state.events.length);
   const lastBannerTimeRef = useRef(0);
+  const dispatch = useCallback((action: GovAction) => internalDispatch(action), []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => saveSimulation(state), 350);
+    return () => window.clearTimeout(timer);
+  }, [state]);
 
   // Check for new events and trigger commentary + breaking news
   useEffect(() => {
+    let cancelled = false;
     if (state.events.length > prevEventCountRef.current) {
       const latestEvent = state.events[0];
-
-      // Shah commentary
       const result = getShahCommentary(latestEvent, state);
-      if (result) {
-        setCommentaryResult(result);
-      }
-
-      // Breaking news banner (rate-limited)
-      const headline = generateHeadline(latestEvent);
-      if (headline.breaking) {
-        const now = Date.now();
-        const cooldown = getBannerCooldownMs(speed);
-        if (now - lastBannerTimeRef.current >= cooldown) {
-          setBreakingHeadline(headline);
-          lastBannerTimeRef.current = now;
+      const headline = generateLocalizedHeadline(latestEvent, activeLocale(i18n.language));
+      queueMicrotask(() => {
+        if (cancelled) return;
+        if (result) setCommentaryResult(result);
+        if (headline.breaking) {
+          const now = Date.now();
+          const cooldown = getBannerCooldownMs(speed);
+          if (now - lastBannerTimeRef.current >= cooldown) {
+            setBreakingHeadline(headline);
+            lastBannerTimeRef.current = now;
+          }
         }
-      }
+      });
     }
     prevEventCountRef.current = state.events.length;
-  }, [state.events, speed]);
+    return () => { cancelled = true; };
+  }, [state, speed]);
 
   // Handle speed changes, including step mode
   const setSpeed = useCallback((newSpeed: PlaySpeed) => {
@@ -91,7 +107,7 @@ export function useSimulation(): SimulationControls {
     } else {
       setSpeedRaw(newSpeed);
     }
-  }, []);
+  }, [dispatch]);
 
   // Auto-advance timer
   useEffect(() => {
@@ -113,7 +129,7 @@ export function useSimulation(): SimulationControls {
         intervalRef.current = null;
       }
     };
-  }, [speed]);
+  }, [dispatch, speed]);
 
   const skip = useCallback(() => {
     const targetDay = findNextEventDay(state);
@@ -121,13 +137,21 @@ export function useSimulation(): SimulationControls {
     for (let i = 0; i < steps; i++) {
       dispatch({ type: 'ADVANCE_DAY' });
     }
-  }, [state]);
+  }, [dispatch, state]);
 
   const clearCommentary = useCallback(() => {
     setCommentaryResult(null);
   }, []);
 
   const dismissBreaking = useCallback(() => {
+    setBreakingHeadline(null);
+  }, []);
+
+  const resetLab = useCallback(() => {
+    clearSimulation();
+    internalDispatch({ type: '__RESET_LAB__' });
+    setSpeedRaw('paused');
+    setCommentaryResult(null);
     setBreakingHeadline(null);
   }, []);
 
@@ -138,10 +162,14 @@ export function useSimulation(): SimulationControls {
     setSpeed,
     skip,
     commentary: commentaryResult?.text ?? null,
-    commentaryTrigger: commentaryResult?.trigger ?? null,
+    commentaryTrigger: commentaryResult?.triggerEvent.description ?? null,
+    commentaryResult,
     clearCommentary,
     breakingHeadline,
     breakingAutoDismissMs: getAutoDismissMs(speed),
     dismissBreaking,
+    resetLab,
+    migrationNotice,
+    dismissMigrationNotice: () => setMigrationNotice(false),
   };
 }

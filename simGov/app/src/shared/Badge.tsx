@@ -16,7 +16,7 @@ export default function Badge({ label, variant = 'gold' }: BadgeProps) {
   return (
     <span
       style={{
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: 'var(--font-body)',
         fontSize: 11,
         fontWeight: 500,
         padding: '2px 8px',

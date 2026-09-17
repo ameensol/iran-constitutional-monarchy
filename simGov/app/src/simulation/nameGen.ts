@@ -18,12 +18,27 @@ const MALE_FIRST_NAMES = [
   'Payam', 'Rostam', 'Touraj', 'Vahid', 'Behzad', 'Kamran', 'Iraj',
 ];
 
+const MALE_FIRST_NAMES_FA = [
+  'داریوش', 'کوروش', 'رضا', 'علی', 'حسن', 'حسین', 'مهدی', 'محمد',
+  'امیر', 'بابک', 'فرهاد', 'کاوه', 'نادر', 'امید', 'پرویز', 'سامان',
+  'شهرام', 'سیاوش', 'آرش', 'بیژن', 'جمشید', 'کیوان', 'مازیار',
+  'پیام', 'رستم', 'تورج', 'وحید', 'بهزاد', 'کامران', 'ایرج',
+];
+
 const FEMALE_FIRST_NAMES = [
   'Shirin', 'Maryam', 'Nasrin', 'Parvin', 'Leila', 'Azadeh', 'Faranak',
   'Golnaz', 'Homa', 'Jaleh', 'Katayoun', 'Ladan', 'Mandana', 'Niloofar',
   'Parastoo', 'Roya', 'Sepideh', 'Taraneh', 'Vida', 'Yasaman', 'Ziba',
   'Anahita', 'Bahar', 'Darya', 'Elnaz', 'Fatemeh', 'Ghazal', 'Haleh',
   'Irana', 'Jamileh',
+];
+
+const FEMALE_FIRST_NAMES_FA = [
+  'شیرین', 'مریم', 'نسرین', 'پروین', 'لیلا', 'آزاده', 'فرانک',
+  'گلناز', 'هما', 'ژاله', 'کتایون', 'لادن', 'ماندانا', 'نیلوفر',
+  'پرستو', 'رویا', 'سپیده', 'ترانه', 'ویدا', 'یاسمن', 'زیبا',
+  'آناهیتا', 'بهار', 'دریا', 'الناز', 'فاطمه', 'غزل', 'هاله',
+  'ایرانا', 'جمیله',
 ];
 
 const LAST_NAMES = [
@@ -34,6 +49,16 @@ const LAST_NAMES = [
   'Chamran', 'Dehghan', 'Eshraghi', 'Ferdowsi', 'Gharibpour', 'Hedayat',
   'Jalili', 'Khorasani', 'Lotfi', 'Mansouri', 'Nikpay', 'Ostadi',
   'Pirouz', 'Rezaei', 'Shahidi', 'Tousi',
+];
+
+const LAST_NAMES_FA = [
+  'احمدی', 'بختیاری', 'دبیری', 'اصفهانی', 'فرزان', 'گلستان',
+  'هاشمی', 'ایرانی', 'جوادی', 'کریمی', 'لاریجانی', 'محمدی',
+  'نظری', 'عمرانی', 'پارسا', 'قاسمی', 'رحمانی', 'صادقی',
+  'تهرانی', 'واعظی', 'یزدی', 'زمانی', 'عابدی', 'بهرامی',
+  'چمران', 'دهقان', 'اشراقی', 'فردوسی', 'غریب‌پور', 'هدایت',
+  'جلیلی', 'خراسانی', 'لطفی', 'منصوری', 'نیک‌پی', 'استادی',
+  'پیروز', 'رضایی', 'شهیدی', 'طوسی',
 ];
 
 export const PARTY_NAMES: PartyId[] = [
@@ -67,21 +92,28 @@ interface PersonSeed {
   termEnd: number | null;
 }
 
-function generateName(seed: number): { firstName: string; lastName: string } {
+function generateName(seed: number): { firstName: string; lastName: string; firstNameFa: string; lastNameFa: string } {
   const isFemale = seededRandom(seed) > 0.5;
   const names = isFemale ? FEMALE_FIRST_NAMES : MALE_FIRST_NAMES;
+  const namesFa = isFemale ? FEMALE_FIRST_NAMES_FA : MALE_FIRST_NAMES_FA;
+  const firstIndex = Math.floor(seededRandom(seed + 1) * names.length);
+  const lastIndex = Math.floor(seededRandom(seed + 2) * LAST_NAMES.length);
   return {
-    firstName: pick(names, seed + 1),
-    lastName: pick(LAST_NAMES, seed + 2),
+    firstName: names[firstIndex],
+    lastName: LAST_NAMES[lastIndex],
+    firstNameFa: namesFa[firstIndex],
+    lastNameFa: LAST_NAMES_FA[lastIndex],
   };
 }
 
 function createPerson(id: number, ps: PersonSeed, nameSeed: number): Person {
-  const { firstName, lastName } = generateName(nameSeed);
+  const { firstName, lastName, firstNameFa, lastNameFa } = generateName(nameSeed);
   return {
     id,
     firstName,
     lastName,
+    firstNameFa,
+    lastNameFa,
     role: ps.role,
     status: 'active',
     provinceId: ps.provinceId,
@@ -99,13 +131,17 @@ interface GenerateResult {
   nextId: number;
 }
 
-export function generateRoyalFamily(nextId: number, _baseSeed: number, _day: number): GenerateResult {
+export function generateRoyalFamily(nextId: number, baseSeed: number, day: number): GenerateResult {
+  void baseSeed;
+  void day;
   const people: Person[] = [];
 
   people.push({
     id: nextId++,
     firstName: 'Reza',
     lastName: 'Pahlavi',
+    firstNameFa: 'رضا',
+    lastNameFa: 'پهلوی',
     role: 'monarch',
     status: 'active',
     provinceId: 1,
@@ -115,15 +151,17 @@ export function generateRoyalFamily(nextId: number, _baseSeed: number, _day: num
   });
 
   const heirNames = [
-    { first: 'Noor', last: 'Pahlavi' },
-    { first: 'Iman', last: 'Pahlavi' },
-    { first: 'Farah', last: 'Pahlavi' },
+    { first: 'Noor', last: 'Pahlavi', firstFa: 'نور', lastFa: 'پهلوی' },
+    { first: 'Iman', last: 'Pahlavi', firstFa: 'ایمان', lastFa: 'پهلوی' },
+    { first: 'Farah', last: 'Pahlavi', firstFa: 'فرح', lastFa: 'پهلوی' },
   ];
   for (const h of heirNames) {
     people.push({
       id: nextId++,
       firstName: h.first,
       lastName: h.last,
+      firstNameFa: h.firstFa,
+      lastNameFa: h.lastFa,
       role: 'heir',
       status: 'active',
       provinceId: 1,

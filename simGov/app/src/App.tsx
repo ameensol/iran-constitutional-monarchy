@@ -1,4 +1,9 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from './i18n';
+import { shahEn, shahFa, simulatorEn, simulatorFa, toursEn, toursFa } from './i18n/simulatorResources';
+import { Link, useParams } from 'react-router-dom';
+import { Button, Dialog } from './design-system';
 import { useSimulation } from './simulation/useSimulation';
 import { useNavigation } from './shared/useNavigation';
 import type { TourViewTarget } from './tour/tourTypes';
@@ -21,15 +26,26 @@ import PersonDetail from './people/PersonDetail';
 import ProcessDetail from './processes/ProcessDetail';
 import DisasterPanel from './disasters/DisasterPanel';
 import ShahSidebar from './shared/ShahToast';
+import LanguageSwitcher from './shared/LanguageSwitcher';
 import './tour/Tour.css';
 import './tour/TourNarrator.css';
 
+i18n.addResourceBundle('en', 'simulator', simulatorEn, true, true);
+i18n.addResourceBundle('fa', 'simulator', simulatorFa, true, true);
+i18n.addResourceBundle('en', 'tours', toursEn, true, true);
+i18n.addResourceBundle('fa', 'tours', toursFa, true, true);
+i18n.addResourceBundle('en', 'shah', shahEn, true, true);
+i18n.addResourceBundle('fa', 'shah', shahFa, true, true);
+
 export default function App() {
+  const { locale = 'en' } = useParams();
+  const { t } = useTranslation('simulator');
   const sim = useSimulation();
   const nav = useNavigation();
   const [disasterOpen, setDisasterOpen] = useState(false);
   const [tourView, setTourView] = useState<TourViewTarget | undefined>(undefined);
   const [tourActionCtx, setTourActionCtx] = useState<TourActionContextValue>({ tourMode: false, activeTargets: [] });
+  const [resetOpen, setResetOpen] = useState(false);
 
   const setTourActions = useCallback((ctx: TourActionContextValue) => {
     setTourActionCtx(ctx);
@@ -72,6 +88,20 @@ export default function App() {
   return (
     <div className={sidebarOpen ? 'app-layout sidebar-open' : 'app-layout'}>
       <div className="app-main">
+        <div className="simulator-ribbon">
+          <Link to={`/${locale}`}><span className="back-arrow" aria-hidden="true">←</span> {t('ribbon.back')}</Link>
+          <span className="simulator-ribbon__status"><i /> {t('ribbon.status')}</span>
+          <div className="simulator-ribbon__tools">
+            <LanguageSwitcher className="simulator-language" />
+            <button onClick={() => setResetOpen(true)}>{t('ribbon.reset')}</button>
+          </div>
+        </div>
+        {sim.migrationNotice && (
+          <div className="simulation-migration" role="status">
+            <span>{t('ribbon.upgraded')}</span>
+            <button onClick={sim.dismissMigrationNotice} aria-label={t('actions.close')}>×</button>
+          </div>
+        )}
         {/* Always-visible header with speed controls */}
         <div className="global-header">
           <Header
@@ -204,7 +234,7 @@ export default function App() {
       )}
 
       {!isTour && (
-        <ShahSidebar text={sim.commentary} trigger={sim.commentaryTrigger} onDismiss={sim.clearCommentary} />
+        <ShahSidebar result={sim.commentaryResult} onDismiss={sim.clearCommentary} />
       )}
 
       {/* Disaster side panel */}
@@ -215,6 +245,17 @@ export default function App() {
           onClose={() => setDisasterOpen(false)}
         />
       )}
+
+      <Dialog
+        open={resetOpen}
+        onClose={() => setResetOpen(false)}
+        title={t('ribbon.resetTitle')}
+        footer={<><Button tone="quiet" onClick={() => setResetOpen(false)}>{t('ribbon.cancel')}</Button><Button tone="danger" onClick={() => { sim.resetLab(); nav.goToDashboard(); setResetOpen(false); }}>{t('ribbon.confirmReset')}</Button></>}
+      >
+        {t('ribbon.resetBody')}
+      </Dialog>
+
+      {isTour && <div className="tour-authorship-disclosure">{t('authorship')}</div>}
     </div>
   );
 }

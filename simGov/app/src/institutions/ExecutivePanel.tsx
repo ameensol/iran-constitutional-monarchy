@@ -1,9 +1,10 @@
 import type { GovState, GovAction } from '../simulation/types';
-import { personName } from '../simulation/types';
 import { activePM, activeDeputyPM, activeMinisters } from '../simulation/selectors';
 import InstitutionShell from './InstitutionShell';
 import { useTourAction, findTourTarget } from '../tour/TourActionContext';
 import Badge from '../shared/Badge';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber, formationStageLabel, partyDisplayName, personDisplayName } from '../i18n/simulatorFormat';
 
 interface Props {
   state: GovState;
@@ -15,21 +16,10 @@ interface Props {
   hideBack?: boolean;
 }
 
-function getFormationLabels(suspended: boolean): Record<string, string> {
-  const nominator = suspended ? 'Senate' : 'Crown';
-  return {
-    'Idle': 'No formation in progress',
-    'CrownNom1': `${nominator} First Nomination`,
-    'Confidence1': 'First Confidence Vote',
-    'CrownNom2': `${nominator} Second Nomination`,
-    'Confidence2': 'Second Confidence Vote',
-    'MajlisList': 'Majlis Candidate List',
-    'CrownPick': `${nominator} Picks from List`,
-    'Dissolved': 'Formation Exhausted (Parliament Dissolved)',
-  };
-}
-
 export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson, onClickProcess, readOnly, hideBack }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const number = (value: number) => formatNumber(value, locale);
   const { tourMode, activeTargets } = useTourAction();
   const showActions = !readOnly || tourMode;
   const pm = activePM(state);
@@ -37,42 +27,41 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
   const ministers = activeMinisters(state);
   const formation = state.executive.formation;
   const suspended = state.crown.suspended;
-  const FORMATION_LABELS = getFormationLabels(suspended);
 
   return (
-    <InstitutionShell title="Executive" icon={'\u2696'} healthy={state.executive.pmSeated} onBack={onBack} hideBack={hideBack}>
+    <InstitutionShell title={t('institutions.executive')} icon={'\u2696'} healthy={state.executive.pmSeated} onBack={onBack} hideBack={hideBack}>
       {state.executive.caretaker && (
-        <div className="inst-alert turquoise">Government is in caretaker mode.{suspended ? ' Crown is suspended — the Senate exercises nomination powers.' : ''}</div>
+        <div className="inst-alert turquoise">{t('executivePanel.caretaker')} {suspended ? t('executivePanel.caretakerSuspended') : ''}</div>
       )}
       {suspended && !state.executive.caretaker && (
-        <div className="inst-alert rose">Crown is suspended. The Senate exercises Crown nomination powers (Art. VI.5).</div>
+        <div className="inst-alert rose">{t('executivePanel.suspended')}</div>
       )}
 
       {/* PM */}
       <div className="inst-section" data-tour-id="exec-pm">
-        <h3 className="inst-section-title">Prime Minister</h3>
+        <h3 className="inst-section-title">{t('labels.primeMinister')}</h3>
         {pm ? (
           <div className="person-card" onClick={() => onClickPerson?.(pm.id)}>
-            <div className="person-card-name">{personName(pm)}</div>
-            <Badge label={state.executive.caretaker ? 'Caretaker' : 'Seated'} variant={state.executive.caretaker ? 'turquoise' : 'gold'} />
-            {pm.party && <Badge label={pm.party} variant="none" />}
+            <div className="person-card-name">{personDisplayName(pm, locale)}</div>
+            <Badge label={t(state.executive.caretaker ? 'labels.caretaker' : 'labels.seated')} variant={state.executive.caretaker ? 'turquoise' : 'gold'} />
+            {pm.party && <Badge label={partyDisplayName(pm.party, locale, t)} variant="none" />}
           </div>
         ) : (
-          <div className="inst-empty">No Prime Minister (formation in progress)</div>
+          <div className="inst-empty">{t('executivePanel.noPm')}</div>
         )}
       </div>
 
       {/* Deputy PM */}
       <div className="inst-section">
-        <h3 className="inst-section-title">Deputy Prime Minister</h3>
+        <h3 className="inst-section-title">{t('executivePanel.deputy')}</h3>
         {deputyPm ? (
           <div className="person-card" onClick={() => onClickPerson?.(deputyPm.id)}>
-            <div className="person-card-name">{personName(deputyPm)}</div>
-            <Badge label="Deputy PM" variant="turquoise" />
+            <div className="person-card-name">{personDisplayName(deputyPm, locale)}</div>
+            <Badge label={t('roles.deputy_pm')} variant="turquoise" />
           </div>
         ) : (
           <>
-            <div className="inst-empty">No Deputy PM</div>
+            <div className="inst-empty">{t('executivePanel.noDeputy')}</div>
             {showActions && !tourMode && pm && !deputyPm && (
               <button
                 className="inst-action-btn"
@@ -86,7 +75,7 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
                   if (pick) dispatch({ type: 'DESIGNATE_DEPUTY_PM', personId: pick.id });
                 }}
               >
-                Designate Deputy PM
+                {t('executivePanel.designateDeputy')}
               </button>
             )}
           </>
@@ -95,7 +84,7 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
 
       {/* Formation Pipeline */}
       <div className="inst-section" data-tour-id="exec-formation">
-        <h3 className="inst-section-title">Formation Process</h3>
+        <h3 className="inst-section-title">{t('executivePanel.formation')}</h3>
         <div className="formation-pipeline">
           {['CrownNom1', 'Confidence1', 'CrownNom2', 'Confidence2', 'MajlisList', 'CrownPick'].map((stage) => {
             const isCurrent = formation.stage === stage;
@@ -103,13 +92,13 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
             return (
               <div key={stage} className={`formation-step ${isCurrent ? 'current' : isPast ? 'past' : 'future'}`}>
                 <div className="formation-dot" />
-                <span className="formation-label">{FORMATION_LABELS[stage]?.replace(suspended ? 'Senate ' : 'Crown ', '').replace('Confidence ', 'Conf. ') || stage}</span>
+                <span className="formation-label">{formationStageLabel(stage as import('../simulation/types').FormationStage, t)}</span>
               </div>
             );
           })}
         </div>
         {formation.deadline && formation.stage !== 'Idle' && (
-          <div className="inst-deadline">Deadline: {formation.deadline - state.day}d remaining</div>
+          <div className="inst-deadline">{t('executivePanel.deadline', { days: number(formation.deadline - state.day) })}</div>
         )}
         {showActions && !tourMode && (formation.stage === 'CrownNom1' || formation.stage === 'CrownNom2') && (
           <button
@@ -120,7 +109,7 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
               if (nominee) dispatch({ type: 'CROWN_NOMINATE_PM', personId: nominee.id });
             }}
           >
-            {suspended ? 'Senate Nominates PM' : 'Nominate PM'}
+            {t(suspended ? 'executivePanel.senateNominate' : 'executivePanel.nominate')}
           </button>
         )}
         {showActions && (formation.stage === 'Confidence1' || formation.stage === 'Confidence2') && (() => {
@@ -135,13 +124,13 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
                 className={`inst-action-btn ${tPass ? 'tour-action-target' : ''}`}
                 onClick={() => { dispatch({ type: 'RESOLVE_CONFIDENCE', outcome: 'pass' }); tPass?.onActionTaken(); }}
               >
-                Confidence Passes
+                {t('executivePanel.confidencePasses')}
               </button>}
               {showFail && <button
                 className={`inst-action-btn danger ${tFail ? 'tour-action-target' : ''}`}
                 onClick={() => { dispatch({ type: 'RESOLVE_CONFIDENCE', outcome: 'fail' }); tFail?.onActionTaken(); }}
               >
-                Confidence Fails
+                {t('executivePanel.confidenceFails')}
               </button>}
             </div>
           );
@@ -151,7 +140,7 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
             className="inst-action-btn"
             onClick={() => dispatch({ type: 'FORMATION_PRESENT_LIST' })}
           >
-            Majlis Presents List
+            {t('executivePanel.presentList')}
           </button>
         )}
         {showActions && !tourMode && formation.stage === 'CrownPick' && (
@@ -159,42 +148,42 @@ export default function ExecutivePanel({ state, dispatch, onBack, onClickPerson,
             className="inst-action-btn"
             onClick={() => dispatch({ type: 'FORMATION_PICK_FROM_LIST' })}
           >
-            {suspended ? 'Senate' : 'Crown'} Picks from List
+            {t('executivePanel.pickList', { institution: t(suspended ? 'institutions.senate' : 'institutions.crown', { defaultValue: suspended ? (locale === 'fa' ? 'سنا' : 'Senate') : t('institutions.crown') }) })}
           </button>
         )}
         {formation.stage !== 'Idle' && onClickProcess && (
           <button className="inst-link-btn" onClick={() => onClickProcess('formation')}>
-            View Formation Flowchart &#x2192;
+            {t('executivePanel.viewFlow')} <span className="next-arrow" aria-hidden="true">&#x2192;</span>
           </button>
         )}
       </div>
 
       {/* No-Confidence (read-only status — actions moved to Parliament) */}
       <div className="inst-section" data-tour-id="exec-confidence">
-        <h3 className="inst-section-title">Confidence</h3>
+        <h3 className="inst-section-title">{t('executivePanel.confidence')}</h3>
         {state.executive.noConfidence && !state.executive.noConfidence.resolved ? (
           <div className="inst-alert rose">
-            No-confidence vote in progress — {state.executive.noConfidence.yesVotes} yes / {state.executive.noConfidence.noVotes} no — {state.executive.noConfidence.deadline - state.day}d remaining
+            {t('executivePanel.confidenceOpen', { yes: number(state.executive.noConfidence.yesVotes), no: number(state.executive.noConfidence.noVotes), days: number(state.executive.noConfidence.deadline - state.day) })}
           </div>
         ) : state.executive.noConfidence?.resolved ? (
           <div className="inst-empty">
-            Last motion {state.executive.noConfidence.outcome === 'pass' ? 'passed' : 'failed'} ({state.executive.noConfidence.yesVotes}-{state.executive.noConfidence.noVotes})
+            {t(state.executive.noConfidence.outcome === 'pass' ? 'executivePanel.lastPassed' : 'executivePanel.lastFailed', { yes: number(state.executive.noConfidence.yesVotes), no: number(state.executive.noConfidence.noVotes) })}
           </div>
         ) : (
           <div className="inst-empty">
-            {state.executive.pmSeated ? 'PM holds Parliament\'s confidence' : 'No active confidence motion'}
+            {t(state.executive.pmSeated ? 'executivePanel.holdsConfidence' : 'executivePanel.noMotion')}
           </div>
         )}
       </div>
 
       {/* Cabinet */}
       <div className="inst-section" data-tour-id="exec-cabinet">
-        <h3 className="inst-section-title">Cabinet ({ministers.length} Ministers)</h3>
+        <h3 className="inst-section-title">{t('executivePanel.cabinet', { count: number(ministers.length) })}</h3>
         <div className="inst-list">
           {ministers.map((m) => (
             <div key={m.id} className="inst-list-item" onClick={() => onClickPerson?.(m.id)}>
-              <span className="inst-list-name">{personName(m)}</span>
-              <Badge label="Minister" variant="none" />
+              <span className="inst-list-name">{personDisplayName(m, locale)}</span>
+              <Badge label={t('executivePanel.minister')} variant="none" />
             </div>
           ))}
         </div>

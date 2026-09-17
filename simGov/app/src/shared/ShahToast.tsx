@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { ShahCommentaryResult } from '../simulation/shah';
+import { activeLocale } from '../i18n/simulatorFormat';
+import { localizeShahCommentary } from '../i18n/shahCopy';
 
 interface ShahSidebarProps {
-  text: string | null;
-  trigger?: string | null;
+  result: ShahCommentaryResult | null;
   onDismiss: () => void;
 }
 
@@ -11,16 +14,18 @@ interface ShahSidebarProps {
  * as the tour narrator so they share the same screen position.
  * Only one is visible at a time (tours suppress commentary).
  */
-export default function ShahSidebar({ text, trigger, onDismiss }: ShahSidebarProps) {
+export default function ShahSidebar({ result, onDismiss }: ShahSidebarProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const { t, i18n } = useTranslation('shah');
+  const localized = result ? localizeShahCommentary(result, activeLocale(i18n.language)) : null;
 
   useEffect(() => {
-    if (text && ref.current) {
+    if (result && ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-  }, [text]);
+  }, [result]);
 
-  if (!text) return null;
+  if (!localized) return null;
 
   return (
     <div className="narrator" ref={ref}>
@@ -42,17 +47,16 @@ export default function ShahSidebar({ text, trigger, onDismiss }: ShahSidebarPro
       <button
         className="tour-close-btn"
         onClick={onDismiss}
-        title="Dismiss"
+        title={t('dismiss')}
+        aria-label={t('dismiss')}
       >
         {'\u2715'}
       </button>
 
       {/* Header */}
       <div className="narrator-header">
-        <div className="narrator-title">The Shah Speaks</div>
-        {trigger && (
-          <div className="commentary-trigger">on: {trigger}</div>
-        )}
+        <div className="narrator-title">{t('title')}</div>
+        <div className="commentary-trigger">{localized.trigger}</div>
       </div>
 
       {/* Commentary */}
@@ -62,7 +66,7 @@ export default function ShahSidebar({ text, trigger, onDismiss }: ShahSidebarPro
             <img src="/assets/king-and-noble.svg" className="persian-art" alt="" />
           </div>
           <div className="shah-text">
-            &ldquo;{text}&rdquo;
+            &ldquo;{localized.text}&rdquo;
           </div>
         </div>
       </div>

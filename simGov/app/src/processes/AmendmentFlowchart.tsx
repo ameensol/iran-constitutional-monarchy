@@ -1,4 +1,7 @@
 import type { AmendmentPhase } from '../simulation/types';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
+import { activeLocale, formatNumber } from '../i18n/simulatorFormat';
 
 interface Props {
   currentPhase: AmendmentPhase;
@@ -25,10 +28,10 @@ interface FlowNode {
 }
 
 const row1: FlowNode[] = [
-  { phase: 'Proposed',       label: 'Proposed' },
-  { phase: 'ParliamentVote', label: 'Parliament Vote' },
-  { phase: 'Referendum',     label: 'Referendum' },
-  { phase: 'Enacted',        label: 'Enacted' },
+  { phase: 'Proposed', label: 'amendmentPhases.Proposed' },
+  { phase: 'ParliamentVote', label: 'amendmentPhases.ParliamentVote' },
+  { phase: 'Referendum', label: 'amendmentPhases.Referendum' },
+  { phase: 'Enacted', label: 'amendmentPhases.Enacted' },
 ];
 
 const mainPath: AmendmentPhase[] = ['Proposed', 'ParliamentVote', 'Referendum', 'Enacted'];
@@ -53,22 +56,22 @@ function isCompleted(fromPhase: AmendmentPhase, current: AmendmentPhase): boolea
   return cls.includes('completed') || cls.includes('terminal');
 }
 
-function getNodeSub(phase: AmendmentPhase, props: Props): string {
+function getNodeSub(phase: AmendmentPhase, props: Props, t: TFunction, n: (value: number) => string): string {
   switch (phase) {
     case 'Proposed':
-      return props.emergency ? 'Emergency amendment' : 'Standard amendment';
+      return props.emergency ? t('flow.emergencyAmendment') : t('flow.standardAmendment');
     case 'ParliamentVote':
-      if (props.parlYes > 0 || props.parlNo > 0) return `${props.parlYes} yes / ${props.parlNo} no`;
-      return '2/3 supermajority needed';
+      if (props.parlYes > 0 || props.parlNo > 0) return t('bills.voteResult', { yes: n(props.parlYes), no: n(props.parlNo) });
+      return t('flow.twoThirds');
     case 'Referendum':
-      if (props.refYes > 0 || props.refNo > 0) return `${props.refYes} yes / ${props.refNo} no`;
-      return props.emergency ? 'Skipped (emergency)' : 'Popular vote';
+      if (props.refYes > 0 || props.refNo > 0) return t('bills.voteResult', { yes: n(props.refYes), no: n(props.refNo) });
+      return props.emergency ? t('flow.skippedEmergency') : t('flow.popularVote');
     case 'Enacted':
-      return 'Constitution amended';
+      return t('flow.constitutionAmended');
     case 'Rejected':
-      return 'Parliament failed';
+      return t('flow.parliamentFailed');
     case 'Expired':
-      return 'Deadline passed';
+      return t('flow.deadlinePassed');
     default:
       return '';
   }
@@ -93,6 +96,9 @@ function VArrow() {
 }
 
 export default function AmendmentFlowchart(props: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const n = (value: number) => formatNumber(value, locale);
   const { currentPhase, deadline, currentDay } = props;
   const daysLeft = deadline - currentDay;
 
@@ -103,7 +109,7 @@ export default function AmendmentFlowchart(props: Props) {
         {row1.map((node, i) => {
           const cls = getNodeClass(node.phase, currentPhase);
           const isCurrent = node.phase === currentPhase;
-          const sub = getNodeSub(node.phase, props);
+          const sub = getNodeSub(node.phase, props, t, n);
           return (
             <div key={node.phase} className="flow-step">
               <div className={cls}>
@@ -112,10 +118,10 @@ export default function AmendmentFlowchart(props: Props) {
                     <img src="/assets/rosette.svg" className="persian-art" alt="" />
                   </div>
                 )}
-                <div className="node-label">{node.label}</div>
+                <div className="node-label">{t(node.label)}</div>
                 <div className="node-sub">
                   {sub}
-                  {isCurrent && daysLeft > 0 && ` · ${daysLeft}d`}
+                  {isCurrent && daysLeft > 0 && ` · ${t('process.daysLeft', { days: n(daysLeft) })}`}
                 </div>
               </div>
               {i < row1.length - 1 && (
@@ -145,15 +151,15 @@ export default function AmendmentFlowchart(props: Props) {
         <div className="flow-spacer" />
         <div className="flow-step">
           <div className={getNodeClass('Rejected', currentPhase)}>
-            <div className="node-label">Rejected</div>
-            <div className="node-sub">{getNodeSub('Rejected', props)}</div>
+            <div className="node-label">{t('amendmentPhases.Rejected')}</div>
+            <div className="node-sub">{getNodeSub('Rejected', props, t, n)}</div>
           </div>
         </div>
         <div className="flow-arrow-h" style={{ visibility: 'hidden' }}><HArrow /></div>
         <div className="flow-step">
           <div className={getNodeClass('Expired', currentPhase)}>
-            <div className="node-label">Expired</div>
-            <div className="node-sub">{getNodeSub('Expired', props)}</div>
+            <div className="node-label">{t('amendmentPhases.Expired')}</div>
+            <div className="node-sub">{getNodeSub('Expired', props, t, n)}</div>
           </div>
         </div>
         <div className="flow-spacer" />

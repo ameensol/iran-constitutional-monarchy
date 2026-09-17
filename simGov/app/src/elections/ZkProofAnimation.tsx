@@ -1,56 +1,50 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber } from '../i18n/simulatorFormat';
 
-const STEPS = [
-  { icon: '\uD83D\uDCF1', label: 'Scanning passport...', done: 'Citizenship confirmed', duration: 1500 },
-  { icon: '\uD83D\uDD10', label: 'Generating mathematical proof...', done: 'Identity sealed', duration: 1500 },
-  { icon: '\u26D3\uFE0F', label: 'Recording ballot on-chain...', done: 'Vote recorded', duration: 1500 },
-];
-
-const EXPLANATIONS = [
-  'Proves you are an Iranian citizen',
-  'Proves you are over 18',
-  'Creates a one-time key preventing double voting',
-  'Encrypts your ballot so no one sees your choice',
-];
+const STEP_META = [
+  { icon: '\uD83D\uDCF1', label: 'scanning', done: 'citizenship', duration: 1500 },
+  { icon: '\uD83D\uDD10', label: 'generating', done: 'sealed', duration: 1500 },
+  { icon: '\u26D3\uFE0F', label: 'recording', done: 'recorded', duration: 1500 },
+] as const;
 
 interface Props {
   onComplete: () => void;
 }
 
 export default function ZkProofAnimation({ onComplete }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
   const [currentStep, setCurrentStep] = useState(0);
-  const [stepPhase, setStepPhase] = useState<'active' | 'done'>('active');
+  const [completedThrough, setCompletedThrough] = useState(-1);
   const [showExplanations, setShowExplanations] = useState(false);
 
   useEffect(() => {
-    if (currentStep >= STEPS.length) {
+    if (currentStep >= STEP_META.length) {
       // All steps complete, show explanations then signal done
       const timer = setTimeout(() => setShowExplanations(true), 200);
       const doneTimer = setTimeout(onComplete, 1800);
       return () => { clearTimeout(timer); clearTimeout(doneTimer); };
     }
 
-    // Start as active
-    setStepPhase('active');
-
     // After step duration, mark done
     const doneTimer = setTimeout(() => {
-      setStepPhase('done');
-    }, STEPS[currentStep].duration - 300);
+      setCompletedThrough(currentStep);
+    }, STEP_META[currentStep].duration - 300);
 
     // Move to next step
     const nextTimer = setTimeout(() => {
       setCurrentStep((s) => s + 1);
-    }, STEPS[currentStep].duration);
+    }, STEP_META[currentStep].duration);
 
     return () => { clearTimeout(doneTimer); clearTimeout(nextTimer); };
   }, [currentStep, onComplete]);
 
   return (
     <div className="zk-proof-animation">
-      {STEPS.map((step, i) => {
-        const isActive = i === currentStep && stepPhase === 'active';
-        const isDone = i < currentStep || (i === currentStep && stepPhase === 'done');
+      {STEP_META.map((step, i) => {
+        const isActive = i === currentStep && i > completedThrough;
+        const isDone = i <= completedThrough;
         const isVisible = i <= currentStep;
 
         const cls = [
@@ -65,10 +59,10 @@ export default function ZkProofAnimation({ onComplete }: Props) {
             <div className="zk-step-icon">{step.icon}</div>
             <div className="zk-step-content">
               <div className="zk-step-label">
-                {isDone ? step.done : step.label}
+                {t(`proof.${isDone ? step.done : step.label}`)}
               </div>
               <div className="zk-step-status">
-                {isDone ? 'Step ' + (i + 1) + ' of 3 complete' : isActive ? 'Processing...' : ''}
+                {isDone ? t('proof.complete', { step: formatNumber(i + 1, locale), total: formatNumber(3, locale) }) : isActive ? t('proof.processing') : ''}
               </div>
               <div className="zk-progress">
                 <div
@@ -84,14 +78,14 @@ export default function ZkProofAnimation({ onComplete }: Props) {
 
       {showExplanations && (
         <div className="zk-explanations">
-          {EXPLANATIONS.map((text, i) => (
+          {(['citizen', 'adult', 'single', 'private'] as const).map((key, i) => (
             <div
               key={i}
               className={`zk-explanation visible`}
               style={{ transitionDelay: `${i * 150}ms` }}
             >
               <span className="zk-explanation-bullet">{'\u25C6'}</span>
-              <span>{text}</span>
+              <span>{t(`proof.explanations.${key}`)}</span>
             </div>
           ))}
         </div>

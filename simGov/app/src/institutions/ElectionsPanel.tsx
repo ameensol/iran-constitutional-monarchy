@@ -5,6 +5,8 @@ import Badge from '../shared/Badge';
 import PassportCard from '../elections/PassportCard';
 import VotingBooth from '../elections/VotingBooth';
 import '../elections/Elections.css';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber, formatPercent, partyDisplayName, provinceDisplayName } from '../i18n/simulatorFormat';
 
 interface Props {
   state: GovState;
@@ -15,13 +17,6 @@ interface Props {
   hideBack?: boolean;
 }
 
-const PHASE_LABELS: Record<string, string> = {
-  'registration': 'Registration',
-  'voting': 'Voting',
-  'tallied': 'Tallied',
-  'seated': 'Seated',
-};
-
 const PHASE_VARIANTS: Record<string, string> = {
   'registration': 'turquoise',
   'voting': 'gold',
@@ -29,20 +24,15 @@ const PHASE_VARIANTS: Record<string, string> = {
   'seated': 'emerald',
 };
 
-const ELECTION_TYPE_LABELS: Record<string, string> = {
-  'majlis_general': 'Majlis General',
-  'senate': 'Senate',
-  'provincial': 'Provincial',
-  'majlis_byelection': 'Majlis By-election',
-  'senate_byelection': 'Senate By-election',
-};
-
 type IssuanceStep = 'welcome' | 'name' | 'province' | 'issued';
 
 export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess, hideBack }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const number = (value: number) => formatNumber(value, locale);
   const [issuanceStep, setIssuanceStep] = useState<IssuanceStep>('welcome');
-  const [firstName, setFirstName] = useState('Dariush');
-  const [lastName, setLastName] = useState('Ahmadi');
+  const [firstName, setFirstName] = useState(locale === 'fa' ? 'داریوش' : 'Dariush');
+  const [lastName, setLastName] = useState(locale === 'fa' ? 'احمدی' : 'Ahmadi');
   const [selectedProvince, setSelectedProvince] = useState<ProvinceId | null>(null);
   const [showingIssuedCard, setShowingIssuedCard] = useState(false);
 
@@ -51,7 +41,7 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
   // If no passport OR just issued (showing celebration), show issuance flow
   if (!hasPassport || showingIssuedCard) {
     return (
-      <InstitutionShell title="Elections" icon={'\u2611'} healthy={true} onBack={onBack} hideBack={hideBack}>
+      <InstitutionShell title={t('institutions.elections')} icon={'\u2611'} healthy={true} onBack={onBack} hideBack={hideBack}>
         <PassportIssuanceFlow
           step={issuanceStep}
           setStep={setIssuanceStep}
@@ -100,7 +90,7 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
   }
 
   return (
-    <InstitutionShell title="Elections" icon={'\u2611'} healthy={activeProcesses.length === 0} onBack={onBack} hideBack={hideBack}>
+    <InstitutionShell title={t('institutions.elections')} icon={'\u2611'} healthy={activeProcesses.length === 0} onBack={onBack} hideBack={hideBack}>
       {/* Passport Card */}
       <div className="inst-section">
         <PassportCard player={state.player!} province={playerProvince} year={state.year} />
@@ -114,7 +104,7 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
             currentDay={state.day}
             playerVotes={state.playerVotes}
             dispatch={dispatch}
-            provinceName={playerProvince.name}
+            provinceName={provinceDisplayName(playerProvince, locale)}
           />
         </div>
       ))}
@@ -129,13 +119,13 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
           <div key={proc.id} className={`vote-result${won ? ' won' : ''}`}>
             <span className="vote-result-icon">{won ? '\u2713' : '\u2717'}</span>
             <span>
-              You voted for <strong>{vote.party}</strong>.{' '}
+              {t('electionsPanel.voted', { party: partyDisplayName(vote.party, locale, t) })}{' '}
               {proc.results
                 ? <>
-                    <strong>{proc.results.winningParty}</strong> won in {playerProvince.name}
-                    {won ? ' \u2014 your party won!' : '.'}
+                    {t('electionsPanel.winner', { party: partyDisplayName(proc.results.winningParty, locale, t), province: provinceDisplayName(playerProvince, locale) })}
+                    {won ? ` — ${t('electionsPanel.yourParty')}` : ''}
                   </>
-                : 'Results pending.'}
+                : t('electionsPanel.pending')}
             </span>
           </div>
         );
@@ -143,10 +133,10 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
 
       {/* Next Scheduled */}
       <div className="inst-section">
-        <h3 className="inst-section-title">Schedule</h3>
+        <h3 className="inst-section-title">{t('electionsPanel.schedule')}</h3>
         <div className="inst-list-item">
-          <span className="inst-list-name">Next General Election</span>
-          <span className="inst-list-meta">{state.elections.nextScheduled} days</span>
+          <span className="inst-list-name">{t('electionsPanel.nextGeneral')}</span>
+          <span className="inst-list-meta">{t('labels.days', { count: number(state.elections.nextScheduled) })}</span>
         </div>
         {(() => {
           const hasActiveMajlis = state.elections.processes.some(
@@ -159,7 +149,7 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
               onClick={() => dispatch({ type: 'START_ELECTION', electionType: 'majlis_general' })}
               disabled={hasActiveMajlis || !state.parliament.dissolved}
             >
-              {hasActiveMajlis ? 'Election In Progress' : !state.parliament.dissolved ? 'Parliament Not Dissolved' : 'Call General Election'}
+              {t(hasActiveMajlis ? 'electionsPanel.electionProgress' : !state.parliament.dissolved ? 'electionsPanel.parliamentActive' : 'electionsPanel.callGeneral')}
             </button>
           );
         })()}
@@ -167,26 +157,26 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
 
       {/* Active Elections */}
       <div className="inst-section" data-tour-id="elections-active">
-        <h3 className="inst-section-title">Active Elections ({activeProcesses.length})</h3>
+        <h3 className="inst-section-title">{t('electionsPanel.active', { count: number(activeProcesses.length) })}</h3>
         {activeProcesses.length === 0 ? (
-          <div className="inst-empty">No elections in progress</div>
+          <div className="inst-empty">{t('electionsPanel.none')}</div>
         ) : (
           <div className="inst-list">
             {activeProcesses.map((proc) => {
-              const advanceLabel = proc.phase === 'registration' ? 'Open Voting'
-                : proc.phase === 'voting' ? 'Tally Votes'
-                : proc.phase === 'tallied' ? 'Seat Winners'
+              const advanceLabel = proc.phase === 'registration' ? t('electionsPanel.openVoting')
+                : proc.phase === 'voting' ? t('electionsPanel.tally')
+                : proc.phase === 'tallied' ? t('electionsPanel.seatWinners')
                 : null;
               return (
                 <div key={proc.id} className="inst-list-item clickable" onClick={() => onClickProcess?.(`election-${proc.id}`)}>
-                  <span className="inst-list-name">{ELECTION_TYPE_LABELS[proc.electionType]}</span>
-                  <Badge label={PHASE_LABELS[proc.phase]} variant="turquoise" />
-                  <span className="inst-list-meta">{proc.seatsContested} seat(s)</span>
-                  <span className="inst-list-meta">{proc.phaseDeadline - state.day}d</span>
+                  <span className="inst-list-name">{t(`electionsPanel.type.${proc.electionType}`)}</span>
+                  <Badge label={t(`electionsPanel.phase.${proc.phase}`)} variant="turquoise" />
+                  <span className="inst-list-meta">{t('electionsPanel.seats', { count: number(proc.seatsContested) })}</span>
+                  <span className="inst-list-meta">{t('budgetPanel.remaining', { days: number(proc.phaseDeadline - state.day) })}</span>
                   {advanceLabel && (
                     <button
                       className="inst-action-btn small"
-                      style={{ marginLeft: 8 }}
+                      style={{ marginInlineStart: 8 }}
                       onClick={(e) => { e.stopPropagation(); dispatch({ type: 'ADVANCE_ELECTION', electionId: proc.id }); }}
                     >
                       {advanceLabel}
@@ -202,7 +192,7 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
       {/* Province Breakdown */}
       {provinceElections.length > 0 && (
         <div className="inst-section" data-tour-id="elections-provinces">
-          <h3 className="inst-section-title">Election by Province ({provinceElections.length})</h3>
+          <h3 className="inst-section-title">{t('electionsPanel.byProvince', { count: number(provinceElections.length) })}</h3>
           <div className="province-grid">
             {state.provinces.map((province) => {
               const proc = provinceElectionMap.get(province.id);
@@ -213,14 +203,14 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
                 : '';
               return (
                 <div key={province.id} className={`province-chip ${phaseClass}`}>
-                  <span className="province-name">{province.name}</span>
+                  <span className="province-name">{provinceDisplayName(province, locale)}</span>
                   <span className="province-meta">
-                    <span className="province-count">{proc.seatsContested} seats</span>
-                    <Badge label={PHASE_LABELS[proc.phase]} variant={(PHASE_VARIANTS[proc.phase] || 'turquoise') as 'gold' | 'turquoise' | 'emerald' | 'rose'} />
+                    <span className="province-count">{t('electionsPanel.seats', { count: number(proc.seatsContested) })}</span>
+                    <Badge label={t(`electionsPanel.phase.${proc.phase}`)} variant={(PHASE_VARIANTS[proc.phase] || 'turquoise') as 'gold' | 'turquoise' | 'emerald' | 'rose'} />
                   </span>
                   {proc.results && (
                     <span className="province-result">
-                      {proc.results.winningParty} ({Math.round(proc.results.turnout * 100)}%)
+                      {partyDisplayName(proc.results.winningParty, locale, t)} ({formatPercent(Math.round(proc.results.turnout * 100), locale)})
                     </span>
                   )}
                 </div>
@@ -233,13 +223,13 @@ export default function ElectionsPanel({ state, dispatch, onBack, onClickProcess
       {/* Completed Elections */}
       {completedProcesses.length > 0 && (
         <div className="inst-section">
-          <h3 className="inst-section-title">Recently Completed</h3>
+          <h3 className="inst-section-title">{t('electionsPanel.completed')}</h3>
           <div className="inst-list">
             {completedProcesses.map((proc) => (
               <div key={proc.id} className="inst-list-item">
-                <span className="inst-list-name">{ELECTION_TYPE_LABELS[proc.electionType]}</span>
-                <Badge label="Seated" variant="emerald" />
-                <span className="inst-list-meta">{proc.seatsContested} seat(s)</span>
+                <span className="inst-list-name">{t(`electionsPanel.type.${proc.electionType}`)}</span>
+                <Badge label={t('electionsPanel.phase.seated')} variant="emerald" />
+                <span className="inst-list-meta">{t('electionsPanel.seats', { count: number(proc.seatsContested) })}</span>
               </div>
             ))}
           </div>
@@ -274,6 +264,9 @@ function PassportIssuanceFlow({
   state, dispatch,
   onDismissIssued, setShowingIssuedCard,
 }: IssuanceProps) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const number = (value: number) => formatNumber(value, locale);
   const stepIndex = ['welcome', 'name', 'province', 'issued'].indexOf(step);
 
   const handleIssue = () => {
@@ -303,14 +296,11 @@ function PassportIssuanceFlow({
       {step === 'welcome' && (
         <>
           <div className="passport-issuance-hero">
-            <h2>Get Your Passport</h2>
-            <p>
-              To participate in elections and have your vote shape Iran's future,
-              you need a citizen passport. It takes only a moment.
-            </p>
+            <h2>{t('electionsPanel.welcome')}</h2>
+            <p>{t('electionsPanel.welcomeText')}</p>
           </div>
           <button className="passport-btn" onClick={() => setStep('name')}>
-            Begin
+            {t('electionsPanel.begin')}
           </button>
         </>
       )}
@@ -318,24 +308,24 @@ function PassportIssuanceFlow({
       {step === 'name' && (
         <>
           <div className="passport-issuance-hero">
-            <h2>Your Name</h2>
+            <h2>{t('electionsPanel.name')}</h2>
           </div>
           <div className="passport-issuance-form">
             <div className="passport-input-group">
-              <label>First Name</label>
+              <label>{t('electionsPanel.first')}</label>
               <input
                 type="text"
-                placeholder="e.g. Dariush"
+                placeholder={t('electionsPanel.firstExample')}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 autoFocus
               />
             </div>
             <div className="passport-input-group">
-              <label>Last Name</label>
+              <label>{t('electionsPanel.last')}</label>
               <input
                 type="text"
-                placeholder="e.g. Ahmadi"
+                placeholder={t('electionsPanel.lastExample')}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -343,14 +333,14 @@ function PassportIssuanceFlow({
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
             <button className="passport-btn secondary" onClick={() => setStep('welcome')}>
-              Back
+              {t('actions.back')}
             </button>
             <button
               className="passport-btn"
               disabled={!firstName.trim() || !lastName.trim()}
               onClick={() => setStep('province')}
             >
-              Next
+              {t('electionsPanel.next')}
             </button>
           </div>
         </>
@@ -359,8 +349,8 @@ function PassportIssuanceFlow({
       {step === 'province' && (
         <>
           <div className="passport-issuance-hero">
-            <h2>Pick Your Province</h2>
-            <p>Your vote will count in this province's elections.</p>
+            <h2>{t('electionsPanel.pickProvince')}</h2>
+            <p>{t('electionsPanel.provinceText')}</p>
           </div>
           <div className="province-picker">
             {state.provinces.map((prov) => (
@@ -369,24 +359,24 @@ function PassportIssuanceFlow({
                 className={`province-picker-card${selectedProvince === prov.id ? ' selected' : ''}`}
                 onClick={() => setSelectedProvince(prov.id)}
               >
-                <span className="province-picker-name">{prov.name}</span>
+                <span className="province-picker-name">{provinceDisplayName(prov, locale)}</span>
                 <span className="province-picker-meta">
-                  <span>{prov.majlisSeats} seats</span>
-                  <span>Cohort {prov.senateCohort}</span>
+                  <span>{t('electionsPanel.seats', { count: number(prov.majlisSeats) })}</span>
+                  <span>{t('electionsPanel.cohort', { cohort: prov.senateCohort })}</span>
                 </span>
               </div>
             ))}
           </div>
           <div style={{ display: 'flex', gap: 12 }}>
             <button className="passport-btn secondary" onClick={() => setStep('name')}>
-              Back
+              {t('actions.back')}
             </button>
             <button
               className="passport-btn"
               disabled={selectedProvince === null}
               onClick={handleIssue}
             >
-              Issue Passport
+              {t('electionsPanel.issue')}
             </button>
           </div>
         </>
@@ -403,7 +393,7 @@ function PassportIssuanceFlow({
             dispatch({ type: 'START_PLAYER_ELECTION' });
             onDismissIssued();
           }}>
-            Begin Participating
+            {t('electionsPanel.participate')}
           </button>
         </>
       )}

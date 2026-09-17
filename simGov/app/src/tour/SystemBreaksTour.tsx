@@ -372,7 +372,7 @@ export default function SystemBreaksTour({ dispatch, speed, setSpeed, onClose, s
       canGoBack={history.length > 1}
     >
       <div className={`tour-content ${fading ? 'fading' : ''}`}>
-        <ShahDialogue text={frame.shahText} />
+        <ShahDialogue text={frame.shahText} context={frame.title} />
         <DecisionButtons choices={choices} onChoose={handleChoose} />
       </div>
     </TourNarrator>

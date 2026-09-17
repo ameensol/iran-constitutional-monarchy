@@ -1,4 +1,6 @@
 import type { ElectionPhase } from '../simulation/types';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber } from '../i18n/simulatorFormat';
 
 interface Props {
   currentPhase: ElectionPhase;
@@ -12,13 +14,6 @@ interface FlowNode {
   label: string;
   sub: string;
 }
-
-const nodes: FlowNode[] = [
-  { phase: 'registration', label: 'Registration', sub: 'Candidates file' },
-  { phase: 'voting',       label: 'Voting',       sub: 'Ballots cast' },
-  { phase: 'tallied',      label: 'Tallied',      sub: 'Results announced' },
-  { phase: 'seated',       label: 'Seated',       sub: 'Members take office' },
-];
 
 const phaseOrder: ElectionPhase[] = ['registration', 'voting', 'tallied', 'seated'];
 
@@ -46,6 +41,14 @@ function HArrow() {
 }
 
 export default function ElectionFlowchart({ currentPhase, seatsContested, deadline, currentDay }: Props) {
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  const nodes: FlowNode[] = [
+    { phase: 'registration', label: t('process.registration'), sub: t('process.candidatesFile') },
+    { phase: 'voting', label: t('process.voting'), sub: t('process.ballotsCast') },
+    { phase: 'tallied', label: t('process.tallied'), sub: t('process.resultsAnnounced') },
+    { phase: 'seated', label: t('process.seated'), sub: t('process.membersTakeOffice') },
+  ];
   const daysLeft = deadline - currentDay;
 
   return (
@@ -55,7 +58,7 @@ export default function ElectionFlowchart({ currentPhase, seatsContested, deadli
           const cls = getNodeClass(node.phase, currentPhase);
           const isCurrent = node.phase === currentPhase;
           const sub = isCurrent && daysLeft > 0
-            ? `${node.sub} · ${daysLeft}d left`
+            ? `${node.sub} · ${t('process.daysLeft', { days: formatNumber(daysLeft, locale) })}`
             : node.sub;
           return (
             <div key={node.phase} className="flow-step">
@@ -79,8 +82,8 @@ export default function ElectionFlowchart({ currentPhase, seatsContested, deadli
       </div>
 
       <div className="process-info">
-        <span className="process-info-label">Seats contested:</span>
-        <span className="process-info-value">{seatsContested}</span>
+        <span className="process-info-label">{t('process.seatsContested')}</span>
+        <span className="process-info-value">{formatNumber(seatsContested, locale)}</span>
       </div>
     </div>
   );

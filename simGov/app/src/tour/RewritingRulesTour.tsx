@@ -8,6 +8,7 @@ import ShahDialogue from './ShahDialogue';
 import DecisionButtons from './DecisionButtons';
 import { useTourCompletion } from './useTourCompletion';
 import { useTourSpotlight } from './useTourSpotlight';
+import TourActionHint from './TourActionHint';
 import { GENESIS_MAX_STAGE } from '../simulation/genesis';
 
 interface TourProps {
@@ -310,12 +311,9 @@ export default function RewritingRulesTour({ dispatch, speed, setSpeed, onClose,
       canGoBack={history.length > 1}
     >
       <div className={`tour-content ${fading ? 'fading' : ''}`}>
-        <ShahDialogue text={frame.shahText} />
+        <ShahDialogue text={frame.shahText} context={frame.title} />
         {frame.mode === 'action' && (
-          <div className="tour-action-hint">
-            <span className="tour-action-hint-icon">{'\u261D'}</span>
-            <span>Use the buttons in the panel to continue</span>
-          </div>
+          <TourActionHint />
         )}
         {choices.length > 0 && <DecisionButtons choices={choices} onChoose={handleChoose} />}
       </div>

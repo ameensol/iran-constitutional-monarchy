@@ -1,11 +1,12 @@
 import type { GovState } from '../simulation/types';
-import { personName } from '../simulation/types';
 import { personById } from '../simulation/selectors';
 import ElectionFlowchart from './ElectionFlowchart';
 import FormationFlowchart from './FormationFlowchart';
 import AppointmentFlowchart from './AppointmentFlowchart';
 import AmendmentFlowchart from './AmendmentFlowchart';
 import './ProcessDetail.css';
+import { useTranslation } from 'react-i18next';
+import { activeLocale, formatNumber, namedEntityDisplayName, personDisplayName } from '../i18n/simulatorFormat';
 
 interface Props {
   processId: string;
@@ -21,11 +22,13 @@ interface Props {
  *  - "amendment-{id}" → AmendmentFlowchart
  */
 export default function ProcessDetail({ processId, state, onBack }: Props) {
-  let title = 'Process';
+  const { t, i18n } = useTranslation('simulator');
+  const locale = activeLocale(i18n.language);
+  let title = t('process.process');
   let content: React.ReactNode = null;
 
   if (processId === 'formation') {
-    title = 'Executive Formation';
+    title = t('process.formation');
     const f = state.executive.formation;
     const nominee = f.nomineeId !== null ? personById(state, f.nomineeId) : null;
     content = (
@@ -33,7 +36,7 @@ export default function ProcessDetail({ processId, state, onBack }: Props) {
         currentStage={f.stage}
         deadline={f.deadline}
         currentDay={state.day}
-        nomineeName={nominee ? personName(nominee) : null}
+        nomineeName={nominee ? personDisplayName(nominee, locale) : null}
       />
     );
   } else if (processId.startsWith('election-')) {
@@ -41,13 +44,10 @@ export default function ProcessDetail({ processId, state, onBack }: Props) {
     const election = state.elections.processes.find((e) => e.id === elId);
     if (election) {
       const typeLabels: Record<string, string> = {
-        majlis_general: 'Majlis General Election',
-        senate: 'Senate Election',
-        provincial: 'Provincial Election',
-        majlis_byelection: 'Majlis By-Election',
-        senate_byelection: 'Senate By-Election',
+        majlis_general: t('process.majlisGeneral'), senate: t('process.senate'), provincial: t('process.provincial'),
+        majlis_byelection: t('process.majlisByelection'), senate_byelection: t('process.senateByelection'),
       };
-      title = typeLabels[election.electionType] || 'Election';
+      title = typeLabels[election.electionType] || t('process.election');
       content = (
         <ElectionFlowchart
           currentPhase={election.phase}
@@ -61,7 +61,7 @@ export default function ProcessDetail({ processId, state, onBack }: Props) {
     const seatNum = parseInt(processId.replace('appointment-', ''), 10);
     const appt = state.court.appointments.find((a) => a.seatNumber === seatNum);
     if (appt) {
-      title = `Justice Appointment — Seat #${seatNum}`;
+      title = t('process.appointment', { seat: formatNumber(seatNum, locale) });
       content = (
         <AppointmentFlowchart
           currentPhase={appt.phase}
@@ -75,7 +75,7 @@ export default function ProcessDetail({ processId, state, onBack }: Props) {
     const amId = parseInt(processId.replace('amendment-', ''), 10);
     const amendment = state.amendments.find((a) => a.id === amId);
     if (amendment) {
-      title = `Amendment: ${amendment.title}`;
+      title = t('process.amendment', { title: namedEntityDisplayName(amendment.title, locale, t) });
       content = (
         <AmendmentFlowchart
           currentPhase={amendment.phase}
@@ -94,10 +94,10 @@ export default function ProcessDetail({ processId, state, onBack }: Props) {
 
   return (
     <div className="process-shell">
-      <button className="back-btn" onClick={onBack}>&#x2190; Back</button>
+      <button className="back-btn" onClick={onBack}><span aria-hidden="true">&#x2190;</span> {t('actions.back')}</button>
 
       <div className="process-header">
-        <div className="process-label">CONSTITUTIONAL PROCESS</div>
+        <div className="process-label">{t('process.label')}</div>
         <h2 className="process-title">{title}</h2>
         <div className="process-header-ornament">
           <img src="/assets/eslimi-corner.svg" className="persian-art" alt="" />
@@ -105,7 +105,7 @@ export default function ProcessDetail({ processId, state, onBack }: Props) {
       </div>
 
       {content || (
-        <div className="process-empty">No active process found.</div>
+        <div className="process-empty">{t('process.empty')}</div>
       )}
     </div>
   );

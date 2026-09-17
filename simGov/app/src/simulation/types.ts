@@ -27,6 +27,8 @@ export interface Person {
   id: PersonId;
   firstName: string;
   lastName: string;
+  firstNameFa?: string;
+  lastNameFa?: string;
   role: PersonRole;
   status: PersonStatus;
   provinceId: ProvinceId;
@@ -47,6 +49,7 @@ export type SenateCohort = 'A' | 'B' | 'C';
 export interface Province {
   id: ProvinceId;
   name: string;
+  nameFa: string;
   senateCohort: SenateCohort;
   majlisSeats: number;     // seats allocated to this province
   councilSize: number;     // provincial council members (15)
